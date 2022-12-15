@@ -23,10 +23,12 @@ int	error_manager(int error)
 	else if (error == 4)
 		return (ft_putendl_fd("Invalid export", 2, 1));
 	else if (error == 5)
-		return (ft_putendl_fd("Pipe error", 2, 1));
+		return (ft_putendl_fd("PID error", 2, 1));
 	else if (error == 6)
-		return (ft_putendl_fd("Fork error", 2, 1));
+		return (ft_putendl_fd("Pipe error", 2, 1));
 	else if (error == 7)
-		return (ft_putendl_fd("Noy enough arguments", 2, 1));
+		return (ft_putendl_fd("Fork error", 2, 1));
+	else if (error == 8)
+		return (ft_putendl_fd("Not enough arguments", 2, 1));
 	return (0);
 }

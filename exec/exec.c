@@ -76,7 +76,7 @@ int	ms_execute(t_var *shell)
 		printf("commande %s\n", ptr->cmd_path);
 		shell->cmd_arg = ptr->cmd_arg;
 		shell->cmd_env = ptr->cmd_env;
-		if (ptr->redir_input != NULL | ptr->redir_output != NULL | ptr->redir_append != NULL) //va être géré par process
+		if (ptr->redir_input != NULL | ptr->redir_output != NULL | ptr->redir_append != NULL) //va être géré par pipex ou process
 			redirection(shell, ptr);
 		process(shell, ptr);
 		ptr = ptr->next;
