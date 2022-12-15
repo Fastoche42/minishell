@@ -23,6 +23,7 @@ typedef struct s_cmdlist
 	char				*redir_append;
 	char				*redir_hdoc;
 	struct s_cmdlist	*next;
+	struct s_var		*shell; //a initialiser
 }					t_cmdlist;
 
 #endif

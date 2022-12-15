@@ -17,10 +17,10 @@ int	process(t_var *shell, t_cmdlist *ptr)
 	pid_t	pid;
 
 	if (pipe(shell->pipe) == -1)
-		return (5);
+		return (error_manager(6));
 	pid = fork();
 	if (pid == -1)
-		return (6);
+		return (error_manager(7));
 	if (pid == 0) //child
 	{
 		if (shell->prev_pipe != -1)
@@ -65,11 +65,9 @@ int	ms_execute(t_var *shell)
 	t_cmdlist	*ptr;
 	char		*str;
 	char		*path;
-	int			cmd_nbr;
-	int			i;
+	//int			cmd_nbr;
 
-	cmd_nbr = number_of_cmd(shell);
-	i = 0;
+	//shell->cmd_nbr = number_of_cmd(shell);
 	ptr = shell->cmdlist;
 	printf("adresse debut liste %p\n", ptr);
 	while (ptr)
@@ -78,11 +76,10 @@ int	ms_execute(t_var *shell)
 		printf("commande %s\n", ptr->cmd_path);
 		shell->cmd_arg = ptr->cmd_arg;
 		shell->cmd_env = ptr->cmd_env;
-		if (ptr->redir_input != NULL | ptr->redir_output != NULL | ptr->redir_append != NULL)
+		if (ptr->redir_input != NULL | ptr->redir_output != NULL | ptr->redir_append != NULL) //va être géré par process
 			redirection(shell, ptr);
 		process(shell, ptr);
 		ptr = ptr->next;
-		i++;
 	}
 	dup2(shell->save_input, STDIN_FILENO);
 	dup2(shell->save_output, STDOUT_FILENO);

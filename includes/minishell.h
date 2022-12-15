@@ -39,6 +39,7 @@ typedef struct s_env {
 	int				exists;		// pas deleted
 	int				exported;	// exportee ou non
 	struct s_env	*next;
+	
 }	t_env;
 
 typedef struct s_var {
@@ -48,8 +49,7 @@ typedef struct s_var {
 	int			outfile;
 	int			save_input;
 	int			save_output;
-	int			prev_pipe;
-	int			pipe[2];
+	int			prev_pipe; // ?
 	char		*input;
 
 	t_cmdlist	*cmdlist;		// ptr vers liste de commande => exec Morgan
@@ -61,15 +61,21 @@ typedef struct s_var {
 	char		*redir_output;
 	char		*redir_append;
 
+	int			child; // index
+	int			*pipe;
+	int			*pids; // process IDs (nécessaire au forking)
+	int			cmd_nbr; // doit être initialisé pour initialiser les pipes et les pids
 	t_path		*path;
+	char		**envp;
 	t_env		*env;
 
-	char		**cmd_access;	//split de $PATH
+	char		**cmd_access;	//split de $PATH (non nécessaire, le parsing de PATH est fait avant l'exécution)
 }	t_var;
 
 //----------------minishell----------------//
 t_var	*init_struct(char **envp);
 t_env	*init_env(char **envp);
+int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
@@ -86,6 +92,8 @@ int		exec_exit(t_var *shell);
 void	exec_cd(t_var *shell);
 int		exec_export(t_var *shell, char **var);
 void	redirection(t_var *shell, t_cmdlist *ptr);
+int		number_of_cmd(t_var *shell);
+
 
 //----------------check_error----------------//
 int		verif_exit(char *cmd);
