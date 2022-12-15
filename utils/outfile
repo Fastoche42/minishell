@@ -1,0 +1,15 @@
+total 712$
+drwxr-xr-x@ 101 fl-hote  2022_mulhouse    3434 Dec 15 12:59 Libft$
+-rw-r--r--    1 fl-hote  2022_mulhouse    2781 Dec 15 12:59 Makefile$
+-rw-r--r--    1 fl-hote  2022_mulhouse    2832 Dec 12 16:11 Makefile_fred$
+-rw-r--r--@   1 fl-hote  2022_mulhouse    5771 Dec 12 16:13 Minishell.docx$
+drwxr-xr-x@  14 fl-hote  2022_mulhouse     476 Dec 15 12:59 builtins$
+drwxr-xr-x@  13 fl-hote  2022_mulhouse     442 Dec 15 12:59 check$
+drwxr-xr-x@  11 fl-hote  2022_mulhouse     374 Dec 15 12:59 exec$
+drwxr-xr-x@   4 fl-hote  2022_mulhouse     136 Dec 15 12:56 includes$
+-rwxr-xr-x    1 fl-hote  2022_mulhouse   53152 Dec 15 12:59 minishell$
+-rw-r--r--    1 fl-hote  2022_mulhouse  292007 Dec  1 16:23 minishell_correction.pdf$
+drwxr-xr-x@   4 fl-hote  2022_mulhouse     136 Dec 15 12:59 parsing$
+drwxr-xr-x@   6 fl-hote  2022_mulhouse     204 Dec 15 12:59 srcs$
+drwxr-xr-x    4 fl-hote  2022_mulhouse     136 Dec 15 11:47 tests$
+drwxr-xr-x@  14 fl-hote  2022_mulhouse     476 Dec 15 12:59 utils$
