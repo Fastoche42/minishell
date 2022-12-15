@@ -17,14 +17,21 @@ void	redirection_heredocs(t_var *shell, t_cmdlist *ptr)
 	char	*str;
 	int		fd;
 
-	fd = open(".heredocs", O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	fd = open(ptr->redir_hdoc, O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (fd < -1)
 		return (ft_putstr_fd("error heredocs\n", 2));
-	str = readline("> ");
 	while (str != NULL)
 	{
 		str = readline("> ");
+		if (str[0])
+		{
+			str = ft_strjoin(str, "\n");
+			ft_putstr_fd(str, fd);
+		}		
 	}
+	close (fd);
+	shell->infile = open(".heredoc", O_RDONLY);
+	dup2(shell->infile, STDIN_FILENO);
 }
 
 void	redirection_infile(t_var *shell, t_cmdlist *ptr)
@@ -38,28 +45,28 @@ void	redirection_infile(t_var *shell, t_cmdlist *ptr)
 void	redirection_outfile(t_var *shell, t_cmdlist *ptr)
 {
 	shell->outfile = open(ptr->redir_output, O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (shell->outfile < -1)
+	if (shell->outfile < 0)
 		return (ft_putstr_fd("error outfile\n", 2));
 	dup2(shell->outfile, STDOUT_FILENO);
 }
 
 void	redirection_append(t_var *shell, t_cmdlist *ptr)
 {
-	shell->outfile = open(ptr->redir_output, O_WRONLY | O_APPEND | O_CREAT, 0664);
-	if (shell->outfile < -1)
+	shell->outfile = open(ptr->redir_append, O_CREAT | O_WRONLY | O_APPEND, 0664);
+	if (shell->outfile < 0)
 		return (ft_putstr_fd("error append\n", 2));
 	dup2(shell->outfile, STDOUT_FILENO);	
 }
 
 void	redirection(t_var *shell, t_cmdlist *ptr)
 {
-	//if (cmd[i] == '>' && cmd[i + 1] == '>')
-			//redirection_append(shell, ptr);
-	//else if (cmd[i] == '<' && cmd[i + 1] == '<')
-			//redirection_heredocs(shell);
-	if (ptr->redir_input)
+	if (ptr->redir_hdoc)
+		redirection_heredocs(shell, ptr);
+	else if (ptr->redir_input)
 		redirection_infile(shell, ptr);
-	if (ptr->redir_output)
+	else if (ptr->redir_append)
+		redirection_append(shell, ptr);
+	else if (ptr->redir_output)
 		redirection_outfile(shell, ptr);
 }
 

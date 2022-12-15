@@ -6,7 +6,7 @@
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by mfusil            #+#    #+#             */
-/*   Updated: 2022/12/12 18:52:01 by fl-hote          ###   ########.fr       */
+/*   Updated: 2022/12/15 13:03:08 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,16 @@ int	ms_parsing(t_var *shell)
 	if (!shell->cmdlist)
 		return (0);
 
- /*
-	printf ("getenv PWD: %s\n", getenv("PWD"));
-	chdir ("..");
-	printf ("getenv PWD: %s\n", getenv("PWD"));
-	printf ("getenv PATH: %s\n", getenv("PATH"));
-*/
-
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
 	ptr = shell->cmdlist;
-	ptr->cmd_path = "/bin/cat";
-	ptr->cmd_arg = ft_split("cat", ' ');
+	ptr->cmd_path = "/bin/ls";
+	ptr->cmd_arg = ft_split("ls -l", ' ');
 	ptr->cmd_env = NULL;
-	ptr->redir_input = "exec/exec.c";
+	ptr->redir_input = NULL;
 	ptr->redir_hdoc = NULL;
-	ptr->redir_output = "outfile1";
+	ptr->redir_output = NULL;
 	ptr->redir_append = NULL;
 
- /*
 	ptr->next = new_cmdlist();
 	ptr = ptr->next;
 	ptr->cmd_path = "/usr/bin/head";
@@ -58,7 +50,6 @@ int	ms_parsing(t_var *shell)
 	ptr->redir_hdoc = NULL;
 	ptr->redir_output = NULL;
 	ptr->redir_append = NULL;
-	*/
 
 	ptr->next = new_cmdlist();
 	ptr = ptr->next;
@@ -67,7 +58,8 @@ int	ms_parsing(t_var *shell)
 	ptr->cmd_env = NULL;
 	ptr->redir_input = NULL;
 	ptr->redir_hdoc = NULL;
-	ptr->redir_output = "outfile2";
+	ptr->redir_output = NULL;
+	//ptr->redir_append = "outfile";
 	ptr->redir_append = NULL;
 	return (1);
 }

@@ -70,6 +70,8 @@ t_var	*init_struct(char **envp)
 	shell->redir_append = NULL;
 	shell->fd_input = 0;
 	shell->fd_output = 0;
+	shell->outfile = 0;
+	shell->infile = 0;
 	shell->prev_pipe = -1;
 	shell->save_input = dup(STDIN_FILENO);
 	shell->save_output = dup(STDOUT_FILENO);

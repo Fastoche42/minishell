@@ -6,7 +6,7 @@
 #    By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/28 16:07:42 by mfusil            #+#    #+#              #
-#    Updated: 2022/12/12 18:48:34 by fl-hote          ###   ########.fr        #
+#    Updated: 2022/12/15 12:59:46 by fl-hote          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HOST := $(shell hostname)
 ifeq ($(HOST), MacBook-Air-de-Laurent.local)
 	CPPFLAGS = -I/usr/local/opt/readline/include/readline
 	LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
-#	CFLAG = -Wall 
+	CFLAG = -Wall 
 else ifeq ($(HOST), LAPTOP-M60DL66F)
 #	CPPFLAGS = -I/mnt/d/msys64/mingw64/include/readline
 	CPPFLAGS =
@@ -28,7 +28,7 @@ else ifeq ($(HOST), LAPTOP-M60DL66F)
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = 
+	CFLAG = -lreadline
 endif
 
 SRCS =	srcs/main.c \
