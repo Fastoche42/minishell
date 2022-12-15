@@ -48,13 +48,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		//shell = init_struct();
 		shell->input = readline("minishell> ");
-		if (shell->input == NULL)
-			exit(0);
+		while (shell->input == NULL)
+			shell->input = readline("minishell> "); // si user entre une ligne vide, il faut redemander un input (a checker)
 		if (shell->input && !ft_strcmp(shell->input, "exit"))     //Temporaire
 			break ;
 		add_history(shell->input);
 		if (ms_parsing(shell)) //creer lst-ch et return 1 si ok;
-			ms_execute(shell);
+			if (!init_process(shell))
+				ms_execute(shell);
 		free(shell->input);
 	}
 	free_mem(shell);

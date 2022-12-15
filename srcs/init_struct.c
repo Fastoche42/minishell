@@ -75,5 +75,20 @@ t_var	*init_struct(char **envp)
 	shell->prev_pipe = -1;
 	shell->save_input = dup(STDIN_FILENO);
 	shell->save_output = dup(STDOUT_FILENO);
+	shell->cmd_nbr = -1;
+	shell->child = -1;
+	shell->envp = envp; // envp va être parsé pour trouver les paths avant l'exec des commandes
 	return (shell);
+}
+
+int	init_process(t_var *shell)
+{
+	shell->cmd_nbr = number_of_cmd(shell);
+	shell->pids = malloc(sizeof * shell->pids * shell->cmd_nbr);
+	if (!shell->pids)
+		return (error_manager(5));
+	shell->pipe = malloc(sizeof * shell->pipe * 2 * shell->cmd_nbr); // a rectifier pour les cas de no-pipe
+	if (!shell->pipe)
+		return (error_manager(6));
+	return (0);
 }
