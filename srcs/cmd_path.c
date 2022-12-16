@@ -95,7 +95,7 @@ char *get_cmd(char *cmd, t_var *shell)
 		return (NULL);
 	cmd_path = test_path(cmd, env_paths);
 	if (!cmd_path)
-		msg("Command not found", ": ", shell->cmd_arg[0], 1); // à changer
+		return (NULL);
 	free_strs(NULL, env_paths);
 	return (cmd_path);
 }

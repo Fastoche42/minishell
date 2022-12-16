@@ -40,7 +40,7 @@ int	exec_exit(t_var *shell)
 		return (write (1, "too many arguments\n", 19));
 	else
 	{
-		write(1, "exit\n", 1);
+		write(1, "exit\n", 1); // why ?
 		exit(exit_status);
 		return (0);
 	}
