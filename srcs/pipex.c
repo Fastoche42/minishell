@@ -12,31 +12,42 @@
 
 #include "../includes/minishell.h"
 
-static void	redirect_io(int input, int output, t_data *d)
+static int	redirect_io(int input, int output, t_cmdlist *cmd)
 {
 	if (dup2(input, STDIN_FILENO) == -1)
 	{
-		exit_error(1, d);
+		return (1);
 	}
 	if (dup2(output, STDOUT_FILENO) == -1)
 	{
-		exit_error(1, d);
+		return (1);
 	}
+	return (0);
 }
 
-static void	child(t_cmdlist *cmd)
+static int	child(t_cmdlist *cmd)
 {
 	if (cmd->shell->child == 0)
-		redirect_io(cmd->fd_in, cmd->shell->pipe[1], d); //adapter la struct cmdlist (changer redir_input en fd)
+	{
+		if (redirect_io(cmd->fd_in, cmd->shell->pipe[1], cmd)) //adapter la struct cmdlist (changer redir_input en fd)
+			return (error_manager(11));
+	}
 	else if (cmd->shell->child == cmd->shell->cmd_nbr - 1)
-		redirect_io(cmd->shell->pipe[2 * cmd->shell->child - 2], cmd->fd_out, d); //adapter la struct cmdlist (changer redir_output en fd)
+	{
+		if (redirect_io(cmd->shell->pipe[2 * cmd->shell->child - 2], cmd->fd_out, cmd)) //adapter la struct cmdlist (changer redir_output en fd)
+			return (error_manager(11));
+	}
 	else
-		redirect_io(cmd->shell->pipe[2 * cmd->shell->child - 2], cmd->shell->pipe[2 * cmd->shell->child + 1], d);
-	close_fds(cmd->shell);
+	{
+		if (redirect_io(cmd->shell->pipe[2 * cmd->shell->child - 2], cmd->shell->pipe[2 * cmd->shell->child + 1], cmd))
+			return (error_manager(11));
+	}
+	close_fds(cmd->shell); // à adapter
 	if (cmd->cmd_arg == NULL || cmd->cmd_path == NULL)
-		exit_error(1, d); // à changer
+		return (error_manager(10));
 	if (execve(cmd->cmd_path, cmd->cmd_arg, cmd->shell->envp) == -1)
-		exit_error(msg(d->cmd_options[0], ": ", strerror(errno), 1), d); // à changer
+		return (error_manager(10));
+	return (0);
 }
 
 static int	parent(t_var *shell)
@@ -63,7 +74,7 @@ static int	parent(t_var *shell)
 	return (exit_code);
 }
 
-static int  pipex(t_var *shell)
+int  pipex(t_var *shell)
 {
     int exit_code;
 
@@ -72,45 +83,23 @@ static int  pipex(t_var *shell)
     shell->child = 0;
     while (shell->child < shell->cmd_nbr && shell->cmdlist)
     {
-        /* d->cmd_options = ft_split(d->argv[d->child + 2 + d->heredoc], ' ');
-        if (!d->cmd_options)
-                exit_error(msg("unexpected error", "", "", 1), d); */
         shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
+		if (!shell->cmdlist->cmd_path)
+		{
+			return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1));
+		}
         shell->pids[shell->child] = fork();
         if (shell->pids[shell->child] == -1)
-                exit_error(msg("fork", ": ", strerror(errno), 1), d); // à changer
+                return (error_manager(7));
         else if (shell->pids[shell->child] == 0)
-                child(shell->cmdlist);
-        free_strs(shell->cmd_path, shell->cmd_arg); // à changer
+                if (child(shell->cmdlist) > 0)
+					return (1);
+        // free_strs(shell->cmd_path, shell->cmd_arg); // à changer
         shell->child++;
 		shell->cmdlist = shell->cmdlist->next;
     }
     exit_code = parent(shell);
-    if (d->heredoc == 1) // à changer
-            unlink(".heredoc.tmp");
-    return (exit_code);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_data	d;
-	int		exit_code;
-
-	if (argc < 5)
-	{
-		if (argc >= 2 && !ft_strcmp("here_doc", argv[1], 9))
-                return (msg("Usage: ",
-                            "./pipex here_doc LIMITER cmd1 cmd2 ... cmdn file2.",
-                            "", 1));
-        return (msg("Usage: ",
-                    "./pipex file1 cmd1 cmd2 ... cmdn file2.", "", 1));
-    }
-    else if (argc < 6 && !ft_strcmp("here_doc", argv[1], 9))
-            return (msg("Usage: ",
-                        "./pipex here_doc LIMITER cmd1 cmd2 ... cmdn file2.", "", 1));
-    if (!envp || envp[0][0] == '\0')
-            exit_error(msg("Unexpected error.", "", "", 1), &d);
-    d = init(argc, argv, envp);
-    exit_code = pipex(&d);
+    if (shell->heredoc > 0)
+            ft_unlink_fds(shell); // à écrire
     return (exit_code);
 }

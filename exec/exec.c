@@ -170,7 +170,8 @@ int	ms_execute(t_var *shell)
 		shell->cmd_env = ptr->cmd_env;
 		if (ptr->redir_input != NULL | ptr->redir_output != NULL | ptr->redir_append != NULL) //va être géré par pipex ou process
 			redirection(shell, ptr);
-		process(shell, ptr);
+		if (process(shell, ptr))
+			return (1);
 		ptr = ptr->next;
 	}
 	dup2(shell->save_input, STDIN_FILENO);

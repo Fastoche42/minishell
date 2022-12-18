@@ -12,21 +12,21 @@
 
 #include "../includes/minishell.h"
 
-char	*exec_pwd(t_var *shell, char **var)
+char	*exec_pwd(char **envp)
 {
 	char	*path_pwd;
 	int		x;
 
 	x = 0;
 	path_pwd = NULL;
-	while (var[x] && path_pwd == NULL)
+	while (envp[x] && path_pwd == NULL)
 	{
-		if (var[x][0] == 'P' && var[x][1] == 'W'
-			&& var[x][2] == 'D' && var[x][3] == '=')
-			path_pwd = &var[x][4];
+		if (envp[x][0] == 'P' && envp[x][1] == 'W'
+			&& envp[x][2] == 'D' && envp[x][3] == '=')
+			path_pwd = &envp[x][4];
 		x++;
 	}
 	return (path_pwd);
 }
 
-// A refaire, lorsque la liste chainee ENV sera prete
+// A refaire, lorsque la liste chainee ENV sera prete // ou pas (?)

@@ -32,7 +32,8 @@ else
 endif
 
 SRCS =	srcs/main.c \
-		srcs/init_struct.c
+		srcs/init_struct.c \
+		srcs/pipex.c srcs/cmd_path.c
 	  
 PARSING = parsing/parsing.c
 

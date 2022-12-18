@@ -12,65 +12,23 @@
 
 #include "../includes/minishell.h"
 
-void	exec_echo_n(t_var *shell)
-{	
-}
-
-void	exec_echo_spaces(t_var *shell)
+void	exec_echo(t_cmdlist *cmd)
 {
-	char	**tab;
-	int		i;
-
-	tab = ft_split(shell->input, ' ');
-	i = 1;
-	while (tab[i])
-	{
-		ft_putstr(tab[i]);
-		i++;
-		if (tab[i])
-			write(1, " ", 1);
-	}
-}
-
-void	exec_echo_quotes(t_var *shell)
-{
-	char	**tab;
-	int		i;
-
-	tab = ft_split(shell->input, '\"');
-	i = 1;
-	while (tab[i])
-	{
-		ft_putstr(tab[i]);
-		i++;
-	}
-}
-
-void	exec_echo(t_var *shell)
-{
-	char	*str;
-	char	**tab;
 	int		i;
 
 	i = 0;
-	while (shell->input[i])
+	while (cmd->cmd_arg[1][i])
 	{
-		if (shell->input[i] == '\"')
+		if (cmd->cmd_arg[1][i] == '\"')
 		{
-			exec_echo_quotes(shell);
-			break ;
+			ft_putchar_fd('"', cmd->redir_output); // à adapter pour le bon FD de sortie
 		}
-		else if (shell->input[i] != '\"' && shell->input[i + 1] == '\0')
+		else 
 		{
-			exec_echo_spaces(shell);
-			break ;
+			ft_putchar_fd(cmd->cmd_arg[1][i], cmd->redir_output); // à adapter pour le bon FD de sortie
 		}
-		/**else if (shell->input[i] == '-' && shell->input[i] == 'n')
-		{
-			exec_echo_n(shell);
-			break ;
-		}**/
 		i++;
 	}
-	printf("\n");
+	if (ft_strcmp(cmd->cmd_arg[2][0], "-n") != 0)
+		printf("\n");
 }

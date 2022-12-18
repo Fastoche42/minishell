@@ -64,6 +64,12 @@ int	error_manager(int error)
 		return (ft_putendl_fd("Fork error", 2, 1));
 	else if (error == 8)
 		return (ft_putendl_fd("Not enough arguments", 2, 1));
+	else if (error == 9)
+		return (ft_putendl_fd("Built-in error ", 2, 1));
+	else if (error == 10)
+		return (ft_putendl_fd("Unexpected error", 2, 1));
+	else if (error == 11)
+		return (ft_putendl_fd("Redirection error", 2, 1));
 	return (0);
 }
 >>>>>>> main

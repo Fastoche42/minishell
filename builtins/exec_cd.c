@@ -12,13 +12,11 @@
 
 #include "../includes/minishell.h"
 
-void	exec_cd(t_var *shell)
+void	exec_cd(t_cmdlist *cmd)
 {
-	char	*str;
-	int		i;
-
-	i = 0;
-	//if (count_args(shell) > 2)
-		//return (5);
-	//chdir();
+	
+	if (chdir(cmd->cmd_arg[1]) == 0)
+		return (0);
+	else
+		return (error_manager(9), ft_putendl_fd(strerror(errno), 2, 1));
 }

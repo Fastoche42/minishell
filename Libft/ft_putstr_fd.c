@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *str, int fd)
+void	ft_putstr_fd(char *str, int fd, int ret)
 {
 	if (!(!str))
 	{
@@ -22,4 +22,5 @@ void	ft_putstr_fd(char *str, int fd)
 			str++;
 		}
 	}
+	return (ret);
 }

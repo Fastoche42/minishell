@@ -128,6 +128,7 @@ int		ft_free_splited(char **str);
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # include "../Libft/libft.h"
 # include "parsing.h"
 
@@ -168,6 +169,7 @@ typedef struct s_var {
 	char		*redir_output;
 	char		*redir_append;
 
+	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
 	int			*pipe;
 	int			*pids; // process IDs (nécessaire au forking)
@@ -189,17 +191,22 @@ void	free_mem(t_var *shell);
 int		ms_parsing(t_var *shell);
 
 //----------------exec----------------//
-void	which_command(t_var *shell);
+void	which_command(t_cmdlist *cmd); // mise à jour 16/12/2022
 void	handler_sig(int signum);
 int		ms_execute(t_var *shell);
-char	*exec_pwd(t_var *shell, char **var);
-void	exec_env(t_var *shell, char **var);
-void	exec_echo(t_var *shell);
-int		exec_exit(t_var *shell);
-void	exec_cd(t_var *shell);
-int		exec_export(t_var *shell, char **var);
-void	redirection(t_var *shell, t_cmdlist *ptr);
+char	*exec_pwd(char **envp); // mise à jour 16/12/2022
+void	exec_env(char **envp); // mise à jour 16/12/2022
+void	exec_echo(t_cmdlist *cmd); // mise à jour 16/12/2022
+int		exec_exit(t_var *shell); // je ne crois pas quelle soit nécessaire
+void	exec_cd(t_cmdlist *cmd); // mise à jour 16/12/2022
+void	exec_export(t_cmdlist *cmd, char **envp);
+void	exec_unset(t_cmdlist *cmd, char **envp);
+void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
 int		number_of_cmd(t_var *shell);
+
+int  	pipex(t_var *shell);
+char 	*get_cmd(char *cmd, t_var *shell);
+
 
 
 //----------------check_error----------------//
@@ -212,7 +219,6 @@ int		check_export(char *str);
 //----------------utils----------------//
 int		count_args(t_var *shell);
 void	find_cmd(t_var *shell, char **var);
-char	*first_arg(t_var *shell);
 int		nb_var_in_env(char **env);
 char	*modif_input(char *input);
 int		ft_free_splited(char **str);

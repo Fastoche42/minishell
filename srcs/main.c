@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 		if (shell->input && !ft_strcmp(shell->input, "exit"))     //Temporaire
 			break ;
 		add_history(shell->input);
-		if (ms_parsing(shell)) //creer lst-ch et return 1 si ok;
+		if (ms_parsing(shell)) //creer lst-ch et return 1 si ok (pour ėtre consistent avec le reste des traitement d'erreurs il faudrait retourner 0 si ok);
 			if (!init_process(shell))
 				ms_execute(shell);
 		free(shell->input);
