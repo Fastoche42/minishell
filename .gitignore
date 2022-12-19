@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-.vscode
-.swp
-.json
-.dSYM
-.o
-./minishell
-=======
 # Prerequisites
 *.d
 
@@ -58,4 +50,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
->>>>>>> main
