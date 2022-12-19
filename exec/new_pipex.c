@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_pipex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfusil <mfusil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fl-hote <fl-hote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:11:18 by mfusil            #+#    #+#             */
-/*   Updated: 2022/12/08 15:58:13 by mfusil           ###   ########.fr       */
+/*   Created: 2022/12/08 11:11:18 by fl-hote            #+#    #+#             */
+/*   Updated: 2022/12/08 15:58:13 by fl-hote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	child_process(t_var *shell)
 	{
 		close (shell->pipe[0]);
 		dup2(shell->pipe[1], STDOUT_FILENO);
-		which_command(shell);
+		which_command(shell, shell->cmdlist);
 	}
 	else // processus pere
 	{

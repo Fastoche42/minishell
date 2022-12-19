@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlorber <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 11:18:37 by jlorber           #+#    #+#             */
-/*   Updated: 2022/06/28 17:14:14 by jlorber          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:51:54 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char *test_path(char **paths, char *cmd)
+void    free_strs(char *str, char **envp)
+{
+    char    *tmp;
+
+    tmp = str;
+}
+
+static char *test_path(char *cmd, char **paths)
 {
     char    *cmd_path;
     int		i;
@@ -25,7 +32,7 @@ static char *test_path(char **paths, char *cmd)
 		if (!cmd_path)
 		{
 			free_strs(NULL, paths);
-			exit_error(msg("Unexpected error", "", "", 1), NULL); // à changer
+			//exit_error(msg("Unexpected error", "", "", 1), NULL); // à changer
 		}
         if (access(cmd_path, F_OK | X_OK) == 0)
             return(cmd_path);

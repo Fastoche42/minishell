@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfusil <mfusil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fl-hote <fl-hote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/27 15:40:47 by mfusil            #+#    #+#             */
-/*   Updated: 2022/03/13 12:31:29 by mfusil           ###   ########.fr       */
+/*   Created: 2022/02/27 15:40:47 by fl-hote            #+#    #+#             */
+/*   Updated: 2022/03/13 12:31:29 by fl-hote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *str, int fd, int ret)
+int	ft_putstr_fd(char *str, int fd, int ret)
 {
 	if (!(!str))
 	{

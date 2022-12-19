@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 16:08:34 by mfusil            #+#    #+#             */
+/*   Created: 2022/11/10 16:08:34 by fl-hote            #+#    #+#             */
 /*   Updated: 2022/12/07 08:03:59 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -21,14 +21,16 @@ void	exec_echo(t_cmdlist *cmd)
 	{
 		if (cmd->cmd_arg[1][i] == '\"')
 		{
-			ft_putchar_fd('"', cmd->redir_output); // à adapter pour le bon FD de sortie
+			//ft_putchar_fd('"', cmd->redir_output); // à adapter pour le bon FD de sortie
+			ft_putchar_fd('"', 1); 
 		}
 		else 
 		{
-			ft_putchar_fd(cmd->cmd_arg[1][i], cmd->redir_output); // à adapter pour le bon FD de sortie
+			//ft_putchar_fd(cmd->cmd_arg[1][i], cmd->redir_output); // à adapter pour le bon FD de sortie
+			ft_putchar_fd(cmd->cmd_arg[1][i], 1); 
 		}
 		i++;
 	}
-	if (ft_strcmp(cmd->cmd_arg[2][0], "-n") != 0)
+	if (ft_strcmp(cmd->cmd_arg[2], "-n") != 0)
 		printf("\n");
 }

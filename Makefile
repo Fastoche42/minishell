@@ -5,7 +5,7 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/28 16:07:42 by mfusil            #+#    #+#              #
+#    Created: 2022/10/28 16:07:42 by fl-hote            #+#    #+#              #
 #    Updated: 2022/12/15 12:59:46 by fl-hote          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -15,11 +15,7 @@ NAME = minishell
 LIBFT = Libft/libft.a
 
 HOST := $(shell hostname)
-ifeq ($(HOST), MacBook-Air-de-Laurent.local)
-	CPPFLAGS = -I/usr/local/opt/readline/include/readline
-	LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
-	CFLAG = -Wall 
-else ifeq ($(HOST), LAPTOP-M60DL66F)
+ifeq ($(HOST), LAPTOP-M60DL66F)
 #	CPPFLAGS = -I/mnt/d/msys64/mingw64/include/readline
 	CPPFLAGS =
 #	LDFLAGS = -L/mnt/d/msys64/mingw64/lib
@@ -28,7 +24,7 @@ else ifeq ($(HOST), LAPTOP-M60DL66F)
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = -lreadline
+	CFLAG = 
 endif
 
 SRCS =	srcs/main.c \
@@ -47,7 +43,8 @@ BUILTINS =	builtins/exec_pwd.c\
 			builtins/exec_echo.c\
 			builtins/exec_exit.c\
 			builtins/exec_cd.c\
-			builtins/exec_export.c
+			builtins/exec_export.c\
+			builtins/exec_unset.c
 	  
 CHECK =	check/check_path_cmd.c\
 		check/error_manager.c\
@@ -96,12 +93,13 @@ clean :
 fclean : clean
 		@rm -rf $(NAME)
 		@make fclean -C Libft
-		@echo "$(GREEN)$(BOLD)Executable removed"
+		@echo "$(GREEN)$(BOLD)Executable removed$(NORM)"
 
 re : fclean all
 
 #----------------------COLORS----------------------
 GREEN=\x1b[32m
 BOLD=\033[1m
+NORM=\033[0m
 
-.PHONY: all clean fclean re
+.PHONY: all alln clean fclean re

@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 16:07:03 by mfusil            #+#    #+#             */
+/*   Created: 2022/10/28 16:07:03 by fl-hote            #+#    #+#             */
 /*   Updated: 2022/12/11 18:24:42 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -84,16 +84,16 @@ void	free_mem(t_var *shell);
 int		ms_parsing(t_var *shell);
 
 //----------------exec----------------//
-void	which_command(t_cmdlist *cmd); // mise à jour 16/12/2022
+void	which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 16/12/2022
 void	handler_sig(int signum);
 int		ms_execute(t_var *shell);
 char	*exec_pwd(char **envp); // mise à jour 16/12/2022
 void	exec_env(char **envp); // mise à jour 16/12/2022
 void	exec_echo(t_cmdlist *cmd); // mise à jour 16/12/2022
 int		exec_exit(t_var *shell); // je ne crois pas quelle soit nécessaire
-void	exec_cd(t_cmdlist *cmd); // mise à jour 16/12/2022
-void	exec_export(t_cmdlist *cmd, char **envp);
-void	exec_unset(t_cmdlist *cmd, char **envp);
+int		exec_cd(t_cmdlist *cmd); // mise à jour 16/12/2022
+int		exec_export(t_var *shell, char **env);
+void	exec_unset(t_cmdlist *cmd, char **env);
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
 int		number_of_cmd(t_var *shell);
 

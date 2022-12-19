@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 16:07:56 by mfusil            #+#    #+#             */
+/*   Created: 2022/10/28 16:07:56 by fl-hote            #+#    #+#             */
 /*   Updated: 2022/12/11 18:29:50 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -46,17 +46,20 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, handler_sig);
 	while (1)
 	{
-		//shell = init_struct();
 		shell->input = readline("minishell> ");
-		while (shell->input == NULL)
-			shell->input = readline("minishell> "); // si user entre une ligne vide, il faut redemander un input (a checker)
-		if (shell->input && !ft_strcmp(shell->input, "exit"))     //Temporaire
-			break ;
-		add_history(shell->input);
-		if (ms_parsing(shell)) //creer lst-ch et return 1 si ok (pour ėtre consistent avec le reste des traitement d'erreurs il faudrait retourner 0 si ok);
-			if (!init_process(shell))
-				ms_execute(shell);
-		free(shell->input);
+		if (shell->input && ((int)shell->input != 13))
+		{
+			add_history(shell->input); // y compris que des spaces
+			if (!ft_strcmp(shell->input, "exit"))     //Temporaire, ou pas....
+			{
+				ft_putendl_fd("exit", 1, 0);
+				break ;
+			}
+			if (ms_parsing(shell)) //creer lst-ch et return 1 si ok
+				if (!init_process(shell))
+					ms_execute(shell);
+			free(shell->input);
+		}
 	}
 	free_mem(shell);
 	return (0);

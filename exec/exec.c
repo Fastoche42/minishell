@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 12:35:51 by mfusil            #+#    #+#             */
+/*   Created: 2022/11/09 12:35:51 by fl-hote            #+#    #+#             */
 /*   Updated: 2022/12/11 18:55:43 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ int	process(t_var *shell, t_cmdlist *ptr)
 		close (shell->pipe[0]);
 		close (shell->pipe[1]);
 		close (shell->prev_pipe);
-		which_command(shell);
+		which_command(shell, shell->cmdlist);
 	}
 	else // parent
 	{
