@@ -6,7 +6,7 @@
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:04:36 by fl-hote           #+#    #+#             */
-/*   Updated: 2022/12/19 17:37:17 by fl-hote          ###   ########.fr       */
+/*   Updated: 2022/12/20 12:26:04 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ typedef struct s_cmdlist
 	char				**cmd_env;
 	int					type;
 	char				*redir_input;	//filename or NULL
+	char				*delim_hdoc;	//exit word
 	char				*redir_output;	//filename
-	char				*redir_append;	//filename
-	char				*redir_hdoc;	//exit word
+	int					flag_append;	//filename
 	int					fd_in;	//voir comment parsing affecte ces 2 int
 	int					fd_out;
 	struct s_cmdlist	*next;

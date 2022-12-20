@@ -58,9 +58,9 @@ typedef struct s_var {
 	char		**cmd_arg;
 	char		**cmd_env;
 	char		*redir_input;
-	char		*redir_hdoc;
+	char		*delim_hdoc;
 	char		*redir_output;
-	char		*redir_append;
+	char		*flag_append;
 
 	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
@@ -81,6 +81,8 @@ int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
+void	fill_cndlist(cmdlist, type);
+void	ms_parse_quotes(t_var *shell);
 int		ms_parsing(t_var *shell);
 
 //----------------exec----------------//

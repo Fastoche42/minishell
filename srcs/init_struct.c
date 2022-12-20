@@ -65,9 +65,9 @@ t_var	*init_struct(char **envp)
 	shell->cmd_arg = NULL;
 	shell->cmd_env = NULL;
 	shell->redir_input = NULL;
-	shell->redir_hdoc = NULL;
+	shell->delim_hdoc = NULL;
 	shell->redir_output = NULL;
-	shell->redir_append = NULL;
+	shell->flag_append = 0;
 	shell->fd_input = 0;
 	shell->fd_output = 0;
 	shell->outfile = 0;

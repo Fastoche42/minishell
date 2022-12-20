@@ -69,14 +69,14 @@ int	ms_execute(t_var *shell)
 
 	//shell->cmd_nbr = number_of_cmd(shell);
 	ptr = shell->cmdlist;
-	printf("adresse debut liste %p\n", ptr);
+	//printf("adresse debut liste %p\n", ptr);
 	while (ptr)
 	{
 		shell->cmd_path = ptr->cmd_path;
 		printf("commande %s\n", ptr->cmd_path);
 		shell->cmd_arg = ptr->cmd_arg;
 		shell->cmd_env = ptr->cmd_env;
-		if (ptr->redir_input != NULL | ptr->redir_output != NULL | ptr->redir_append != NULL) //va être géré par pipex ou process
+		if (ptr->redir_input != NULL | ptr->redir_output != NULL) //va être géré par pipex ou process
 			redirection(shell, ptr);
 		if (process(shell, ptr))
 			return (1);

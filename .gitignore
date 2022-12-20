@@ -1,6 +1,7 @@
 #
 .vscode
 minishell
+*.txt
 
 # Prerequisites
 *.d

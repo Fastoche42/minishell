@@ -17,7 +17,7 @@ int	redirection_heredocs(t_var *shell, t_cmdlist *ptr)
 	char	*str;
 	int		fd;
 
-	fd = open(ptr->redir_hdoc, O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	fd = open(ptr->delim_hdoc, O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (fd < -1)
 		return (ft_putstr_fd("error heredocs\n", 2, 1));
 	while (str != NULL)
@@ -55,7 +55,8 @@ int	redirection_outfile(t_var *shell, t_cmdlist *ptr)
 
 int	redirection_append(t_var *shell, t_cmdlist *ptr)
 {
-	shell->outfile = open(ptr->redir_append, O_CREAT | O_WRONLY | O_APPEND, 0664);
+	// utiliser flag_append
+	shell->outfile = open(ptr->redir_output, O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (shell->outfile < 0)
 		return (ft_putstr_fd("error append\n", 2, 1));
 	dup2(shell->outfile, STDOUT_FILENO);	
@@ -64,11 +65,11 @@ int	redirection_append(t_var *shell, t_cmdlist *ptr)
 
 void	redirection(t_var *shell, t_cmdlist *ptr)
 {
-	if (ptr->redir_hdoc)
+	if (ptr->delim_hdoc)
 		redirection_heredocs(shell, ptr);
 	else if (ptr->redir_input)
 		redirection_infile(shell, ptr);
-	else if (ptr->redir_append)
+	else if (ptr->flag_append)
 		redirection_append(shell, ptr);
 	else if (ptr->redir_output)
 		redirection_outfile(shell, ptr);
