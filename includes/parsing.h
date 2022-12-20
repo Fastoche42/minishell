@@ -18,6 +18,7 @@ typedef struct s_cmdlist
 	char				*cmd_path;
 	char				**cmd_arg;
 	char				**cmd_env;
+	int					type;
 	char				*redir_input;	//filename or NULL
 	char				*redir_output;	//filename
 	char				*redir_append;	//filename

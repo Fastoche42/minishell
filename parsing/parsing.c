@@ -26,10 +26,19 @@ t_cmdlist	*new_cmdlist(void)
 void	ms_parse_quotes(t_var *shell)
 {
 	int	i;
-	int	status; //are we inside "" (1), inside '' (2), or not (0)
+	int	status; //are we inside "" (1,ascii34), inside '' (2,ascii39), or not (0)
 
+	printf("len: %d\n", strlen(shell->input));
 	i = 0;
-	status = 0
+	status = 0;
+	while (shell->input[i])
+	{
+		if (shell->input[i] == 34)
+		{
+			status = 1;
+		}
+		i++;
+	}
 }
 
 int	ms_parsing(t_var *shell)
