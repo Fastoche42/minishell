@@ -117,5 +117,7 @@ void	find_cmd(t_var *shell, char **var);
 int		nb_var_in_env(char **env);
 char	*modif_input(char *input);
 int		ft_free_splited(char **str);
+void	close_fds(t_var *shell);
+void	free_strs(char *str, char **strs);
 
 #endif
