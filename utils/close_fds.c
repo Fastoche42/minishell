@@ -17,7 +17,7 @@ void	close_fds(t_var *shell)
 	if (shell->cmdlist->fd_in != -1)
 		close(shell->cmdlist->fd_in);
 	if (shell->cmdlist->fd_out != -1)
-		close(shell->cmd->fd_out);
+		close(shell->cmdlist->fd_out);
 	close_pipe_fds(shell);
 }
 

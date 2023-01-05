@@ -12,7 +12,8 @@
 
 #include "../includes/minishell.h"
 
-void	exec_echo(t_cmdlist *cmd)
+// modifiée car inutile de préciser le fd de sortie, la sortie standard aura déjà été redirigée vers le bon fd
+/*void	exec_echo(t_cmdlist *cmd)
 {
 	int		i;
 
@@ -21,16 +22,23 @@ void	exec_echo(t_cmdlist *cmd)
 	{
 		if (cmd->cmd_arg[1][i] == '\"')
 		{
-			//ft_putchar_fd('"', cmd->redir_output); // à adapter pour le bon FD de sortie
-			ft_putchar_fd('"', 1); 
+			ft_putchar_fd('\"', cmd->fd_out);
 		}
-		else 
+		else
 		{
-			//ft_putchar_fd(cmd->cmd_arg[1][i], cmd->redir_output); // à adapter pour le bon FD de sortie
-			ft_putchar_fd(cmd->cmd_arg[1][i], 1); 
+			ft_putchar_fd(cmd->cmd_arg[1][i], cmd->fd_out);
 		}
 		i++;
 	}
 	if (ft_strcmp(cmd->cmd_arg[2], "-n") != 0)
 		printf("\n");
+}*/
+
+int	exec_echo(t_cmdlist *cmd) // nouvelle version corrigée
+{
+	if (cmd->cmd_arg[1])
+		printf("%s", cmd->cmd_arg[1]);
+	if (ft_strcmp(cmd->cmd_arg[2], "-n") != 0)
+		printf("\n");
+	return (0);
 }

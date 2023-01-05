@@ -25,7 +25,7 @@ static int	redirect_io(int input, int output, t_cmdlist *cmd)
 	return (0);
 }
 
-static int	child(t_var *shell, t_cmdlist *cmd) // à adapter pour les inputs et outputs entres pipes
+static int	child(t_var *shell, t_cmdlist *cmd) // à adapter pour les inputs et outputs entres pipes et pour no pipe
 {
 	if (shell->child == 0)
 	{
@@ -45,7 +45,7 @@ static int	child(t_var *shell, t_cmdlist *cmd) // à adapter pour les inputs et 
 	close_fds(shell); // comment prov pour pouvoir compil // à verifier
 	if (cmd->cmd_arg == NULL || cmd->cmd_path == NULL)
 		return (error_manager(10));
-	if (execve(cmd->cmd_path, cmd->cmd_arg, shell->envp) == -1)
+	if (which_command(shell, cmd) != 0)
 		return (error_manager(10));
 	return (0);
 }
@@ -81,7 +81,7 @@ int  pipex(t_var *shell)
     if (pipe(shell->pipe) == -1)
             return(error_manager(6));
     shell->child = 0;
-    while (shell->child < shell->cmd_nbr && shell->cmdlist)
+    while (shell->child < shell->cmd_nbr && shell->cmdlist) // boucle à modifier par Jojo
     {
         shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
 		if (!shell->cmdlist->cmd_path)
@@ -92,11 +92,11 @@ int  pipex(t_var *shell)
         if (shell->pids[shell->child] == -1)
                 return (error_manager(7));
         else if (shell->pids[shell->child] == 0)
-                if (child(shell, shell->cmdlist) > 0)
+                if (child(shell, shell->cmdlist) > 0) // param doit etre la copie du ptr
 					return (1);
-        free_strs(shell->cmdlist->cmd_path, shell->cmdlist->cmd_arg); // à vérifier
+        free_strs(shell->cmdlist->cmd_path, shell->cmdlist->cmd_arg); // à vérifier // à adapter
         shell->child++;
-		shell->cmdlist = shell->cmdlist->next;
+		shell->cmdlist = shell->cmdlist->next; //à changer pour une copie de ptr
     }
     exit_code = parent(shell);
     if (shell->heredoc > 0)

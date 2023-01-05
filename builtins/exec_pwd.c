@@ -12,7 +12,11 @@
 
 #include "../includes/minishell.h"
 
-int	exec_pwd(char **envp)
+ // a effacer 
+ // notre envp est defini à l'initialisation et risque donc de ne pas être à jour lors de l'appel à pwd
+ // d'où la nouvelle version (en bas) qui fait appel à getcwd() (cwd = current working directory)
+/*int	exec_pwd(char **envp) 
+
 {
 	int		x;
 
@@ -27,5 +31,18 @@ int	exec_pwd(char **envp)
 			}
 		x++;
 	}
-	return (error_manager(9), ft_putendl_fd("PWD path not found", 2, 1);
+	return (error_manager(9), ft_putendl_fd("PWD path not found", 2, 1));
+}
+*/
+
+int	exec_pwd()
+{
+	char *tmp;
+
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+		return (error_manager(9), ft_putendl_fd("PWD path not found", 2, 1));
+	printf("%s", tmp);
+	free(tmp);
+	return (0);
 }

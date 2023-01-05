@@ -12,22 +12,22 @@
 
 #include "../includes/minishell.h"
 
-void	which_command(t_var *shell, t_cmdlist *cmd)
+int	which_command(t_var *shell, t_cmdlist *cmd)
 {
 	if (ft_strcmp (cmd->cmd_arg[0], "pwd") == 0)
-		printf("%s\n", exec_pwd(shell->envp));
+		return(exec_pwd());
 	else if (ft_strcmp (cmd->cmd_arg[0], "env") == 0)
-		exec_env(shell->envp);
+		return(exec_env(shell->envp));
 	else if (ft_strcmp (cmd->cmd_arg[0], "echo") == 0)
-		exec_echo(cmd);
-	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0)
+		return(exec_echo(cmd));
+	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0) // à vérifier/modifier
 		exit(0);
 	else if (ft_strcmp (cmd->cmd_arg[0], "export") == 0)
-		exec_export(shell, shell->envp);
+		return(exec_export(shell, shell->envp));
 	else if (ft_strcmp (cmd->cmd_arg[0], "unset") == 0)
-		exec_unset(cmd, shell->envp);
+		return(exec_unset(cmd, shell->envp));
 	else if (ft_strcmp (cmd->cmd_arg[0], "cd") == 0)
-		exec_cd(cmd);
+		return(exec_cd(cmd));
 	else
-		execve(cmd->cmd_path, cmd->cmd_arg, shell->envp);
+		return(execve(cmd->cmd_path, cmd->cmd_arg, shell->envp));
 }

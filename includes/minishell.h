@@ -54,13 +54,6 @@ typedef struct s_var {
 	char		*input;
 
 	t_cmdlist	*cmdlist;		// ptr vers liste de commande => exec Morgan
-	char		*cmd_path;
-	char		**cmd_arg;
-	char		**cmd_env;
-	char		*redir_input;
-	char		*delim_hdoc;
-	char		*redir_output;
-	char		*flag_append;
 
 	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
@@ -68,7 +61,7 @@ typedef struct s_var {
 	int			*pids; // process IDs (nécessaire au forking)
 	int			cmd_nbr; // doit être initialisé pour initialiser les pipes et les pids
 	t_path		*path;
-	char		**envp;
+	char		**envp; // a supprimer
 	t_env		*env;
 
 	char		**cmd_access;	//split de $PATH (non nécessaire, le parsing de PATH est fait avant l'exécution)
@@ -86,16 +79,16 @@ void	ms_parse_quotes(t_var *shell);
 int		ms_parsing(t_var *shell);
 
 //----------------exec----------------//
-void	which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 16/12/2022
+int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 05/01/2023
 void	handler_sig(int signum);
 int		ms_execute(t_var *shell);
-char	*exec_pwd(char **envp); // mise à jour 16/12/2022
-void	exec_env(char **envp); // mise à jour 16/12/2022
-void	exec_echo(t_cmdlist *cmd); // mise à jour 16/12/2022
+int		exec_pwd(); // mise à jour 05/01/2023
+int		exec_env(char **envp); // mise à jour 05/01/2023
+int		exec_echo(t_cmdlist *cmd); // mise à jour 05/01/2023
 int		exec_exit(t_var *shell); // je ne crois pas quelle soit nécessaire
-int		exec_cd(t_cmdlist *cmd); // mise à jour 16/12/2022
+int		exec_cd(t_cmdlist *cmd); // mise à jour 05/01/2023
 int		exec_export(t_var *shell, char **env);
-void	exec_unset(t_cmdlist *cmd, char **env);
+int		exec_unset(t_cmdlist *cmd, char **env);
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
 int		number_of_cmd(t_var *shell);
 
