@@ -25,7 +25,7 @@ static int	redirect_io(int input, int output, t_cmdlist *cmd)
 	return (0);
 }
 
-static int	child(t_var *shell, t_cmdlist *cmd)
+static int	child(t_var *shell, t_cmdlist *cmd) // à adapter pour les inputs et outputs entres pipes
 {
 	if (shell->child == 0)
 	{
@@ -42,7 +42,7 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 		if (redirect_io(shell->pipe[2 * shell->child - 2], shell->pipe[2 * shell->child + 1], cmd))
 			return (error_manager(11));
 	}
-	//close_fds(cmd->shell); // à adapter // comment prov pour pouvoir compil
+	close_fds(shell); // comment prov pour pouvoir compil // à verifier
 	if (cmd->cmd_arg == NULL || cmd->cmd_path == NULL)
 		return (error_manager(10));
 	if (execve(cmd->cmd_path, cmd->cmd_arg, shell->envp) == -1)
@@ -56,7 +56,7 @@ static int	parent(t_var *shell)
 	int		status;
 	int		exit_code;
 
-	// close_fds(shell); comment prov pour pouvoir compil
+	close_fds(shell); // à vérifier
 	shell->child--;
 	exit_code = 1;
 	while (shell->child >= 0)
@@ -94,7 +94,7 @@ int  pipex(t_var *shell)
         else if (shell->pids[shell->child] == 0)
                 if (child(shell, shell->cmdlist) > 0)
 					return (1);
-        // free_strs(shell->cmd_path, shell->cmd_arg); // à changer
+        free_strs(shell->cmdlist->cmd_path, shell->cmdlist->cmd_arg); // à vérifier
         shell->child++;
 		shell->cmdlist = shell->cmdlist->next;
     }

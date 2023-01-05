@@ -81,6 +81,20 @@ t_var	*init_struct(char **envp)
 	return (shell);
 }
 
+static int	generate_pipes(t_var *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->cmd_nbr - 1)
+	{
+		if (pipe(shell->pipe + 2 * i) == -1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	init_process(t_var *shell)
 {
 	shell->cmd_nbr = number_of_cmd(shell);
@@ -90,5 +104,7 @@ int	init_process(t_var *shell)
 	shell->pipe = malloc(sizeof * shell->pipe * 2 * shell->cmd_nbr); // a rectifier pour les cas de no-pipe
 	if (!shell->pipe)
 		return (error_manager(6));
+	if (generate_pipes(shell));
+		return(error_manager(6));
 	return (0);
 }

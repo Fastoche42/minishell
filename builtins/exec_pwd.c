@@ -12,21 +12,20 @@
 
 #include "../includes/minishell.h"
 
-char	*exec_pwd(char **envp)
+int	exec_pwd(char **envp)
 {
-	char	*path_pwd;
 	int		x;
 
 	x = 0;
-	path_pwd = NULL;
-	while (envp[x] && path_pwd == NULL)
+	while (envp[x])
 	{
 		if (envp[x][0] == 'P' && envp[x][1] == 'W'
 			&& envp[x][2] == 'D' && envp[x][3] == '=')
-			path_pwd = &envp[x][4];
+			{
+				printf("%s\n", &envp[x][4]);
+				return (0);
+			}
 		x++;
 	}
-	return (path_pwd);
+	return (error_manager(9), ft_putendl_fd("PWD path not found", 2, 1);
 }
-
-// A refaire, lorsque la liste chainee ENV sera prete // ou pas (?)
