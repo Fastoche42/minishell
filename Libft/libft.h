@@ -29,7 +29,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
-size_t	ft_strlen(const char *s);
+int		ft_strlen(const char *s);
 int		ft_strlen_tab(char **tab);
 int		ft_nb_lines_tab(char **tab);
 void	*ft_memset(void *b, int c, size_t len);

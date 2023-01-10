@@ -33,9 +33,8 @@
 	}
 	return (error_manager(9), ft_putendl_fd("PWD path not found", 2, 1));
 }
-*/
 
-int	exec_pwd()
+int	exec_pwd() // A refaire avec t_env *env
 {
 	char *tmp;
 
@@ -45,4 +44,24 @@ int	exec_pwd()
 	printf("%s", tmp);
 	free(tmp);
 	return (0);
+}
+*/
+
+int	exec_pwd(t_env *env)
+{
+	t_env *ptr;
+
+	ptr = env;
+	while (env)
+	{
+		if (ft_strcmp(env->name, "PWD") == 0)
+		{
+			printf("%s\n", env->value);
+			env = ptr;
+			return (0);
+		}
+		env = env->next;
+	}
+	env = ptr;
+	return (1);
 }

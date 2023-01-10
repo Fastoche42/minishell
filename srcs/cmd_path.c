@@ -94,10 +94,15 @@ char *get_cmd(char *cmd, t_var *shell)
 {
 	char	**env_paths;
 	char	*cmd_path;
+	char 	**envp;
 
 	if (access(cmd, F_OK | X_OK) == 0)
 		return  (ft_strdup(cmd));
-	env_paths = find_paths(shell->envp);
+	envp = build_envp(shell->env);
+	if (!envp)
+		return (NULL);
+	env_paths = find_paths(envp);
+	free_strs(NULL, envp);
 	if(!env_paths)
 		return (NULL);
 	cmd_path = test_path(cmd, env_paths);

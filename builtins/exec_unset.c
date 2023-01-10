@@ -12,7 +12,51 @@
 
 #include "../includes/minishell.h"
 
-void    exec_unset(t_cmdlist *cmd, char **env)
+static int	check_unset(char *tmp, t_env *env)
 {
-    printf("unset a implementer");
+	t_env	*ptr;
+
+	ptr = env;
+	while (ptr)
+	{
+		if (ft_strcmp(ptr->name, tmp))
+			return (1);
+		ptr = ptr->next;
+	}
+	return (0);
+}
+
+static int	change_unset(char *tmp, t_env *env)
+{
+	t_env	*ptr;
+
+	ptr = env;
+	while (ptr)
+	{
+		if (ft_strcmp(ptr->name, tmp))
+		{
+			ptr->exists = 0;
+			return (0);
+		}
+		ptr = ptr->next;
+	}
+	return (1);
+}
+
+int    exec_unset(t_cmdlist *cmd, t_env *env)
+{
+    int		i;
+	char	*tmp;
+
+	i = 1;
+	while (cmd->cmd_arg[i])
+	{
+		tmp = ft_strdup(cmd->cmd_arg[i]);
+		if (check_unset(tmp, env))
+			if (change_unset(tmp, env))
+				return (1);
+		free (tmp);
+		i++;
+	}
+	return (0);
 }

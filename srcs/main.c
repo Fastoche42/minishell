@@ -41,7 +41,6 @@ int	main(int argc, char **argv, char **envp)
 	shell = init_struct(envp);
 	if (!shell)
 		return (1);
-	//envir = init_env(envp);			// A disparaitre
 	signal(SIGINT, handler_sig);
 	signal(SIGQUIT, handler_sig);
 	while (1)
@@ -57,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (ms_parsing(shell)) //creer lst-ch et return 1 si ok
 				if (!init_process(shell))
-					ms_execute(shell);
+					pipex(shell);
 			free(shell->input);
 		}
 	}

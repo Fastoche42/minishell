@@ -50,7 +50,7 @@ typedef struct s_var {
 	int			outfile;
 	int			save_input;
 	int			save_output;
-	int			prev_pipe; // ?
+	int			prev_pipe;
 	char		*input;
 
 	t_cmdlist	*cmdlist;		// ptr vers liste de commande => exec Morgan
@@ -79,27 +79,26 @@ void	ms_parse_quotes(t_var *shell);
 int		ms_parsing(t_var *shell);
 
 //----------------exec----------------//
-int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 05/01/2023
+int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023
 void	handler_sig(int signum);
 int		ms_execute(t_var *shell);
-int		exec_pwd(); // mise à jour 05/01/2023
-int		exec_env(char **envp); // mise à jour 05/01/2023
+int		exec_pwd(t_env *env); // mise à jour 05/01/2023
+int		exec_env(t_env *env); // mise à jour 10/01/2023
 int		exec_echo(t_cmdlist *cmd); // mise à jour 05/01/2023
 int		exec_exit(t_var *shell); // je ne crois pas quelle soit nécessaire
-int		exec_cd(t_cmdlist *cmd); // mise à jour 05/01/2023
-int		exec_export(t_var *shell, char **env);
-int		exec_unset(t_cmdlist *cmd, char **env);
+int		exec_cd(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
+int		exec_export(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
+int		exec_unset(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
 int		number_of_cmd(t_var *shell);
 
 int  	pipex(t_var *shell);
 char 	*get_cmd(char *cmd, t_var *shell);
+int		file_handler(t_cmdlist *cmd);
 
 
 
 //----------------check_error----------------//
-int		verif_exit(char *cmd);
-int		verif_export(char *cmd);
 int		check_path_cmd(t_var *shell, char **var);
 int		error_manager(int error);
 int		check_export(char *str);
@@ -112,5 +111,6 @@ char	*modif_input(char *input);
 int		ft_free_splited(char **str);
 void	close_fds(t_var *shell);
 void	free_strs(char *str, char **strs);
+char	**build_envp(t_env *env);
 
 #endif

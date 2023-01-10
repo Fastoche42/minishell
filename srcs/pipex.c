@@ -25,24 +25,42 @@ static int	redirect_io(int input, int output, t_cmdlist *cmd)
 	return (0);
 }
 
-static int	child(t_var *shell, t_cmdlist *cmd) // à adapter pour les inputs et outputs entres pipes et pour no pipe
+static int	child(t_var *shell, t_cmdlist *cmd) // il faut "un peu" raccourcir
 {
 	if (shell->child == 0)
 	{
-		if (redirect_io(cmd->fd_in, shell->pipe[1], cmd)) //adapter la struct cmdlist (changer redir_input en fd)
-			return (error_manager(11));
+		if (cmd->redir_output || !shell->pipe)
+			if (redirect_io(cmd->fd_in, cmd->fd_out, cmd))
+				return (error_manager(11));
+		else
+			if (redirect_io(cmd->fd_in, shell->pipe[1], cmd))
+				return (error_manager(11));
 	}
 	else if (shell->child == shell->cmd_nbr - 1)
 	{
-		if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out, cmd)) //adapter la struct cmdlist (changer redir_output en fd)
-			return (error_manager(11));
+		if (cmd->redir_input)
+			if (redirect_io(cmd->fd_in, cmd->fd_out, cmd))
+				return (error_manager(11));
+		else
+			if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out, cmd))
+				return (error_manager(11));
 	}
 	else
 	{
-		if (redirect_io(shell->pipe[2 * shell->child - 2], shell->pipe[2 * shell->child + 1], cmd))
-			return (error_manager(11));
+		if (cmd->redir_input && cmd->redir_output)
+			if (redirect_io(cmd->fd_in, cmd->fd_out, cmd))
+				return (error_manager(11));
+		else if (cmd->redir_output)
+			if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out, cmd))
+				return (error_manager(11));
+		else if (cmd->redir_input)
+			if (redirect_io(cmd->fd_in, shell->pipe[2 * shell->child + 1], cmd))
+				return (error_manager(11));
+		else
+			if (redirect_io(shell->pipe[2 * shell->child - 2], shell->pipe[2 * shell->child + 1], cmd))
+				return (error_manager(11));
 	}
-	close_fds(shell); // comment prov pour pouvoir compil // à verifier
+	close_fds(shell); // à verifier
 	if (cmd->cmd_arg == NULL || cmd->cmd_path == NULL)
 		return (error_manager(10));
 	if (which_command(shell, cmd) != 0)
@@ -77,30 +95,33 @@ static int	parent(t_var *shell)
 int  pipex(t_var *shell)
 {
     int exit_code;
+	t_var	*ptr;
 
-    if (pipe(shell->pipe) == -1)
+	ptr = shell;
+    if (shell->cmd_nbr > 1) // à vérifier
+		if (pipe(shell->pipe) == -1)
             return(error_manager(6));
     shell->child = 0;
-    while (shell->child < shell->cmd_nbr && shell->cmdlist) // boucle à modifier par Jojo
+    while (shell->child < shell->cmd_nbr && ptr->cmdlist) // boucle à modifier par Jojo (done)
     {
-        shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
-		if (!shell->cmdlist->cmd_path)
-		{
-			return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1));
-		}
+        ptr->cmdlist->cmd_path = get_cmd(ptr->cmdlist->cmd_arg[0], shell);
+		if (!ptr->cmdlist->cmd_path)
+			return (ft_putendl_fd(ft_strjoin("Command not found: ", ptr->cmdlist->cmd_arg[0]), 2 , 1));
+		if (file_handler(ptr->cmdlist)) // gestion des redirections
+			return (error_manager(12));
         shell->pids[shell->child] = fork();
         if (shell->pids[shell->child] == -1)
                 return (error_manager(7));
         else if (shell->pids[shell->child] == 0)
-                if (child(shell, shell->cmdlist) > 0) // param doit etre la copie du ptr
+                if (child(shell, ptr->cmdlist) > 0) // param doit etre la copie du ptr (done)
 					return (1);
-        free_strs(shell->cmdlist->cmd_path, shell->cmdlist->cmd_arg); // à vérifier // à adapter
+        free_strs(ptr->cmdlist->cmd_path, ptr->cmdlist->cmd_arg); // à vérifier // à adapter
         shell->child++;
-		shell->cmdlist = shell->cmdlist->next; //à changer pour une copie de ptr
+		ptr->cmdlist = ptr->cmdlist->next; //à changer pour une copie de ptr (done)
     }
     exit_code = parent(shell);
     if (shell->heredoc > 0)
-		//ft_unlink_fds(shell); // à écrire
+		//ft_unlink_heredocs(shell); // à écrire
 		; // temp
     return (exit_code);
 }
