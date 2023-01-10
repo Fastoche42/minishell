@@ -26,7 +26,7 @@
 # include "parsing.h"
 
 //----------------global variable----------------//
-extern pid_t	g_pid;
+extern int	g_exit_code;
 
 //----------------struct----------------//
 typedef struct s_path {
@@ -44,13 +44,13 @@ typedef struct s_env {
 }	t_env;
 
 typedef struct s_var {
-	int			fd_input;
-	int			fd_output;
-	int			infile;
-	int			outfile;
-	int			save_input;
-	int			save_output;
-	int			prev_pipe;
+	int			fd_input; // à supprimer
+	int			fd_output; // à supprimer
+	int			infile; // à supprimer
+	int			outfile; // à supprimer
+	int			save_input; // à supprimer
+	int			save_output; // à supprimer
+	int			prev_pipe; // à supprimer
 	char		*input;
 
 	t_cmdlist	*cmdlist;		// ptr vers liste de commande => exec Morgan
@@ -59,12 +59,10 @@ typedef struct s_var {
 	int			child; // index
 	int			*pipe;
 	int			*pids; // process IDs (nécessaire au forking)
-	int			cmd_nbr; // doit être initialisé pour initialiser les pipes et les pids
+	int			cmd_nbr; // doit être initialisé pour initialiser les pipes et les pids (done)
 	t_path		*path;
-	char		**envp; // a supprimer
 	t_env		*env;
 
-	char		**cmd_access;	//split de $PATH (non nécessaire, le parsing de PATH est fait avant l'exécution)
 }	t_var;
 
 //----------------minishell----------------//

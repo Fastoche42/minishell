@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (ms_parsing(shell)) //creer lst-ch et return 1 si ok
 				if (!init_process(shell))
-					pipex(shell);
+					g_exit_code = pipex(shell);
 			free(shell->input);
 		}
 	}

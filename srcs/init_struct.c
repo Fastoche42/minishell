@@ -60,16 +60,16 @@ t_var	*init_struct(char **envp)
 		free(shell);
 		return (NULL);
 	}
-	shell->cmd_access = NULL;
-	shell->fd_input = 0;
-	shell->fd_output = 0;
-	shell->outfile = 0;
-	shell->infile = 0;
-	shell->prev_pipe = -1;
-	shell->save_input = dup(STDIN_FILENO);
-	shell->save_output = dup(STDOUT_FILENO);
+	shell->fd_input = 0; // Tout ça...
+	shell->fd_output = 0; // 
+	shell->outfile = 0; // 
+	shell->infile = 0; //
+	shell->prev_pipe = -1; // 
+	shell->save_input = dup(STDIN_FILENO); //
+	shell->save_output = dup(STDOUT_FILENO); // ..est à supprimer si je ne m'abuse
+	shell->heredoc = 0;
 	shell->cmd_nbr = -1;
-	shell->child = -1;
+	shell->child = 0;
 	return (shell);
 }
 

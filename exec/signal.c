@@ -16,7 +16,7 @@ int	g_pid = 0;
 
 void	handler_sig(int signum)
 {
-	if (g_pid)
+	if (g_pid) // ?
 		return ;
 	if (signum == SIGINT) //ctrl c
 	{
