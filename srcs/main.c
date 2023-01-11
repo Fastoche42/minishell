@@ -12,25 +12,6 @@
 
 #include "../includes/minishell.h"
 
-/* A disparaitre
-char	**init_env(char **envp)
-{
-	char	**var;
-	int		i;
-
-	i = 0;
-	var = malloc (sizeof(char *) * ft_nb_lines_tab(envp));
-	if (!envp)
-		return (NULL);
-	while (envp[i])
-	{
-		var[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	return (var);
-}
-*/
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*shell;

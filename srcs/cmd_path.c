@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void    free_strs(char *str, char **envp)
+void    free_strs(char *str, char **envp) // à faire
 {
     char    *tmp;
 
@@ -32,14 +32,13 @@ static char *test_path(char *cmd, char **paths)
 		if (!cmd_path)
 		{
 			free_strs(NULL, paths);
-			//exit_error(msg("Unexpected error", "", "", 1), NULL); // à changer
+			return (NULL);
 		}
         if (access(cmd_path, F_OK | X_OK) == 0)
             return(cmd_path);
         free_strs(cmd_path, NULL);
         i++;
     }
-    //free_strs(tmp, NULL);
     free_strs(cmd_path, NULL);
     return (NULL);
 }

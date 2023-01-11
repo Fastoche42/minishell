@@ -52,6 +52,8 @@ int    exec_unset(t_cmdlist *cmd, t_env *env)
 	while (cmd->cmd_arg[i])
 	{
 		tmp = ft_strdup(cmd->cmd_arg[i]);
+		if (!tmp)
+			return (1);
 		if (check_unset(tmp, env))
 			if (change_unset(tmp, env))
 				return (1);

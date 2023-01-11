@@ -99,6 +99,7 @@ static int	new_export(char **tmp, t_env *env)
 	else 
 		new->value = ' ';
 	new->exists = 1;
+	new->exported = 1;
 	new->next = env;
 	env = new;
 	return (0);
@@ -114,6 +115,7 @@ static int	change_export(char **tmp, t_env *env)
 	free (new->value);
 	new->value = ft_strdup(tmp[1]);
 	new->exists = 1;
+	new->exported = 1;
 	return (0);
 }
 

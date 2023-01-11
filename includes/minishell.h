@@ -29,11 +29,6 @@
 extern int	g_exit_code;
 
 //----------------struct----------------//
-typedef struct s_path {
-	char			*str;
-	struct s_path	*next;
-}	t_path;
-
 typedef struct s_env {
 	char			*name;		// gquche du =
 	char			*value;		// droite du =
@@ -60,7 +55,6 @@ typedef struct s_var {
 	int			*pipe;
 	int			*pids; // process IDs (nécessaire au forking)
 	int			cmd_nbr; // doit être initialisé pour initialiser les pipes et les pids (done)
-	t_path		*path;
 	t_env		*env;
 
 }	t_var;

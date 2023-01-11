@@ -15,7 +15,7 @@ static int	get_heredoc(t_cmdlist *cmd)
 	{
 		ft_putstr_fd("> ", 1, 0);
 		line = get_next_line(stdin_fd);
-		if (line == NULL)
+		if (line == NULL) // à tester
 			break ;
 		if (ft_strlen(cmd->delim_hdoc) + 1 == ft_strlen(line)
 				&& !ft_strncmp(line, cmd->delim_hdoc, ft_strlen(cmd->delim_hdoc + 1)))
@@ -55,6 +55,7 @@ static int	get_output_file(t_cmdlist *cmd)
 		cmd->fd_out = open(cmd->redir_output, O_WRONLY | O_CREAT | O_TRUNC, 644);
 	if (cmd->fd_out == -1)
 		return (1);
+	return (0);
 }
 
 int	file_handler(t_cmdlist *cmd)
