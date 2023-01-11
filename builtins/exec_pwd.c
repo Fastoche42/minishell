@@ -49,12 +49,12 @@ int	exec_pwd() // A refaire avec t_env *env
 
 int	exec_pwd(t_env *env)
 {
-	t_env *ptr;
+	t_env *ptr;		//Fred 11/01: peut-on s'affranchir de ptr et utiliser directement env ?
 
 	ptr = env;
 	while (env)
 	{
-		if (ft_strcmp(env->name, "PWD") == 0)
+		if (!ft_strcmp(env->name, "PWD"))
 		{
 			printf("%s\n", env->value);
 			env = ptr;

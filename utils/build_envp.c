@@ -2,7 +2,7 @@
 
 static int	env_lstlen(t_env *env)
 {
-	t_env	*tmp;
+	t_env	*tmp;	// Fred 11/01: a priori ce temp n'est pas utile
 	int		i;
 
 	tmp = env;
@@ -26,19 +26,11 @@ static char	*env_strjoin(char *name, char *value)
 	j = 0;
 	ret = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 1);
 	while (name[i])
-	{
-		ret[j] = name[i];
-		j++;
-		i++;
-	}
+		ret[j++] = name[i++];
 	ret[j++] = '=';
 	i = 0;
 	while (value[i])
-	{
-		ret[j] = value[i];
-		j++;
-		i++;
-	}
+		ret[j++] = value[i++];
 	ret[j] = '\0';
 	return (ret);
 }
@@ -46,10 +38,8 @@ static char	*env_strjoin(char *name, char *value)
 char	**build_envp(t_env *env)
 {
 	char	**envp;
-	t_env	*tmp;
 	int		i;
 
-	tmp = env;
 	i = 0;
 	envp = malloc(sizeof(char *) * (env_lstlen(env) + 1));
 	while (env)
@@ -64,6 +54,5 @@ char	**build_envp(t_env *env)
 		env = env->next;
 	}
 	envp[i] = NULL;
-	env = tmp;
 	return (envp);
 }
