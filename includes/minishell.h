@@ -72,7 +72,7 @@ int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
-void	fill_cndlist(cmdlist, type);
+void	fill_cmdlist(cmdlist, type);
 void	ms_parse_quotes(t_var *shell);
 int		ms_parsing(t_var *shell);
 

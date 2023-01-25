@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/01/11 02:47:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/24 00:33:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmdlist	*new_cmdlist(void)
 	return (node);
 }
 
-void	fill_cndlist(t_cmdlist cmdlist, int type, int start, int i)
+void	fill_cmdlist(t_cmdlist cmdlist, int type, int start, int i)
 {
 	cmdlist.cmd_path = ft_substr()
 }
