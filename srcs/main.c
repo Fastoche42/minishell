@@ -27,10 +27,11 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell->input = readline("minishell> ");
-		if (shell->input && ((int)shell->input != 13))
+		//if (shell->input && ((int)shell->input != 13))
+		if (shell->input && (shell->input != 0))
 		{
-			add_history(shell->input); // y compris que des spaces
-			if (!ft_strcmp(shell->input, "exit"))     //Temporaire, ou pas....
+			add_history(shell->input);					// y compris que des spaces
+			if (!ft_strcmp(shell->input, "exit"))		//Temporaire, ou pas....
 			{
 				ft_putendl_fd("exit", 1, 0);
 				break ;

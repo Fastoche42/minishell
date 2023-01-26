@@ -66,7 +66,7 @@ int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
-void	fill_cndlist(cmdlist, type);
+//void	fill_cndlist(cmdlist, type);
 void	ms_parse_quotes(t_var *shell);
 int		ms_parsing(t_var *shell);
 
@@ -88,12 +88,8 @@ int  	pipex(t_var *shell);
 char 	*get_cmd(char *cmd, t_var *shell);
 int		file_handler(t_cmdlist *cmd);
 
-
-
 //----------------check_error----------------//
-int		check_path_cmd(t_var *shell, char **var);
 int		error_manager(int error);
-int		check_export(char *str);
 
 //----------------utils----------------//
 int		count_args(t_var *shell);

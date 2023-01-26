@@ -66,7 +66,7 @@ t_var	*init_struct(char **envp)
 	shell->infile = 0; //
 	shell->prev_pipe = -1; // 
 	shell->save_input = dup(STDIN_FILENO); //
-	shell->save_output = dup(STDOUT_FILENO); // ..est à supprimer si je ne m'abuse
+	shell->save_output = dup(STDOUT_FILENO); // ..à supprimer si je ne m'abuse
 	shell->heredoc = 0;
 	shell->cmd_nbr = -1;
 	shell->child = 0;
