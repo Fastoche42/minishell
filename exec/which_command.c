@@ -21,7 +21,12 @@ int	which_command(t_var *shell, t_cmdlist *cmd)
 	else if (ft_strcmp (cmd->cmd_arg[0], "echo") == 0)
 		return(exec_echo(cmd));
 	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0) // à vérifier/modifier
-		exit(0);
+	{
+		if (cmd->cmd_arg[1] != NULL)
+			exit(ft_atoi(cmd->cmd_arg[1]));
+		else
+			exit(0);
+	}
 	else if (ft_strcmp (cmd->cmd_arg[0], "export") == 0)
 		return(exec_export(cmd, shell->env));
 	else if (ft_strcmp (cmd->cmd_arg[0], "unset") == 0)
@@ -31,3 +36,4 @@ int	which_command(t_var *shell, t_cmdlist *cmd)
 	else
 		return(execve(cmd->cmd_path, cmd->cmd_arg, shell->env));
 }
+            

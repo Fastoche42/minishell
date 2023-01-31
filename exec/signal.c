@@ -25,10 +25,14 @@ void	handler_sig(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (signum == SIGQUIT) //ctrl d
+	else if (signum == SIGQUIT) //ctrl d (?)(ctrl D devrait juste exit, non ?)
 	{
+		/*
 		rl_on_new_line();
 		rl_redisplay();
 		printf("  \b\b");
+		*/
+		printf("exit\n");
+		exit(0);
 	}
 }

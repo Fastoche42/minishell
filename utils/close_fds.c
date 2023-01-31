@@ -42,3 +42,18 @@ void	free_strs(char *str, char **strs)
 		strs = NULL;
 	}
 }
+
+int	ft_unlink_heredocs(t_var *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->cmd_nbr)
+	{
+		if (shell->cmdlist[i].delim_hdoc != NULL)
+			if(unlink(shell->cmdlist[i].redir_input) == -1)
+				return (errno);
+		i++;
+	}
+	return (0);
+}

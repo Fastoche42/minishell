@@ -12,13 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void    free_strs(char *str, char **envp) // à faire
-{
-	char	*tmp;
-
-	tmp = str;
-}
-
 static char	*test_path(char *cmd, char **paths)
 {
 	char	*cmd_path;

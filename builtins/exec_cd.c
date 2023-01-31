@@ -36,7 +36,7 @@ int	update_pwd(t_cmdlist * cmd, t_env *env)
 			{
 				tmp = ft_strdup(env->value);
 				free(env->value);
-				env->value = ft_strdup(cmd->cmd_arg[1]);
+				env->value = ft_strdup(cmd->cmd_arg[1]); //à adapter pour le cas des chemins relatifs
 				if (!tmp || !env->value)
 					return (1);
 			}
