@@ -29,13 +29,8 @@
 extern int	g_exit_code;
 
 //----------------struct----------------//
-typedef struct s_path {
-	char			*str;
-	struct s_path	*next;
-}	t_path;
-
 typedef struct s_env {
-	char			*name;		// gquche du =
+	char			*name;		// gauche du =
 	char			*value;		// droite du =
 	int				exists;		// pas deleted
 	int				exported;	// exportee ou non
@@ -44,13 +39,6 @@ typedef struct s_env {
 }	t_env;
 
 typedef struct s_var {
-	int			fd_input; // à supprimer
-	int			fd_output; // à supprimer
-	int			infile; // à supprimer
-	int			outfile; // à supprimer
-	int			save_input; // à supprimer
-	int			save_output; // à supprimer
-	int			prev_pipe; // à supprimer
 	char		*input;
 
 	t_cmdlist	*cmdlist;		// ptr vers liste de commande => exec Morgan
@@ -59,8 +47,7 @@ typedef struct s_var {
 	int			child; // index
 	int			*pipe;
 	int			*pids; // process IDs (nécessaire au forking)
-	int			cmd_nbr; // doit être initialisé pour initialiser les pipes et les pids (done)
-	t_path		*path;
+	int			cmd_nbr;
 	t_env		*env;
 
 }	t_var;
@@ -72,7 +59,7 @@ int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
-void	fill_cmdlist(cmdlist, type);
+//void	fill_cndlist(cmdlist, type);
 void	ms_parse_quotes(t_var *shell);
 int		ms_parsing(t_var *shell);
 
@@ -93,11 +80,10 @@ int		number_of_cmd(t_var *shell);
 int  	pipex(t_var *shell);
 char 	*get_cmd(char *cmd, t_var *shell);
 int		file_handler(t_cmdlist *cmd);
-
-
+int		redir_first_last(t_var *shell, t_cmdlist *cmd);
+int		redir_other(t_var *shell, t_cmdlist *cmd);
 
 //----------------check_error----------------//
-int		check_path_cmd(t_var *shell, char **var);
 int		error_manager(int error);
 
 //----------------utils----------------//
@@ -109,5 +95,6 @@ int		ft_free_splited(char **str);
 void	close_fds(t_var *shell);
 void	free_strs(char *str, char **strs);
 char	**build_envp(t_env *env);
+int		ft_unlink_heredocs(t_var *shell);
 
 #endif

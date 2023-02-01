@@ -12,25 +12,6 @@
 
 #include "../includes/minishell.h"
 
-/* A disparaitre
-char	**init_env(char **envp)
-{
-	char	**var;
-	int		i;
-
-	i = 0;
-	var = malloc (sizeof(char *) * ft_nb_lines_tab(envp));
-	if (!envp)
-		return (NULL);
-	while (envp[i])
-	{
-		var[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	return (var);
-}
-*/
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*shell;
@@ -46,10 +27,11 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell->input = readline("minishell> ");
-		if (shell->input && ((int)shell->input != 13))
+		//if (shell->input && ((int)shell->input != 13))
+		if (shell->input && (shell->input != 0))
 		{
-			add_history(shell->input); // y compris que des spaces
-			if (!ft_strcmp(shell->input, "exit"))     //Temporaire, ou pas....
+			add_history(shell->input);					// y compris que des spaces
+			if (!ft_strcmp(shell->input, "exit"))		//Temporaire, ou pas....
 			{
 				ft_putendl_fd("exit", 1, 0);
 				break ;

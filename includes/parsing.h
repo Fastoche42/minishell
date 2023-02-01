@@ -19,14 +19,13 @@ typedef struct s_cmdlist
 {
 	char				*cmd_path;
 	char				**cmd_arg;
-	char				**cmd_env; // à supprimer
 	int					type;
 	char				*redir_input;	//filename or NULL
 	char				*delim_hdoc;	//exit word or NULL
-	char				*redir_output;	//filename
+	char				*redir_output;	//filename or NULL
 	int					flag_append;	//flag
-	int					fd_in;
-	int					fd_out;
+	int					fd_in; // initialiser à 0
+	int					fd_out; // initialiser à 1
 	struct s_cmdlist	*next;
 }					t_cmdlist;
 

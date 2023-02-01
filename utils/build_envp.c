@@ -2,17 +2,14 @@
 
 static int	env_lstlen(t_env *env)
 {
-	t_env	*tmp;	// Fred 11/01: a priori ce temp n'est pas utile
 	int		i;
 
-	tmp = env;
 	i = 0;
 	while (env)
 	{
 		i++;
 		env = env->next;
 	}
-	env = tmp;
 	return (i);
 }
 
@@ -24,7 +21,7 @@ static char	*env_strjoin(char *name, char *value)
 
 	i = 0;
 	j = 0;
-	ret = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 1);
+	ret = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 2);
 	while (name[i])
 		ret[j++] = name[i++];
 	ret[j++] = '=';

@@ -1,3 +1,5 @@
+#include "lexer.c"
+
 int main(int argc, char **argv)
 {
   Lexer lexer;
