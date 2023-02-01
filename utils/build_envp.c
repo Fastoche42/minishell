@@ -1,4 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_envp.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/01 17:31:28 by fl-hote           #+#    #+#             */
+/*   Updated: 2023/02/01 17:41:04 by fl-hote          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
+
+int	number_of_cmd(t_var *shell)
+{
+	t_cmdlist	*ptr;
+	int			cmd_nbr;
+
+	ptr = shell->cmdlist;
+	cmd_nbr = 0;
+	while (ptr)
+	{
+		cmd_nbr++;
+		ptr = ptr->next;
+	}
+	return (cmd_nbr);
+}
 
 static int	env_lstlen(t_env *env)
 {

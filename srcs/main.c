@@ -45,7 +45,3 @@ int	main(int argc, char **argv, char **envp)
 	free_mem(shell);
 	return (0);
 }
-
-/*
- * fonction free mem qui permettra de free chaque ligne du tableau
- */
