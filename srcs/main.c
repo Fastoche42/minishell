@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+int g_exit_code; 
+
+g_exit_code = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -42,6 +45,6 @@ int	main(int argc, char **argv, char **envp)
 			free(shell->input);
 		}
 	}
-	free_mem(shell);
+	exit_minishell(shell, g_exit_code);
 	return (0);
 }

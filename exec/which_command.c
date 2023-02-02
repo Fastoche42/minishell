@@ -34,6 +34,6 @@ int	which_command(t_var *shell, t_cmdlist *cmd)
 	else if (ft_strcmp (cmd->cmd_arg[0], "cd") == 0)
 		return(exec_cd(cmd, shell->env));
 	else
-		return(execve(cmd->cmd_path, cmd->cmd_arg, shell->env));
+		return(execve(cmd->cmd_path, cmd->cmd_arg, build_envp(shell->env)));
 }
             

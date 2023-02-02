@@ -16,7 +16,6 @@ t_env	*init_env(char **envp)
 {
 	t_env	*list;
 	t_env	*ptr;
-	t_env	*new;
 	int		i;
 	int		c;
 

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	redirect_io(int input, int output, t_cmdlist *cmd)
+int	redirect_io(int input, int output)
 {
 	if (dup2(input, STDIN_FILENO) == -1)
 	{

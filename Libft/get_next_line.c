@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "./libft.h"
 
 static char    *ft_before_newline(const char *tmp)
 {

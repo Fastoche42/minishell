@@ -20,11 +20,11 @@ ifeq ($(HOST), LAPTOP-M60DL66F)
 	CPPFLAGS =
 #	LDFLAGS = -L/mnt/d/msys64/mingw64/lib
 	LDFLAGS = -lreadline
-	CFLAG = -Wall -Wextra -lreadline
+	CFLAG = -Wall -Wextra -Werror -lreadline
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = 
+	CFLAG = -Wall -Wextra
 endif
 
 # PARSING = parsing/parsing.c
@@ -54,19 +54,11 @@ BUILTINS =	builtins/exec_cd.c\
 	  
 CHECK =	check/error_manager.c\
 		
-UTILS =	utils/count_args.c\
-		utils/nb_var_in_env.c\
-		utils/modif_input.c\
-		utils/build_envp\
-		utils/free_mem.c
-#		utils/first_arg.c
-#		utils/count_args.c
-#		utils/nb_var_in_env.c
-#		utils/find_cmd.c
-#		utils/modif_input.c
+UTILS =	utils/close_fds.c\
+		utils/exit.c\
+		utils/build_envp.c\
 
 ALL_SRCS =	$(SRCS)\
-			$(INIT)\
 			$(CHECK)\
 			$(BUILTINS)\
 			$(UTILS)\

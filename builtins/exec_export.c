@@ -131,7 +131,6 @@ static int	change_export(char **tmp, t_env *env)
 
 int	exec_export(t_cmdlist *cmd, t_env *env)
 {
-	t_env 	*new;
 	char	**tmp;
 	int		i;
 

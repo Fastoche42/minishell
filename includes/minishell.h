@@ -25,8 +25,8 @@
 # include "../Libft/libft.h"
 # include "parsing.h"
 
-//----------------global variable----------------//
-extern int	g_exit_code;
+// //----------------global variable----------------//
+// extern int	g_exit_code;
 
 //----------------struct----------------//
 typedef struct s_env {
@@ -41,7 +41,7 @@ typedef struct s_env {
 typedef struct s_var {
 	char		*input;
 
-	t_cmdlist	*cmdlist;		// ptr vers liste de commande => exec Morgan
+	t_cmdlist	*cmdlist; // liste chainée de commandes
 
 	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
@@ -49,7 +49,6 @@ typedef struct s_var {
 	int			*pids; // process IDs (nécessaire au forking)
 	int			cmd_nbr;
 	t_env		*env;
-
 }	t_var;
 
 //----------------minishell----------------//
@@ -70,14 +69,14 @@ int		ms_execute(t_var *shell);
 int		exec_pwd(t_env *env); // mise à jour 05/01/2023
 int		exec_env(t_env *env); // mise à jour 10/01/2023
 int		exec_echo(t_cmdlist *cmd); // mise à jour 05/01/2023
-int		exec_exit(t_var *shell); // je ne crois pas quelle soit nécessaire
+int		exec_exit(t_cmdlist *cmd);
 int		exec_cd(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_export(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_unset(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
 
 int  	pipex(t_var *shell);
-int		redirect_io(int input, int output, t_cmdlist *cmd);
+int		redirect_io(int input, int output);
 char 	*get_cmd(char *cmd, t_var *shell);
 int		file_handler(t_cmdlist *cmd);
 int		redir_first_last(t_var *shell, t_cmdlist *cmd);
@@ -89,12 +88,16 @@ int		error_manager(int error);
 
 //----------------utils----------------//
 //int		count_args(t_var *shell);
-void	find_cmd(t_var *shell, char **var);
+//void	find_cmd(t_var *shell, char **var);
 //int		nb_var_in_env(char **env);
 //char	*modif_input(char *input);
 void	close_fds(t_var *shell);
 void	free_strs(char *str, char **strs);
 char	**build_envp(t_env *env);
 int		number_of_cmd(t_var *shell);
+int		free_all(t_var *shell);
+int		exit_minishell(t_var *shell, int exit_code);
+
+
 
 #endif

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/*
 int	exit_number_of_args(t_var *shell)
 {
 	char	**tab;
@@ -40,8 +40,38 @@ int	exec_exit(t_var *shell)
 		return (write (1, "too many arguments\n", 19));
 	else
 	{
-		write(1, "exit\n", 1); // why ?
+		write(1, "exit\n", 1);
 		exit(exit_status);
 		return (0);
 	}
+}
+*/
+
+int	exec_exit(t_cmdlist *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd->cmd_arg[1][++i])
+	{
+		if (!ft_isdigit(cmd->cmd_arg[1][i]))
+		{
+			write(1, "exit\n", 5);
+			write(2, "minishell: exit: ", 17);
+			write(2, cmd->cmd_arg[1], ft_strlen(cmd->cmd_arg[1]));
+			write(2, ": numeric argument required", 29);
+			exit (255);
+		}
+	}
+	if (cmd->cmd_arg[2])
+	{
+		write(1, "exit\n", 5);
+		write(2, "minishell: exit: too many arguments\n", 36);
+	}
+	else
+	{
+		write(1, "exit\n", 5);
+		exit (ft_atoi(cmd->cmd_arg[1]));
+	}
+	return (0); // à vérifier
 }
