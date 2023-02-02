@@ -12,17 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	exec_cd(t_cmdlist *cmd, t_env *env)
-{
-	
-	if (chdir(cmd->cmd_arg[1]) != 0)
-		return (error_manager(9), ft_putendl_fd(strerror(errno), 2, 1));
-	if (update_pwd(cmd, env))
-		return (1);
-	return (0);
-}
-
-int	update_pwd(t_cmdlist * cmd, t_env *env)
+static int	update_pwd(t_cmdlist * cmd, t_env *env)
 {
 	int		i;
 	t_env	*ptr;
@@ -53,3 +43,14 @@ int	update_pwd(t_cmdlist * cmd, t_env *env)
 	free(tmp);
 	return (0);
 }
+
+int	exec_cd(t_cmdlist *cmd, t_env *env)
+{
+	
+	if (chdir(cmd->cmd_arg[1]) != 0)
+		return (error_manager(9), ft_putendl_fd(strerror(errno), 2, 1));
+	if (update_pwd(cmd, env))
+		return (1);
+	return (0);
+}
+

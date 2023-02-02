@@ -97,7 +97,7 @@ static int	new_export(char **tmp, t_env *env)
 	if (tmp[1])
 		new->value = ft_strdup(tmp[1]);
 	else 
-		new->value = ' ';
+		new->value = ft_strdup(" ");
 	new->exists = 1;
 	new->exported = 1;
 	new->next = env;
@@ -134,8 +134,10 @@ int	exec_export(t_cmdlist *cmd, t_env *env)
 			if (!tmp)
 				return (1);
 			if (check_export(tmp, env))
+			{
 				if (change_export(tmp, env))
 					return (1);
+			}
 			else if (new_export(tmp, env))
 				return (1);		
 			free (tmp);

@@ -29,15 +29,15 @@ endif
 
 SRCS =	srcs/main.c \
 		srcs/init_struct.c \
-		srcs/pipex.c srcs/cmd_path.c
+		srcs/pipex.c srcs/cmd_path.c \
+		srcs/file_handler.c \
+		srcs/redirection.c \
 	  
-PARSING = parsing/parsing.c
+# PARSING = parsing/parsing.c
 
-EXEC = exec/exec.c\
-	   exec/signal.c\
+EXEC = exec/signal.c\
 	   exec/which_command.c\
-	   exec/redirection.c
-
+	   
 BUILTINS =	builtins/exec_pwd.c\
 			builtins/exec_env.c\
 			builtins/exec_echo.c\
@@ -46,16 +46,11 @@ BUILTINS =	builtins/exec_pwd.c\
 			builtins/exec_export.c\
 			builtins/exec_unset.c
 	  
-CHECK =	check/check_path_cmd.c\
-		check/error_manager.c\
-		check/verif_exit.c\
-		check/verif_export.c\
-		check/check_export.c\
-
+CHECK =	check/error_manager.c\
+		
 UTILS =	utils/count_args.c\
 		utils/first_arg.c\
 		utils/nb_var_in_env.c\
-		utils/find_cmd.c\
 		utils/modif_input.c\
 		utils/free_mem.c
 		

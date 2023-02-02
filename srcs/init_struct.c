@@ -91,7 +91,7 @@ int	init_process(t_var *shell)
 		shell->pipe = malloc(sizeof * shell->pipe * 2 * shell->cmd_nbr);
 		if (!shell->pipe)
 			return (error_manager(6));
-		if (generate_pipes(shell));
+		if (generate_pipes(shell))
 			return (error_manager(6));
 	}
 	return (0);
