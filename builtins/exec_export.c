@@ -61,13 +61,13 @@ static int	check_export(char **tmp, t_env *env)
 	ptr = env;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->name, tmp[0]))
+		if (!ft_strcmp(ptr->name, tmp[0]))
 		{
-			return (1);
+			return (0);
 		}
 		ptr = ptr->next;
 	}
-	return (0);
+	return (1);
 }
 
 static t_env	*find_export(char **tmp, t_env *env)
@@ -98,6 +98,11 @@ static int	new_export(char **tmp, t_env *env)
 		new->value = ft_strdup(tmp[1]);
 	else 
 		new->value = ft_strdup(" ");
+	if (!new->name || !new->value)
+	{
+		free (new);
+		return (1);
+	}
 	new->exists = 1;
 	new->exported = 1;
 	new->next = env;
@@ -114,6 +119,11 @@ static int	change_export(char **tmp, t_env *env)
 		return (1);
 	free (new->value);
 	new->value = ft_strdup(tmp[1]);
+	if (!new->value)
+	{
+		free (new);
+		return (1);
+	}
 	new->exists = 1;
 	new->exported = 1;
 	return (0);
@@ -133,13 +143,19 @@ int	exec_export(t_cmdlist *cmd, t_env *env)
 			tmp = ft_split(cmd->cmd_arg[i], '='); // vérifier ft_split
 			if (!tmp)
 				return (1);
-			if (check_export(tmp, env))
+			if (!check_export(tmp, env))
 			{
 				if (change_export(tmp, env))
+				{
+					free (tmp);
 					return (1);
+				}
 			}
 			else if (new_export(tmp, env))
-				return (1);		
+			{
+				free (tmp);
+				return (1);
+			}	
 			free (tmp);
 		}
 		i++;

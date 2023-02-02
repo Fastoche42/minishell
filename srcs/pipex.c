@@ -6,13 +6,13 @@
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:34 by jlorber           #+#    #+#             */
-/*   Updated: 2023/01/23 16:27:44 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/01 18:31:36 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	redirect_io(int input, int output, t_cmdlist *cmd)
+int	redirect_io(int input, int output, t_cmdlist *cmd)
 {
 	if (dup2(input, STDIN_FILENO) == -1)
 	{

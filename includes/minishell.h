@@ -75,26 +75,26 @@ int		exec_cd(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_export(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_unset(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
-int		number_of_cmd(t_var *shell);
 
 int  	pipex(t_var *shell);
+int		redirect_io(int input, int output, t_cmdlist *cmd);
 char 	*get_cmd(char *cmd, t_var *shell);
 int		file_handler(t_cmdlist *cmd);
 int		redir_first_last(t_var *shell, t_cmdlist *cmd);
 int		redir_other(t_var *shell, t_cmdlist *cmd);
+int		ft_unlink_heredocs(t_var *shell);
 
-//----------------check_error----------------//
+//----------------check----------------//
 int		error_manager(int error);
 
 //----------------utils----------------//
-int		count_args(t_var *shell);
+//int		count_args(t_var *shell);
 void	find_cmd(t_var *shell, char **var);
-int		nb_var_in_env(char **env);
-char	*modif_input(char *input);
-int		ft_free_splited(char **str);
+//int		nb_var_in_env(char **env);
+//char	*modif_input(char *input);
 void	close_fds(t_var *shell);
 void	free_strs(char *str, char **strs);
 char	**build_envp(t_env *env);
-int		ft_unlink_heredocs(t_var *shell);
+int		number_of_cmd(t_var *shell);
 
 #endif

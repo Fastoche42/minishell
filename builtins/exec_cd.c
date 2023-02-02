@@ -53,4 +53,3 @@ int	exec_cd(t_cmdlist *cmd, t_env *env)
 		return (1);
 	return (0);
 }
-

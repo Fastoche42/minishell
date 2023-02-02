@@ -29,17 +29,3 @@ void	free_mem(t_var *shell)
 	//free_env(shell->env);
 	free(shell);
 }
-
-int	ft_free_splited(char **str)
-{
-	int	i;
-
-	if (str)
-	{
-		i = -1;
-		while (str[++i])
-			free (str[i]);
-		free (str);
-	}
-	return (0);
-}

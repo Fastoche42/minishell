@@ -1,7 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #\
 #                                                     +:+ +:+         +:+      #
 #    By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -27,33 +27,43 @@ else
 	CFLAG = 
 endif
 
-SRCS =	srcs/main.c \
-		srcs/init_struct.c \
-		srcs/pipex.c srcs/cmd_path.c \
-		srcs/file_handler.c \
-		srcs/redirection.c \
-	  
 # PARSING = parsing/parsing.c
 
 EXEC = exec/signal.c\
 	   exec/which_command.c\
-	   
-BUILTINS =	builtins/exec_pwd.c\
-			builtins/exec_env.c\
+
+SRCS =	srcs/main.c\
+		srcs/init_struct.c\
+		srcs/pipex.c\
+		srcs/cmd_path.c\
+		srcs/redirection.c\
+		srcs/file_handler.c
+
+PARSING = parsing/parsing.c
+
+EXEC =	exec/signal.c\
+		exec/which_command.c
+
+BUILTINS =	builtins/exec_cd.c\
 			builtins/exec_echo.c\
+			builtins/exec_env.c\
 			builtins/exec_exit.c\
-			builtins/exec_cd.c\
 			builtins/exec_export.c\
+			builtins/exec_pwd.c\
 			builtins/exec_unset.c
 	  
 CHECK =	check/error_manager.c\
 		
 UTILS =	utils/count_args.c\
-		utils/first_arg.c\
 		utils/nb_var_in_env.c\
 		utils/modif_input.c\
+		utils/build_envp\
 		utils/free_mem.c
-		
+#		utils/first_arg.c
+#		utils/count_args.c
+#		utils/nb_var_in_env.c
+#		utils/find_cmd.c
+#		utils/modif_input.c
 
 ALL_SRCS =	$(SRCS)\
 			$(INIT)\
