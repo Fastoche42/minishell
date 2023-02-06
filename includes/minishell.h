@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -58,9 +59,7 @@ int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
-//void	fill_cndlist(cmdlist, type);
-void	ms_parse_quotes(t_var *shell);
-int		ms_parsing(t_var *shell);
+int		parsing(t_var *shell);
 
 //----------------exec----------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023

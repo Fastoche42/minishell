@@ -20,17 +20,12 @@ ifeq ($(HOST), LAPTOP-M60DL66F)
 	CPPFLAGS =
 #	LDFLAGS = -L/mnt/d/msys64/mingw64/lib
 	LDFLAGS = -lreadline
-	CFLAG = -Wall -Wextra -Werror -lreadline
+	CFLAG = -Wall -Wextra -lreadline
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 	CFLAG = -Wall -Wextra
 endif
-
-# PARSING = parsing/parsing.c
-
-EXEC = exec/signal.c\
-	   exec/which_command.c\
 
 SRCS =	srcs/main.c\
 		srcs/init_struct.c\
@@ -39,11 +34,8 @@ SRCS =	srcs/main.c\
 		srcs/redirection.c\
 		srcs/file_handler.c
 
-PARSING = parsing/parsing.c
-
-EXEC =	exec/signal.c\
-		exec/which_command.c
-
+CHECK =	check/error_manager.c\
+		
 BUILTINS =	builtins/exec_cd.c\
 			builtins/exec_echo.c\
 			builtins/exec_env.c\
@@ -52,11 +44,14 @@ BUILTINS =	builtins/exec_cd.c\
 			builtins/exec_pwd.c\
 			builtins/exec_unset.c
 	  
-CHECK =	check/error_manager.c\
-		
 UTILS =	utils/close_fds.c\
 		utils/exit.c\
 		utils/build_envp.c\
+
+PARSING = parsing/parsing.c
+
+EXEC =	exec/signal.c\
+		exec/which_command.c
 
 ALL_SRCS =	$(SRCS)\
 			$(CHECK)\
@@ -75,7 +70,7 @@ alln : all
 		norminette
 
 .c.o:
-	cc -o $@ -c $< $(CPPFLAGS) $(CFLAG)
+	cc -g -o $@ -c $< $(CPPFLAGS) $(CFLAG)
 
 $(NAME) : $(OBJS)
 		$(RE_LIBFT)

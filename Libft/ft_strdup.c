@@ -30,7 +30,8 @@ char	*ft_strdup(const char *s1)
 {
 	char	*a;
 
-	a = malloc((ft_strlen(s1) + 1) * sizeof(*a));
+	//a = malloc((ft_strlen(s1) + 1) * sizeof(*a));
+	a = malloc((ft_strlen(s1) + 1) * sizeof(char)); // A valider
 	if (a == 0)
 		return (NULL);
 	return (ft_strcpy(a, (char *)s1));

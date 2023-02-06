@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:34 by jlorber           #+#    #+#             */
-/*   Updated: 2023/02/01 18:31:36 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/05 00:35:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 		redir_first_last(shell, cmd);
 	else
 		redir_other(shell, cmd);
-	close_fds(shell); // à verifier
+	if (shell->cmdlist)
+	{
+		close_fds(shell); // à verifier
+		printf("close_fds from child\n");
+	}
 	if (cmd->cmd_arg == NULL || cmd->cmd_path == NULL)
 		return (error_manager(10));
 	if (which_command(shell, cmd) != 0)
@@ -45,7 +49,11 @@ static int	parent(t_var *shell)
 	int		status;
 	int		exit_code;
 
-	close_fds(shell); // à vérifier
+	if (shell->cmdlist)
+	{
+		close_fds(shell); // à vérifier
+		printf("close_fds from parent\n");
+	}
 	shell->child--;
 	exit_code = 1;
 	while (shell->child >= 0)
@@ -63,6 +71,7 @@ static int	parent(t_var *shell)
 	return (exit_code);
 }
 
+/*
 int	pipex(t_var *shell)
 {
 	int		exit_code;
@@ -89,6 +98,39 @@ int	pipex(t_var *shell)
 		free_strs(ptr->cmdlist->cmd_path, ptr->cmdlist->cmd_arg); // à vérifier // à adapter
 		shell->child++;
 		ptr->cmdlist = ptr->cmdlist->next;
+	}
+	exit_code = parent(shell);
+	if (shell->heredoc > 0)
+		if (ft_unlink_heredocs(shell) > 0)
+			return (error_manager(10));
+	return (exit_code);
+}
+*/
+
+int	pipex(t_var *shell)
+{
+	int		exit_code;
+
+	if (shell->cmd_nbr > 1) // à vérifier
+		if (pipe(shell->pipe) == -1)
+			return (error_manager(6));
+	shell->child = 0;
+	while (shell->child < shell->cmd_nbr && shell->cmdlist) // boucle à modifier par Jojo (done)
+	{
+		shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
+		if (!shell->cmdlist->cmd_path)
+			return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror 
+		if (file_handler(shell->cmdlist)) // gestion des redirections (part 1)
+			return (error_manager(12));
+		shell->pids[shell->child] = fork();
+		if (shell->pids[shell->child] == -1)
+			return (error_manager(7));
+		else if (shell->pids[shell->child] == 0)
+			if (child(shell, shell->cmdlist) > 0)
+				return (errno);
+		free_strs(shell->cmdlist->cmd_path, shell->cmdlist->cmd_arg); // à vérifier // à adapter
+		shell->child++;
+		shell->cmdlist = shell->cmdlist->next;
 	}
 	exit_code = parent(shell);
 	if (shell->heredoc > 0)

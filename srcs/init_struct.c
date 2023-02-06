@@ -40,7 +40,7 @@ t_env	*init_env(char **envp)
 		ptr->exists = 1;
 		ptr->exported = 1;
 		ptr->next = NULL;
-		printf("%d: '%s'  '%s'\n", i, ptr->name, ptr->value);
+		//printf("%d: '%s'  '%s'\n", i, ptr->name, ptr->value);
 		i++;
 	}
 	return (list);
@@ -82,12 +82,15 @@ static int	generate_pipes(t_var *shell)
 int	init_process(t_var *shell)
 {
 	shell->cmd_nbr = number_of_cmd(shell);
-	shell->pids = malloc(sizeof * shell->pids * shell->cmd_nbr);
+	printf("nb of cmd %d\n", shell->cmd_nbr);
+	//shell->pids = malloc(sizeof * shell->pids * shell->cmd_nbr);
+	shell->pids = malloc(sizeof(int) * shell->cmd_nbr); // A valider
 	if (!shell->pids)
 		return (error_manager(5));
 	if (shell->cmd_nbr > 1) // à vérifier
 	{
-		shell->pipe = malloc(sizeof * shell->pipe * 2 * shell->cmd_nbr);
+		//shell->pipe = malloc(sizeof * shell->pipe * 2 * shell->cmd_nbr);
+		shell->pipe = malloc(sizeof(int) * 2 * shell->cmd_nbr); // A valider
 		if (!shell->pipe)
 			return (error_manager(6));
 		if (generate_pipes(shell))

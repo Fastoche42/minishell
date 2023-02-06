@@ -14,11 +14,11 @@
 
 static int	update_pwd(t_cmdlist * cmd, t_env *env)
 {
-	int		i;
+	//int		i;
 	t_env	*ptr;
 	char 	*tmp;
 
-	i = 0;
+	//i = 0;
 	ptr = env;
 	while (env)
 	{

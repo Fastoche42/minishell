@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_envp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:31:28 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/01 17:41:04 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/04 18:18:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static char	*env_strjoin(char *name, char *value)
 
 	i = 0;
 	j = 0;
-	ret = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 2);
+	//ret = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 2);
+	ret = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(value) + 2));
 	while (name[i])
 		ret[j++] = name[i++];
 	ret[j++] = '=';

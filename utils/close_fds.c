@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:36:49 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/01 17:36:56 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/05 00:32:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,13 @@ static void	close_pipe_fds(t_var *shell)
 
 void	close_fds(t_var *shell)
 {
-	if (shell->cmdlist->fd_in != -1)
+	printf("&shell:%p cmdlist:%p\n", shell, shell->cmdlist);
+	printf("fdin:%d, fdout:%d\n", shell->cmdlist->fd_in, shell->cmdlist->fd_out);
+	//if (shell->cmdlist->fd_in != -1)
+	if (shell->cmdlist->fd_in > 2)
 		close(shell->cmdlist->fd_in);
-	if (shell->cmdlist->fd_out != -1)
+	//if (shell->cmdlist->fd_out != -1)
+	if (shell->cmdlist->fd_out > 2)
 		close(shell->cmdlist->fd_out);
 	close_pipe_fds(shell);
 }

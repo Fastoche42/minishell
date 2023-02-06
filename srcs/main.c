@@ -11,14 +11,15 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 int g_exit_code; 
 
-g_exit_code = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*shell;
 
+	g_exit_code = 0;
 	(void)argv;
 	if (argc != 1)
 		return (error_manager(1));
@@ -39,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 				ft_putendl_fd("exit", 1, 0);
 				break ;
 			}
-			if (ms_parsing(shell)) //creer lst-ch et return 1 si ok
+			if (parsing(shell)) //creer lst-ch et return 1 si ok
 				if (!init_process(shell))
 					g_exit_code = pipex(shell);
 			free(shell->input);

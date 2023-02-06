@@ -58,7 +58,8 @@ static void    ft_read_line(int fd, char **keep, char **tmp)
     char    *buffer;
     int     ret;
 
-    buffer = malloc(sizeof(buffer) * (BUFFER_SIZE + 1));
+    //buffer = malloc(sizeof(buffer) * (BUFFER_SIZE + 1));
+    buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)); // a valider
     if (!buffer)
         return ;
     ret = 1;
