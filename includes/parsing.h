@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:04:36 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/01 17:35:20 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/08 18:10:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 typedef struct s_cmdlist
 {
+	char				*brut;
 	char				*cmd_path;
 	char				**cmd_arg;
 	int					type;
@@ -30,3 +31,5 @@ typedef struct s_cmdlist
 }					t_cmdlist;
 
 #endif
+
+int	free_cmdlist(t_cmdlist **head);

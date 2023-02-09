@@ -14,6 +14,14 @@
 
 int g_exit_code; 
 
+static void	print_cmdlist(t_cmdlist *ptr)
+{
+	while (ptr && ptr->brut)
+	{
+		printf("'%s'\n", ptr->brut);
+		ptr = ptr->next;
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -40,9 +48,13 @@ int	main(int argc, char **argv, char **envp)
 				ft_putendl_fd("exit", 1, 0);
 				break ;
 			}
-			if (parsing(shell)) //creer lst-ch et return 1 si ok
+			if (parsing(shell))
+				print_cmdlist(shell->cmdlist);
+				/* temporaire test parsing only
 				if (!init_process(shell))
 					g_exit_code = pipex(shell);
+				*/
+			free_cmdlist(&(shell->cmdlist));
 			free(shell->input);
 		}
 	}

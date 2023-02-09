@@ -59,9 +59,11 @@ t_var	*init_struct(char **envp)
 		free(shell);
 		return (NULL);
 	}
+	shell->input = NULL;
+	shell->cmdlist = NULL;
 	shell->heredoc = 0;
-	shell->cmd_nbr = -1;
 	shell->child = 0;
+	shell->cmd_nbr = -1;
 	return (shell);
 }
 
