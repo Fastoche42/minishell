@@ -74,6 +74,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strposchr(const char *s, int c);
+void*	ft_realloc(void* ptr, size_t size);
 
 		// Get Next Line //
 int     ft_find_newline(const char *s);

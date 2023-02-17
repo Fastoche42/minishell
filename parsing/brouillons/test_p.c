@@ -47,7 +47,8 @@ char **parse_line(char *line, char *argv[], int *argc) {
     }
     i = j + 1;
   }
-  argv[*argc] = NULL;
+  //argv[*argc] = NULL;
+  return (&argv[*argc]);
 }
 
 int main(int argc, char* argv[], char* envp[]) {

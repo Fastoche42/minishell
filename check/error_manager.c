@@ -38,5 +38,7 @@ int	error_manager(int error)
 		return (perror("Redirection error"), (int)errno);
 	else if (error == 12)
 		return (perror("File handler error"), (int)errno);
+	else if (error == 20)
+		return (perror("Quotes not properly closed. Abort"), (int)errno);
 	return (0);
 }
