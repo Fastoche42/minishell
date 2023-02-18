@@ -91,12 +91,13 @@ int		error_manager(int error);
 //int		nb_var_in_env(char **env);
 //char	*modif_input(char *input);
 void	close_fds(t_var *shell);
+void	close_pipe_fds(t_var *shell);
 void	free_strs(char *str, char **strs);
 char	**build_envp(t_env *env);
 int		number_of_cmd(t_var *shell);
 int		free_all(t_var *shell);
 int		exit_minishell(t_var *shell, int exit_code);
-
+int		is_builtin(char *cmd);
 
 
 #endif

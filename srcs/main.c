@@ -41,7 +41,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell->input = readline("minishell> ");
-		//if (shell->input && ((int)shell->input != 13))
 		if (shell->input && (shell->input != 0))
 		{
 			add_history(shell->input);					// y compris que des spaces
@@ -51,11 +50,10 @@ int	main(int argc, char **argv, char **envp)
 				break ;
 			}
 			if (parsing(shell))
-				print_cmdlist(shell->cmdlist);
-				/* temporaire test parsing only
+				// print_cmdlist(shell->cmdlist);
+				// temporaire test parsing only
 				if (!init_process(shell))
 					g_exit_code = pipex(shell);
-				*/
 			free_cmdlist(&(shell->cmdlist));
 			free(shell->input);
 		}

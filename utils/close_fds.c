@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static void	close_pipe_fds(t_var *shell)
+void	close_pipe_fds(t_var *shell)
 {
 	int	i;
 
@@ -26,15 +26,21 @@ static void	close_pipe_fds(t_var *shell)
 
 void	close_fds(t_var *shell)
 {
-	printf("&shell:%p cmdlist:%p\n", shell, shell->cmdlist);
-	printf("fdin:%d, fdout:%d\n", shell->cmdlist->fd_in, shell->cmdlist->fd_out);
-	//if (shell->cmdlist->fd_in != -1)
+	
 	if (shell->cmdlist->fd_in > 2)
 		close(shell->cmdlist->fd_in);
-	//if (shell->cmdlist->fd_out != -1)
 	if (shell->cmdlist->fd_out > 2)
 		close(shell->cmdlist->fd_out);
-	close_pipe_fds(shell);
+	if (shell->child == 0)
+		close(shell->pipe[1]);
+	else if (shell->child == shell->cmd_nbr - 1)
+		close(shell->pipe[2 * shell->child - 2]);
+	else
+	{
+		close(shell->pipe[shell->child * 2 - 2]);
+		close(shell->pipe[shell->child * 2 + 1]);
+	}
+	//close_pipe_fds(shell);
 }
 
 void	free_strs(char *str, char **strs)
@@ -67,7 +73,7 @@ int	ft_unlink_heredocs(t_var *shell)
 	while (i < shell->cmd_nbr)
 	{
 		if (shell->cmdlist[i].delim_hdoc != NULL)
-			if(unlink(shell->cmdlist[i].redir_input) == -1)
+			if (unlink(shell->cmdlist[i].redir_input) == -1)
 				return (errno);
 		i++;
 	}

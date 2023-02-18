@@ -84,15 +84,12 @@ static int	generate_pipes(t_var *shell)
 int	init_process(t_var *shell)
 {
 	shell->cmd_nbr = number_of_cmd(shell);
-	printf("nb of cmd %d\n", shell->cmd_nbr);
-	//shell->pids = malloc(sizeof * shell->pids * shell->cmd_nbr);
-	shell->pids = malloc(sizeof(int) * shell->cmd_nbr); // A valider
+	shell->pids = malloc(sizeof(int) * shell->cmd_nbr);
 	if (!shell->pids)
 		return (error_manager(5));
-	if (shell->cmd_nbr > 1) // à vérifier
+	if (shell->cmd_nbr > 1)
 	{
-		//shell->pipe = malloc(sizeof * shell->pipe * 2 * shell->cmd_nbr);
-		shell->pipe = malloc(sizeof(int) * 2 * shell->cmd_nbr); // A valider
+		shell->pipe = malloc(sizeof(int) * 2 * shell->cmd_nbr - 1);
 		if (!shell->pipe)
 			return (error_manager(6));
 		if (generate_pipes(shell))

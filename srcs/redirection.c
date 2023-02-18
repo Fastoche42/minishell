@@ -14,25 +14,31 @@
 
 int	redir_first_last(t_var *shell, t_cmdlist *cmd)
 {
-	if (shell->child == 0)
+	if (shell->child == 0 && shell->cmd_nbr > 1)
 	{
-		if (cmd->redir_output || !shell->pipe)
+		if (cmd->redir_output != NULL)
 		{
 			if (redirect_io(cmd->fd_in, cmd->fd_out))
 				return (error_manager(11));
 		}
-		else if (redirect_io(cmd->fd_in, shell->pipe[1]))
+		else
+		{	
+			if (redirect_io(cmd->fd_in, shell->pipe[1]))
 				return (error_manager(11));
+		}
 	}
-	else if (shell->child == shell->cmd_nbr - 1)
+	else if (shell->child == shell->cmd_nbr - 1 && shell->cmd_nbr > 1)
 	{
 		if (cmd->redir_input)
 		{
 			if (redirect_io(cmd->fd_in, cmd->fd_out))
 				return (error_manager(11));
 		}
-		else if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out))
+		else
+		{
+			if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out))
 				return (error_manager(11));
+		}
 	}
 	return (0);
 }

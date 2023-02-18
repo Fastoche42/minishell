@@ -16,27 +16,34 @@ int	redirect_io(int input, int output)
 {
 	if (dup2(input, STDIN_FILENO) == -1)
 	{
+		fprintf(stderr, "PIPE: %d", input);
+		fprintf(stderr, "The input redir failed\n");
 		return (1);
 	}
 	if (dup2(output, STDOUT_FILENO) == -1)
 	{
+		fprintf(stderr, "The output redir failed\n");
 		return (1);
 	}
+	if (input != STDIN_FILENO)
+		close(input);
+	if (output != STDOUT_FILENO)
+		close(output);
 	return (0);
 }
 
 static int	child(t_var *shell, t_cmdlist *cmd)
 {
 	if ((shell->child == 0) || (shell->child == shell->cmd_nbr - 1))
-		redir_first_last(shell, cmd);
-	else
-		redir_other(shell, cmd);
-	if (shell->cmdlist)
 	{
-		close_fds(shell); // à verifier
-		printf("close_fds from child\n");
+		redir_first_last(shell, cmd);
 	}
-	if (cmd->cmd_arg == NULL || cmd->cmd_path == NULL)
+	else
+	{
+		redir_other(shell, cmd);
+	}
+	close_fds(shell); // à verifier
+	if (cmd->cmd_arg == NULL || (!is_builtin(cmd->cmd_arg[0]) && cmd->cmd_path == NULL))
 		return (error_manager(10));
 	if (which_command(shell, cmd) != 0)
 		return (error_manager(10));
@@ -49,11 +56,7 @@ static int	parent(t_var *shell)
 	int		status;
 	int		exit_code;
 
-	if (shell->cmdlist)
-	{
-		close_fds(shell); // à vérifier
-		printf("close_fds from parent\n");
-	}
+	close_pipe_fds(shell); // à vérifier
 	shell->child--;
 	exit_code = 1;
 	while (shell->child >= 0)
@@ -66,60 +69,24 @@ static int	parent(t_var *shell)
 		}
 		shell->child--;
 	}
-	free(shell->pipe);
-	free(shell->pids);
+	free(shell->pipe); // a enlever une fois que la fonction pour reinit est faite
+	free(shell->pids); // a enlever une fois que la fonction pour reinit est faite
 	return (exit_code);
 }
-
-/*
-int	pipex(t_var *shell)
-{
-	int		exit_code;
-	t_var	*ptr;
-
-	ptr = shell;
-	if (shell->cmd_nbr > 1) // à vérifier
-		if (pipe(shell->pipe) == -1)
-			return (error_manager(6));
-	shell->child = 0;
-	while (shell->child < shell->cmd_nbr && ptr->cmdlist) // boucle à modifier par Jojo (done)
-	{
-		ptr->cmdlist->cmd_path = get_cmd(ptr->cmdlist->cmd_arg[0], shell);
-		if (!ptr->cmdlist->cmd_path)
-			return (ft_putendl_fd(ft_strjoin("Command not found: ", ptr->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror 
-		if (file_handler(ptr->cmdlist)) // gestion des redirections (part 1)
-			return (error_manager(12));
-		shell->pids[shell->child] = fork();
-		if (shell->pids[shell->child] == -1)
-			return (error_manager(7));
-		else if (shell->pids[shell->child] == 0)
-			if (child(shell, ptr->cmdlist) > 0)
-				return (errno);
-		free_strs(ptr->cmdlist->cmd_path, ptr->cmdlist->cmd_arg); // à vérifier // à adapter
-		shell->child++;
-		ptr->cmdlist = ptr->cmdlist->next;
-	}
-	exit_code = parent(shell);
-	if (shell->heredoc > 0)
-		if (ft_unlink_heredocs(shell) > 0)
-			return (error_manager(10));
-	return (exit_code);
-}
-*/
 
 int	pipex(t_var *shell)
 {
 	int		exit_code;
 
-	if (shell->cmd_nbr > 1) // à vérifier
-		if (pipe(shell->pipe) == -1)
-			return (error_manager(6));
 	shell->child = 0;
-	while (shell->child < shell->cmd_nbr && shell->cmdlist) // boucle à modifier par Jojo (done)
+	while ((shell->child < shell->cmd_nbr) && shell->cmdlist)
 	{
-		shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
-		if (!shell->cmdlist->cmd_path)
-			return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror 
+		if (!is_builtin(shell->cmdlist->cmd_arg[0]))
+		{
+			shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
+			if (!shell->cmdlist->cmd_path)
+				return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror */
+		}
 		if (file_handler(shell->cmdlist)) // gestion des redirections (part 1)
 			return (error_manager(12));
 		shell->pids[shell->child] = fork();
@@ -128,7 +95,6 @@ int	pipex(t_var *shell)
 		else if (shell->pids[shell->child] == 0)
 			if (child(shell, shell->cmdlist) > 0)
 				return (errno);
-		free_strs(shell->cmdlist->cmd_path, shell->cmdlist->cmd_arg); // à vérifier // à adapter
 		shell->child++;
 		shell->cmdlist = shell->cmdlist->next;
 	}
