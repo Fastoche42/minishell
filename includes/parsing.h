@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:04:36 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/17 11:02:00 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:16:29 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ typedef struct s_cmdlist
 {
 	char				*brut;
 	char				*cmd_path;
-	char				*cmd_arg[20];
-	int					type;
+	char				**cmd_arg;
+	enum e_type			type;
+	char				*start;
+	char				*end;
 	char				*redir_input;	//filename or NULL
 	char				*delim_hdoc;	//exit word or NULL
 	char				*redir_output;	//filename or NULL

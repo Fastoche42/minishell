@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/17 13:28:49 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:16:20 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ int	free_cmdlist(t_cmdlist **head)
 		free(ptr->redir_input);
 		free(ptr->redir_output);
 		*head = (*head)->next;
-		ptr->next = NULL;
 		free(ptr);
 	}
-	head = NULL;
+	head = NULL; // utile ??
 	return (0);
 }
 
@@ -71,7 +70,6 @@ void init_shell(shell *sh) {
 	sh->flag_append = 0;
 	sh->delim_hdoc = NULL;
 }
-*/
 
 static void parse_one_cmd(t_cmdlist ptr)
 {
@@ -175,25 +173,70 @@ static void parse_one_cmd(t_cmdlist ptr)
 	}
 }
 //==================================================================
-static void parse_one_cmd(t_cmdlist ptr, t_env *env)
+*/
+
+static int expand_dollar(t_cmdlist *ptr, t_env *env)
 {
 	e_type type;
+	char *start;
+	char *end;
+	char	*str;
+	char	*str2;
+	char	*var;
+
+	type = NIL;
+	start = ptr->brut;
+	end = start;
+	str = NULL;
+	while (*end)
+	{
+		if (*end == '\'' && type != DQ)
+			while (*(end+1) != '\'')
+				end++;
+			end++;
+		else if (*end == '$')
+		{
+			if ((*(end+1) == '?') || (isalpha(*(end+1))))
+			{
+				str2 = ft_strndup (*start, (end - start));
+				str = ft_realloc(str, strlen(str) + strlen(str2) + 1);
+                ft_strcat(str, str2);
+				free (str2);
+				if (*(end+1) == '?')
+					str2 = ft_itoa(g_exit_code);
+				else
+					str2 = replace_by_var(end);
+				str = ft_realloc(str, strlen(str) + strlen(str2) + 1);
+                ft_strcat(str, str2);
+				free (str2);
+			}
+		}
+		end++;
+	}
+	free (ptr->brut);
+	ptr->brut = buffer;
+}
+
+static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
+{
+	enum e_type	type;
 	int in_single_quotes;
 	int in_double_quotes;
-	const char *start;
-	const char *end;
+	char *start;
+	char *end;
 	char	*str;
 	int	a;
 	int length;
 
-	e_type = NIL;
+	expand_dollar(ptr, env);
+	type = NIL;
 	in_single_quotes = 0;
 	in_double_quotes = 0;
 	start = ptr->brut;
 	end = start;
 	a = 0; // arg counter max 20
-	ptr->cmd_arg[a] = malloc(sizeof(char));
-	ptr->cmd_arg[a] = 0; //voir si ft_strjoin mieux
+	ptr->cmd_arg = malloc(sizeof(char));
+	ptr->cmd_arg = 0;
 	while (*end)
 	{
 		if (*end == '$' && type != SQ)
@@ -298,7 +341,7 @@ static int parse_pipes(t_var *shell)
 		return (error_manager(20));
 	nbn++;
 	printf("nb noeuds: %d\n", nbn);
-	return (1);
+	return (0);
 }
 
 int	parsing(t_var *shell)
@@ -307,12 +350,14 @@ int	parsing(t_var *shell)
 
 	// parse "|" avoiding quotes + fill cmdlist
 	if (!parse_pipes(shell))
-		return (0);
+		return (1);
 
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
-		parse_one_cmd(ptr, shell->env);
+		if (parse_one_cmd(ptr, shell->env));
+		 	// erreur rencontree => free cmdlist
+			return(1);
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
@@ -335,5 +380,5 @@ int	parsing(t_var *shell)
 	ptr->cmd_path = "/bin/cat";
 	ptr->cmd_arg = ft_split("cat -e", ' ');
 */
-	return (1);
+	return (0);
 }
