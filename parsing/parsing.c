@@ -3,120 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/21 01:13:53 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/21 11:37:17 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-//==================================================================
-static void parse_one_cmd(t_cmdlist ptr)
-{
-	int i = 0, j = 0, k = 0, l = 0, m = 0, n = 0;
-	char buffer[MAX_LEN];
-	char var[MAX_LEN];
-	int	i; // parcours de la chaine
-	int len;
-
-	len = strlen(ptr->brut);
-	i = 0;
-	while (i < len)
-	{
-		// Skip whitespaces
-		while (ptr->brut[i] == ' ' || ptr->brut[i] == '\t')
-			i++;
-		j = i;
-		// Handle redirection
-		if (ptr->brut[i] == '<' || ptr->brut[i] == '>')
-		{
-			char redir = ptr->brut[i];
-			int j = i + 1;
-			// Skip whitespaces
-			while (ptr->brut[j] == ' ' || ptr->brut[j] == '\t')
-				j++;
-			if (ptr->brut[j] == '>')
-			{
-				sh->flag_append = 1;
-				j++;
-				// Skip whitespaces
-				while (ptr->brut[j] == ' ' || ptr->brut[j] == '\t')
-					j++;
-			}
-			// Skip whitespaces
-			while (ptr->brut[j] == ' ' || ptr->brut[j] == '\t')
-				j++;
-			if (ptr->brut[j] == '\0')
-			{
-				// Error: expected file name after redirection operator
-				strcpy(sh->result, "Error: expected file name after redirection operator\n");
-				return;
-			}
-			k = j;
-			while (ptr->brut[k] != '\0' && ptr->brut[k] != ' ' && ptr->brut[k] != '\t')
-				k++;
-			// Store the redirection file name
-			char *file_name = (char *) malloc(k - j + 1);
-			memcpy(file_name, &ptr->brut[j], k - j);
-			file_name[k - j] = '\0';
-			if (redir == '<')
-			{
-				// Input redirection
-				sh->redir_input = file_name;
-			}
-			else
-			{
-				// Output redirection
-				sh->redir_output = file_name;
-				if (redir == '>')
-					sh->flag_append = 0;
-				else
-				{
-					// redir == '>>'
-					sh->flag_append = 1;
-				}
-			}
-			i = k - 1;
-		}
-		else if (ptr->brut[i] == ''')
-		{
-			// Single quote handling
-			int j = i + 1;
-			while (ptr->brut[j] != ''' && ptr->brut[j] != '\0')
-				j++;
-			if (ptr->brut[j] == '\0')
-			{
-				// Error: unterminated single quote
-				strcpy(sh->result, "Error: unterminated single quote\n");
-				return;
-			}
-			// Copy the single-quoted string to the argument array
-			char *arg = (char *) malloc(j - i);
-			memcpy(arg, &ptr->brut[i + 1], j - i - 1);
-			arg[j - i - 1] = '\0';
-			sh->argv[sh->argc++] = arg;
-			i = j;
-		}
-		else
-		{
-			// Normal argument handling
-		int j = i + 1;
-		while (ptr->brut[j] != '\0' && ptr->brut[j] != ' ' && ptr->brut[j] != '\t') {
-			j++;
-		}
-		// Copy the argument to the argument array
-		char *arg = (char *) malloc(j - i + 1);
-		memcpy(arg, &ptr->brut[i], j - i);
-		arg[j - i] = '\0';
-		sh->argv[sh->argc++] = arg;
-		i = j - 1;
-	}
-}
-//==================================================================
-*/
 static int find_redir(t_cmdlist *ptr)
 {
 	char	*start;
@@ -321,6 +216,9 @@ int	parsing(t_var *shell)
 			return (1);
 		if (find_redir(ptr))
 			return (1);
+		//ptr->cmd_arg = (split_token(ptr))
+		//if (!(ptr->cmd_arg))
+		//	return (1);
 		//if (parse_one_cmd(ptr, shell->env))
 		 	// erreur rencontree => free cmdlist
 		//	return (1);

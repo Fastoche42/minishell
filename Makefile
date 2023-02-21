@@ -50,6 +50,7 @@ UTILS =	utils/close_fds.c\
 		utils/is_builtin.c
 
 PARSING =	parsing/parsing.c\
+			parsing/split_token.c\
 			parsing/parsing_utils.c
 
 EXEC =	exec/signal.c\
