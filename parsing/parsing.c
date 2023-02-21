@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/21 11:37:17 by event            ###   ########.fr       */
+/*   Updated: 2023/02/21 19:45:51 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int find_redir(t_cmdlist *ptr)
 			end++;
 			if (*end == '>')
 				ptr->flag_append = 1;
-			ptr->redir_output = find_redirfile(&end);
+			//ptr->redir_output = find_redirfile(&end);
 		}
 		end++;
 	}
@@ -60,7 +60,7 @@ static int expand_dollar(t_cmdlist *ptr, t_env *env)
 			skip_car(&end, '\'');
 		else if (*end == '$')
 		{
-			if (*(end+1) == '?' || isalpha(*(end+1)) || *(end+1) == '_')
+			if (*(end+1) == '?' || ft_isalpha(*(end+1)) || *(end+1) == '_')
 			{
 				if (end > start)
 					ft_concat(&str, ft_strndup (start, (end - start)));
@@ -82,6 +82,7 @@ static int expand_dollar(t_cmdlist *ptr, t_env *env)
 	return (0);
 }
 
+	/*
 static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 {
 	enum e_type	type;
@@ -93,7 +94,6 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 	int	a;
 	int length;
 
-	/*
 	type = NIL;
 	in_single_quotes = 0;
 	in_double_quotes = 0;
@@ -132,10 +132,17 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 		}
 		end++;
 	}
+<<<<<<< HEAD
 	
 	return (0);
 }
 */
+=======
+	return (0);
+}
+	*/
+
+>>>>>>> c1b63838c724f868be61be53274ba3e8d748c1be
 static int parse_pipes(t_var *shell)
 {
 	int in_single_quotes;
@@ -145,7 +152,6 @@ static int parse_pipes(t_var *shell)
 	t_cmdlist *current;
 	char *token;
 	int length;
-	int	nbn = 0; // tempoR pour debog
 
 	in_single_quotes = 0;
 	in_double_quotes = 0;
@@ -174,7 +180,6 @@ static int parse_pipes(t_var *shell)
 				current = current->next;
 			}
 			current->brut = token;
-			nbn++;
 
 			start = end + 1;
 		}
@@ -197,8 +202,6 @@ static int parse_pipes(t_var *shell)
 	current->brut = token;
 	if (in_single_quotes || in_double_quotes)
 		return (error_manager(20));
-	nbn++;
-	printf("nb noeuds: %d\n", nbn);
 	return (0);
 }
 
@@ -214,11 +217,11 @@ int	parsing(t_var *shell)
 	{
 		if (expand_dollar(ptr, shell->env))
 			return (1);
-		if (find_redir(ptr))
-			return (1);
-		//ptr->cmd_arg = (split_token(ptr))
-		//if (!(ptr->cmd_arg))
+		//if (find_redir(ptr))
 		//	return (1);
+		ptr->cmd_arg = (split_token(ptr->brut));
+		if (!(ptr->cmd_arg))
+			return (1);
 		//if (parse_one_cmd(ptr, shell->env))
 		 	// erreur rencontree => free cmdlist
 		//	return (1);

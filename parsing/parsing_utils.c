@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	skip_car(char **pos, char c)
+void	skip_car(const char **pos, char c)
 {
 	if (**pos != c)
 		return ;
@@ -36,7 +36,11 @@ int	free_cmdlist(t_cmdlist **head)
 	{
 		ptr = *head;
 		*head = (*head)->next;
+<<<<<<< HEAD
 		free(ptr->brut);
+=======
+		free_strs(ptr->brut, NULL);
+>>>>>>> c1b63838c724f868be61be53274ba3e8d748c1be
 		free_strs(ptr->cmd_path, ptr->cmd_arg);
 		free_strs(ptr->redir_input, NULL);
 		free_strs(ptr->redir_output, NULL);
@@ -76,7 +80,7 @@ char	*replace_by_var(char **pos, t_env *env)
 		i++;
 	var = ft_strndup(*pos, i);
 	*pos += (i - 1);
-	printf("<%c> ", **pos);
+	//printf("<%c> ", **pos);
 	while (env)
 	{
 		if (!ft_strcmp(var, env->name))
