@@ -97,7 +97,7 @@ char		*replace_by_var(char **pos, t_env *env);
 void		ft_concat(char **str, char *str2);
 void		skip_car(char **pos, char c);
 
-char		**split_token(char const *s, char c)
+char		**split_token(char const *s, char c);
 
 //----------------exec----------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023
@@ -136,5 +136,6 @@ int		number_of_cmd(t_var *shell);
 int		free_all(t_var *shell);
 int		exit_minishell(t_var *shell, int exit_code);
 int		is_builtin(char *cmd);
+void	reinit_struct(t_var *shell);
 
 #endif

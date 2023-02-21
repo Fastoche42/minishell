@@ -37,14 +37,13 @@ int	free_cmdlist(t_cmdlist **head)
 		ptr = *head;
 		*head = (*head)->next;
 		free(ptr->brut);
-		//free_strs(NULL, ptr->cmd_arg);
-		free(ptr->cmd_path);
-		free(ptr->redir_input);
-		free(ptr->redir_output);
-		free(ptr->delim_hdoc);
+		free_strs(ptr->cmd_path, ptr->cmd_arg);
+		free_strs(ptr->redir_input, NULL);
+		free_strs(ptr->redir_output, NULL);
+		free_strs(ptr->delim_hdoc, NULL);
 		free(ptr);
 	}
-	//head = NULL; // utile ??
+	// head = NULL; // utile ??
 	return (0);
 }
 

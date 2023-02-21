@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/*
 static int find_redir(t_cmdlist *ptr)
 {
 	char	*start;
@@ -132,10 +132,10 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 		}
 		end++;
 	}
-	*/
+	
 	return (0);
 }
-
+*/
 static int parse_pipes(t_var *shell)
 {
 	int in_single_quotes;
@@ -205,7 +205,7 @@ static int parse_pipes(t_var *shell)
 int	parsing(t_var *shell)
 {
 	t_cmdlist	*ptr; //pointeur de parcours
-
+/*
 	if (parse_pipes(shell))
 		return (1);
 
@@ -225,19 +225,24 @@ int	parsing(t_var *shell)
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
- /*
+ */
 	shell->cmdlist = new_cmdnode();
 	if (!shell->cmdlist)
 		return (0);
 
 	ptr = shell->cmdlist;
-	ptr->cmd_path = "/bin/ls";
+	//ptr->cmd_path = "/bin/ls";
 	ptr->cmd_arg = ft_split("ls -l", ' ');
 
 	ptr->next = new_cmdnode();
 	ptr = ptr->next;
-	ptr->cmd_path = "/usr/bin/head";
-	ptr->cmd_arg = ft_split("head -3", ' ');
-*/
+	//ptr->cmd_path = "/usr/bin/head";
+	ptr->cmd_arg = ft_split("grep PATH", ' ');
+
+	ptr->next = new_cmdnode();
+	ptr = ptr->next;
+	//ptr->cmd_path = "/usr/bin/head";
+	ptr->cmd_arg = ft_split("wc -l", ' ');
+
 	return (0);
 }

@@ -49,13 +49,12 @@ int	main(int argc, char **argv, char **envp)
 				break ;
 			}
 			if (!parsing(shell))
-				print_cmdlist(shell->cmdlist);
+				//print_cmdlist(shell->cmdlist);
 				//temporaire test parsing only
-				/*if (!init_process(shell))
+				if (!init_process(shell))
 					g_exit_code = pipex(shell);
-				*/
-			free_cmdlist(&(shell->cmdlist));
-			free(shell->input);
+			//free_cmdlist(&(shell->cmdlist));
+			reinit_struct(shell);
 		}
 	}
 	exit_minishell(shell, g_exit_code);

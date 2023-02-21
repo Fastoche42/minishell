@@ -26,11 +26,13 @@ void	close_pipe_fds(t_var *shell)
 
 void	close_fds(t_var *shell)
 {
-	
-	if (shell->cmdlist->fd_in > 2)
-		close(shell->cmdlist->fd_in);
-	if (shell->cmdlist->fd_out > 2)
-		close(shell->cmdlist->fd_out);
+	if (shell->cmdlist)
+	{
+		if (shell->cmdlist->fd_in > 2)
+			close(shell->cmdlist->fd_in);
+		if (shell->cmdlist->fd_out > 2)
+			close(shell->cmdlist->fd_out);
+	}
 	if (shell->child == 0)
 		close(shell->pipe[1]);
 	else if (shell->child == shell->cmd_nbr - 1)

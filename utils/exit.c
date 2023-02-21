@@ -13,8 +13,12 @@ int	free_all(t_var *shell) //esquisse de fonction pour free tout proprement (en 
 		env_tmp = env_ptr;
 		env_ptr = env_ptr->next;
 		free(env_tmp->name);
+		env_tmp->name = NULL;
 		if (env_tmp->value)
+		{
 			free(env_tmp->value);
+			env_tmp->value = NULL;
+		}
 		free(env_tmp);
 	}
 	shell->env = NULL;
@@ -23,31 +27,41 @@ int	free_all(t_var *shell) //esquisse de fonction pour free tout proprement (en 
 	{
 		cmd_tmp = cmd_ptr;
 		cmd_ptr = cmd_ptr->next;
-		if (cmd_tmp->cmd_path)
+		if (cmd_tmp->cmd_path != NULL)
+		{
 			free(cmd_tmp->cmd_path);
-		if (cmd_tmp->cmd_arg)
+			cmd_tmp->cmd_path = NULL;
+		}
+		if (cmd_tmp->cmd_arg != NULL)
+		{
 			free(cmd_tmp->cmd_arg);
-		if (cmd_tmp->redir_input)
+			cmd_tmp->cmd_arg = NULL;
+		}
+		if (cmd_tmp->redir_input != NULL)
+		{
 			free(cmd_tmp->redir_input);
-		if (cmd_tmp->delim_hdoc)
+			cmd_tmp->redir_input = NULL;
+		}
+		if (cmd_tmp->delim_hdoc != NULL)
+		{
 			free(cmd_tmp->delim_hdoc);
-		if (cmd_tmp->redir_output)
+			cmd_tmp->delim_hdoc = NULL;
+		}
+		if (cmd_tmp->redir_output != NULL)
+		{
 			free(cmd_tmp->redir_output);
+			cmd_tmp->redir_output = NULL;
+		}
 		free(cmd_tmp);
 	}
 	shell->cmdlist = NULL;
-	if (shell->pids)
-		free(shell->pids);
-	if (shell->pipe)
-		free(shell->pipe);
-	free(shell);
 	shell = NULL;
 	return (0);
 }
 
 int	exit_minishell(t_var *shell, int exit_code)
 {
-	if (shell)
+	if (shell != NULL)
 		free_all(shell);
 	exit(exit_code % 256);
 }

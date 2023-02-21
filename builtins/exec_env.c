@@ -22,7 +22,9 @@ int	exec_env(t_env *env)
 		return (1);
 	i = -1;
 	while (envp[++i])
+	{
 		printf("%s\n", envp[i]);
+	}
 	free_strs(NULL, envp);
 	return (0);
 }

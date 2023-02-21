@@ -34,6 +34,9 @@ int	redirect_io(int input, int output)
 
 static int	child(t_var *shell, t_cmdlist *cmd)
 {
+	fprintf(stdout, "Entered child\n");
+	if (shell->child > 0)
+		close(shell->pipe[shell->child * 2 - 1]);
 	if ((shell->child == 0) || (shell->child == shell->cmd_nbr - 1))
 	{
 		redir_first_last(shell, cmd);
@@ -42,12 +45,22 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 	{
 		redir_other(shell, cmd);
 	}
-	close_fds(shell); // à verifier
+	//close_fds(shell); // à verifier
 	if (cmd->cmd_arg == NULL || (!is_builtin(cmd->cmd_arg[0]) && cmd->cmd_path == NULL))
 		return (error_manager(10));
+	ft_putendl_fd("Before which_command", 2, 0);
 	if (which_command(shell, cmd) != 0)
 		return (error_manager(10));
-	return (0);
+	/*if (shell->child > 0)
+		close(shell->pipe[shell->child * 2 - 2]);
+	if (shell->child != shell->cmd_nbr - 1)	
+		close(shell->pipe[shell->child * 2 + 1]);
+	ft_putendl_fd("Done executing", 2, 0);
+	/*if (shell->child == shell->cmd_nbr - 1)
+	{
+		close_pipe_fds(shell);
+	}*/
+	exit (0);
 }
 
 static int	parent(t_var *shell)
@@ -69,8 +82,8 @@ static int	parent(t_var *shell)
 		}
 		shell->child--;
 	}
-	free(shell->pipe); // a enlever une fois que la fonction pour reinit est faite
-	free(shell->pids); // a enlever une fois que la fonction pour reinit est faite
+	//free(shell->pipe); // a enlever une fois que la fonction pour reinit est faite
+	//free(shell->pids); // a enlever une fois que la fonction pour reinit est faite
 	return (exit_code);
 }
 
@@ -89,6 +102,7 @@ int	pipex(t_var *shell)
 		}
 		if (file_handler(shell->cmdlist)) // gestion des redirections (part 1)
 			return (error_manager(12));
+		printf("I'm about to fork\n");
 		shell->pids[shell->child] = fork();
 		if (shell->pids[shell->child] == -1)
 			return (error_manager(7));
@@ -97,6 +111,7 @@ int	pipex(t_var *shell)
 				return (errno);
 		shell->child++;
 		shell->cmdlist = shell->cmdlist->next;
+		usleep(100000);
 	}
 	exit_code = parent(shell);
 	if (shell->heredoc > 0)

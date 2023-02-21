@@ -36,9 +36,17 @@
 
 int	exec_echo(t_cmdlist *cmd) // nouvelle version corrigée
 {
-	if (cmd->cmd_arg[1])
-		printf("%s", cmd->cmd_arg[1]);
-	if (ft_strcmp(cmd->cmd_arg[2], "-n") != 0)
+	int		i;
+
+	i = 1;
+	if (cmd->cmd_arg[1] == "-n")
+		i++;
+	while (cmd->cmd_arg[i])
+	{
+		printf("%s", cmd->cmd_arg[i]);
+		i++;
+	}
+	if (ft_strcmp(cmd->cmd_arg[1], "-n") != 0)
 		printf("\n");
 	return (0);
 }
