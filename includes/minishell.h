@@ -24,10 +24,40 @@
 # include <readline/history.h>
 # include <errno.h>
 # include "../Libft/libft.h"
-# include "parsing.h"
+//# include "parsing.h"
+
+#define MAX_LEN 4096
 
 // //----------------global variable----------------//
-// extern int	g_exit_code;
+extern int	g_exit_code;
+
+enum e_type {
+	NIL,
+	WORD,
+	SQ,
+	DQ,
+	TOKEN_CD,
+	TOKEN_PATH,
+	TOKEN_OPTION,
+	TOKEN_STRING
+};
+
+typedef struct s_cmdlist
+{
+	char				*brut;
+	char				*cmd_path;
+	char				**cmd_arg;
+	enum e_type			type;
+	char				*start;
+	char				*end;
+	char				*redir_input;	//filename or NULL
+	char				*delim_hdoc;	//exit word or NULL
+	char				*redir_output;	//filename or NULL
+	int					flag_append;	//flag
+	int					fd_in; // initialiser à 0
+	int					fd_out; // initialiser à 1
+	struct s_cmdlist	*next;
+}					t_cmdlist;
 
 //----------------struct----------------//
 typedef struct s_env {
@@ -59,7 +89,14 @@ int		init_process(t_var *shell);
 void	free_mem(t_var *shell);
 
 //---------------parsing------------------//
-int		parsing(t_var *shell);
+int			parsing(t_var *shell);
+
+t_cmdlist	*new_cmdnode(void);
+int			free_cmdlist(t_cmdlist **head);
+char		*replace_by_var(char **pos, t_env *env);
+void		ft_concat(char **str, char *str2);
+void		skip_car(char **pos, char c);
+
 
 //----------------exec----------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023
@@ -98,6 +135,5 @@ int		number_of_cmd(t_var *shell);
 int		free_all(t_var *shell);
 int		exit_minishell(t_var *shell, int exit_code);
 int		is_builtin(char *cmd);
-
 
 #endif

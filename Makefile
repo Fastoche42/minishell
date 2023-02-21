@@ -47,8 +47,10 @@ BUILTINS =	builtins/exec_cd.c\
 UTILS =	utils/close_fds.c\
 		utils/exit.c\
 		utils/build_envp.c\
+		utils/is_builtin.c
 
-PARSING = parsing/parsing.c
+PARSING =	parsing/parsing.c\
+			parsing/parsing_utils.c
 
 EXEC =	exec/signal.c\
 		exec/which_command.c

@@ -3,36 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fl-hote <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/02 12:45:50 by fl-hote            #+#    #+#             */
-/*   Updated: 2022/03/12 11:37:21 by fl-hote           ###   ########.fr       */
+/*   Created: 2022/02/23 16:46:47 by fl-hote           #+#    #+#             */
+/*   Updated: 2022/03/08 18:58:19 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_strcpy(char *dest, char *src)
+char	*ft_strdup(const char *src)
 {
-	int	x;
+	char	*dest;
+	int		i;
 
-	x = 0;
-	while (src[x] != '\0')
-	{
-		dest[x] = src[x];
-		x++;
-	}
-	dest[x] = src[x];
-	return (dest);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*a;
-
-	//a = malloc((ft_strlen(s1) + 1) * sizeof(*a));
-	a = malloc((ft_strlen(s1) + 1) * sizeof(char)); // A valider
-	if (a == 0)
+	dest = malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (!dest)
 		return (NULL);
-	return (ft_strcpy(a, (char *)s1));
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

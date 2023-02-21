@@ -16,7 +16,7 @@ void* ft_realloc(void* ptr, size_t size)
 {
     void* new_ptr;
 
-    if (ptr == NULL)
+    if (!ptr)
         return malloc(size);
     else if (size == 0)
     {

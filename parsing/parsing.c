@@ -3,74 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/19 21:16:20 by event            ###   ########.fr       */
+/*   Updated: 2023/02/21 01:13:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	free_cmdlist(t_cmdlist **head)
-{
-	t_cmdlist	*ptr;
-
-	while (*head)
-	{
-		ptr = *head;
-		free(ptr->brut);
-		//free_strs(NULL, ptr->cmd_arg);
-		//free(ptr->cmd_path);
-		free(ptr->redir_input);
-		free(ptr->redir_output);
-		*head = (*head)->next;
-		free(ptr);
-	}
-	head = NULL; // utile ??
-	return (0);
-}
-
-static t_cmdlist	*new_cmdnode(void)
-{
-	t_cmdlist	*node;
-
-	node = malloc(sizeof(t_cmdlist));
-	if (!node)
-		return (NULL);
-	node->brut = NULL;
-	node->cmd_path = NULL;
-	node->redir_input = NULL;
-	node->delim_hdoc = NULL;
-	node->redir_output = NULL;
-	node->flag_append = 0;
-	node->fd_in = 0;
-	node->fd_out = 1;
-	node->next = NULL;
-	return (node);
-}
-
 /*
 //==================================================================
-typedef struct shell {
-	char **argv;
-	int argc;
-	char *redir_input;
-	char *redir_output;
-	int flag_append;
-	char *delim_hdoc;
-	char result[MAX_LEN];
-} shell;
-
-void init_shell(shell *sh) {
-	sh->argv = NULL;
-	sh->argc = 0;
-	sh->redir_input = NULL;
-	sh->redir_output = NULL;
-	sh->flag_append = 0;
-	sh->delim_hdoc = NULL;
-}
-
 static void parse_one_cmd(t_cmdlist ptr)
 {
 	int i = 0, j = 0, k = 0, l = 0, m = 0, n = 0;
@@ -174,47 +117,74 @@ static void parse_one_cmd(t_cmdlist ptr)
 }
 //==================================================================
 */
-
-static int expand_dollar(t_cmdlist *ptr, t_env *env)
+static int find_redir(t_cmdlist *ptr)
 {
-	e_type type;
-	char *start;
-	char *end;
+	char	*start;
+	char	*end;
 	char	*str;
 	char	*str2;
-	char	*var;
 
-	type = NIL;
 	start = ptr->brut;
 	end = start;
 	str = NULL;
 	while (*end)
 	{
-		if (*end == '\'' && type != DQ)
-			while (*(end+1) != '\'')
-				end++;
+		if (*end == '\'')
+			skip_car (&end, '\'');
+		else if (*end == '"')
+			skip_car (&end, '"');
+		else if (*end == '>')
+		{
+			if (ptr->redir_output) // multi non géré
+				return (error_manager(21));
+			if (end > start)
+				ft_concat(&str, ft_strndup (start, (end - start)));
 			end++;
+			if (*end == '>')
+				ptr->flag_append = 1;
+			ptr->redir_output = find_redirfile(&end);
+		}
+		end++;
+	}
+	return (0);
+}
+
+static int expand_dollar(t_cmdlist *ptr, t_env *env)
+{
+	char	*start;
+	char	*end;
+	char	*str;
+	char	*str2;
+
+	start = ptr->brut;
+	end = start;
+	str = NULL;
+	while (*end)
+	{
+		if (*end == '\'')
+			skip_car(&end, '\'');
 		else if (*end == '$')
 		{
-			if ((*(end+1) == '?') || (isalpha(*(end+1))))
+			if (*(end+1) == '?' || isalpha(*(end+1)) || *(end+1) == '_')
 			{
-				str2 = ft_strndup (*start, (end - start));
-				str = ft_realloc(str, strlen(str) + strlen(str2) + 1);
-                ft_strcat(str, str2);
-				free (str2);
-				if (*(end+1) == '?')
+				if (end > start)
+					ft_concat(&str, ft_strndup (start, (end - start)));
+				end++;
+				if (*end == '?')
 					str2 = ft_itoa(g_exit_code);
 				else
-					str2 = replace_by_var(end);
-				str = ft_realloc(str, strlen(str) + strlen(str2) + 1);
-                ft_strcat(str, str2);
-				free (str2);
+					str2 = replace_by_var(&end, env);
+				ft_concat(&str, str2);
+				start = end + 1;
 			}
 		}
 		end++;
 	}
+	if (end > start)
+		ft_concat(&str, ft_strndup (start, (end - start)));
 	free (ptr->brut);
-	ptr->brut = buffer;
+	ptr->brut = str;
+	return (0);
 }
 
 static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
@@ -228,7 +198,7 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 	int	a;
 	int length;
 
-	expand_dollar(ptr, env);
+	/*
 	type = NIL;
 	in_single_quotes = 0;
 	in_double_quotes = 0;
@@ -239,15 +209,6 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 	ptr->cmd_arg = 0;
 	while (*end)
 	{
-		if (*end == '$' && type != SQ)
-		{
-			end++;
-			if (*end == '?')
-			{
-				str = ft_itoa(g_exit_code);
-				// join à cmd_arg
-			}
-		}
 		if (type != SQ && type != DQ)
 		{
 			if (*end == '\'') //début ' => stocker jusquà '
@@ -276,6 +237,8 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 		}
 		end++;
 	}
+	*/
+	return (0);
 }
 
 static int parse_pipes(t_var *shell)
@@ -348,16 +311,19 @@ int	parsing(t_var *shell)
 {
 	t_cmdlist	*ptr; //pointeur de parcours
 
-	// parse "|" avoiding quotes + fill cmdlist
-	if (!parse_pipes(shell))
+	if (parse_pipes(shell))
 		return (1);
 
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
-		if (parse_one_cmd(ptr, shell->env));
+		if (expand_dollar(ptr, shell->env))
+			return (1);
+		if (find_redir(ptr))
+			return (1);
+		//if (parse_one_cmd(ptr, shell->env))
 		 	// erreur rencontree => free cmdlist
-			return(1);
+		//	return (1);
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
@@ -374,11 +340,6 @@ int	parsing(t_var *shell)
 	ptr = ptr->next;
 	ptr->cmd_path = "/usr/bin/head";
 	ptr->cmd_arg = ft_split("head -3", ' ');
-
-	ptr->next = new_cmdnode();
-	ptr = ptr->next;
-	ptr->cmd_path = "/bin/cat";
-	ptr->cmd_arg = ft_split("cat -e", ' ');
 */
 	return (0);
 }

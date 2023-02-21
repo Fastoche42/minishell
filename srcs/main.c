@@ -16,7 +16,6 @@ int g_exit_code;
 
 static void	print_cmdlist(t_cmdlist *ptr)
 {
-	//while (ptr && ptr->brut)
 	while (ptr)
 	{
 		printf("'%s'\n", ptr->brut);
@@ -51,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (!parsing(shell))
 				print_cmdlist(shell->cmdlist);
-				temporaire test parsing only
+				//temporaire test parsing only
 				/*if (!init_process(shell))
 					g_exit_code = pipex(shell);
 				*/
