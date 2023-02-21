@@ -16,10 +16,18 @@ int g_exit_code;
 
 static void	print_cmdlist(t_cmdlist *ptr)
 {
+	int		i;
+
 	while (ptr)
 	{
 		printf("'%s'\n", ptr->brut);
 		printf("i:%s o:%s hd:%s app:%d\n", ptr->redir_input, ptr->redir_output, ptr->delim_hdoc, ptr->flag_append);
+		i=-1;
+		while (ptr->cmd_arg[++i])
+		{
+			printf("[%s]  ", ptr->cmd_arg[i]);
+		}
+		printf("\n");
 		ptr = ptr->next;
 	}
 }
