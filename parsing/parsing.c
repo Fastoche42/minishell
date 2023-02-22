@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/22 16:52:43 by event            ###   ########.fr       */
+/*   Updated: 2023/02/22 19:07:50 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int find_redir(t_cmdlist *ptr)
 	return (0);
 }
 */
-
 static int expand_dollar(t_cmdlist *ptr, t_env *env)
 {
 	char	*start;
@@ -140,12 +139,12 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 	}
 	return (0);
 }
-	*/
+*/
 
 static int parse_pipes(t_var *shell)
 {
-	int in_single_quotes;
-	int in_double_quotes;
+	int	in_single_quotes;
+	int	in_double_quotes;
 	const char *start;
 	const char *end;
 	t_cmdlist *current;
@@ -226,14 +225,14 @@ int	parsing(t_var *shell)
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
- /*
+	/*
 	shell->cmdlist = new_cmdnode();
 	if (!shell->cmdlist)
 		return (0);
 
 	ptr = shell->cmdlist;
 	//ptr->cmd_path = "/bin/ls";
-	ptr->cmd_arg = ft_split("ls -l", ' ');
+	ptr->cmd_arg = ft_split("env", ' ');
 
 	ptr->next = new_cmdnode();
 	ptr = ptr->next;
@@ -243,8 +242,12 @@ int	parsing(t_var *shell)
 	ptr->next = new_cmdnode();
 	ptr = ptr->next;
 	//ptr->cmd_path = "/usr/bin/head";
-	ptr->cmd_arg = ft_split("wc -l", ' ');
-*/
+	ptr->cmd_arg = ft_split("grep bin", ' ');
 
+	ptr->next = new_cmdnode();
+	ptr = ptr->next;
+	//ptr->cmd_path = "/usr/bin/head";
+	ptr->cmd_arg = ft_split("wc", ' ');
+*/
 	return (0);
 }

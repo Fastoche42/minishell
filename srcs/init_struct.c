@@ -101,13 +101,10 @@ int	init_process(t_var *shell)
 	shell->pids = malloc(sizeof(int) * shell->cmd_nbr);
 	if (!shell->pids)
 		return (error_manager(5));
-	if (shell->cmd_nbr > 1)
-	{
-		shell->pipe = malloc(sizeof(int) * 2 * shell->cmd_nbr - 1);
-		if (!shell->pipe)
-			return (error_manager(6));
-		if (generate_pipes(shell))
-			return (error_manager(6));
-	}
+	shell->pipe = malloc(sizeof(int) * 2 * shell->cmd_nbr);
+	if (!shell->pipe)
+		return (error_manager(6));
+	if (generate_pipes(shell))
+		return (error_manager(6));
 	return (0);
 }

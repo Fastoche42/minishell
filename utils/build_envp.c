@@ -48,7 +48,6 @@ static char	*env_strjoin(char *name, char *value)
 
 	i = 0;
 	j = 0;
-	//ret = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 2);
 	ret = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(value) + 2));
 	while (name[i])
 		ret[j++] = name[i++];
