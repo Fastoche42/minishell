@@ -14,7 +14,7 @@ int	free_all(t_var *shell) //esquisse de fonction pour free tout proprement (en 
 		env_ptr = env_ptr->next;
 		free(env_tmp->name);
 		env_tmp->name = NULL;
-		if (env_tmp->value)
+		if (env_tmp->value != NULL)
 		{
 			free(env_tmp->value);
 			env_tmp->value = NULL;

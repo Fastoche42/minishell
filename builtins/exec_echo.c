@@ -12,41 +12,28 @@
 
 #include "../includes/minishell.h"
 
-// modifiée car inutile de préciser le fd de sortie, la sortie standard aura déjà été redirigée vers le bon fd
-/*void	exec_echo(t_cmdlist *cmd)
+int	exec_echo(t_cmdlist *cmd)
 {
 	int		i;
-
-	i = 0;
-	while (cmd->cmd_arg[1][i])
-	{
-		if (cmd->cmd_arg[1][i] == '\"')
-		{
-			ft_putchar_fd('\"', cmd->fd_out);
-		}
-		else
-		{
-			ft_putchar_fd(cmd->cmd_arg[1][i], cmd->fd_out);
-		}
-		i++;
-	}
-	if (ft_strcmp(cmd->cmd_arg[2], "-n") != 0)
-		printf("\n");
-}*/
-
-int	exec_echo(t_cmdlist *cmd) // nouvelle version corrigée
-{
-	int		i;
+	int		flag;
 
 	i = 1;
-	if (cmd->cmd_arg[1] == "-n")
-		i++;
-	while (cmd->cmd_arg[i])
+	flag = 0;
+	if (ft_strcmp(cmd->cmd_arg[i], "-n") == 0)
 	{
-		printf("%s", cmd->cmd_arg[i]);
+		flag = 1;
+		i = i + 1;
+	}
+	fprintf(stderr, "flag = %d\n", flag);
+	fprintf(stderr, "i = %d\n", i);
+	while (cmd->cmd_arg[i] != NULL)
+	{
+		fprintf(stderr, "IM IN THE WHILE LOOP\n");
+		printf("%s", cmd->cmd_arg[2]);
+		printf(" ");
 		i++;
 	}
-	if (ft_strcmp(cmd->cmd_arg[1], "-n") != 0)
+	if (flag == 0)
 		printf("\n");
 	return (0);
 }
