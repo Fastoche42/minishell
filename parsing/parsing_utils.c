@@ -36,11 +36,7 @@ int	free_cmdlist(t_cmdlist **head)
 	{
 		ptr = *head;
 		*head = (*head)->next;
-<<<<<<< HEAD
-		free(ptr->brut);
-=======
 		free_strs(ptr->brut, NULL);
->>>>>>> c1b63838c724f868be61be53274ba3e8d748c1be
 		free_strs(ptr->cmd_path, ptr->cmd_arg);
 		free_strs(ptr->redir_input, NULL);
 		free_strs(ptr->redir_output, NULL);

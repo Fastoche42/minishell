@@ -43,7 +43,7 @@ static int find_redir(t_cmdlist *ptr)
 	}
 	return (0);
 }
-
+*/
 static int expand_dollar(t_cmdlist *ptr, t_env *env)
 {
 	char	*start;
@@ -132,21 +132,14 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 		}
 		end++;
 	}
-<<<<<<< HEAD
-	
 	return (0);
 }
 */
-=======
-	return (0);
-}
-	*/
 
->>>>>>> c1b63838c724f868be61be53274ba3e8d748c1be
 static int parse_pipes(t_var *shell)
 {
-	int in_single_quotes;
-	int in_double_quotes;
+	int	in_single_quotes;
+	int	in_double_quotes;
 	const char *start;
 	const char *end;
 	t_cmdlist *current;
@@ -208,7 +201,7 @@ static int parse_pipes(t_var *shell)
 int	parsing(t_var *shell)
 {
 	t_cmdlist	*ptr; //pointeur de parcours
-/*
+
 	if (parse_pipes(shell))
 		return (1);
 
@@ -228,14 +221,14 @@ int	parsing(t_var *shell)
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
- */
+	/*
 	shell->cmdlist = new_cmdnode();
 	if (!shell->cmdlist)
 		return (0);
 
 	ptr = shell->cmdlist;
 	//ptr->cmd_path = "/bin/ls";
-	ptr->cmd_arg = ft_split("ls -l", ' ');
+	ptr->cmd_arg = ft_split("env", ' ');
 
 	ptr->next = new_cmdnode();
 	ptr = ptr->next;
@@ -245,7 +238,12 @@ int	parsing(t_var *shell)
 	ptr->next = new_cmdnode();
 	ptr = ptr->next;
 	//ptr->cmd_path = "/usr/bin/head";
-	ptr->cmd_arg = ft_split("wc -l", ' ');
+	ptr->cmd_arg = ft_split("grep bin", ' ');
 
+	ptr->next = new_cmdnode();
+	ptr = ptr->next;
+	//ptr->cmd_path = "/usr/bin/head";
+	ptr->cmd_arg = ft_split("wc", ' ');
+*/
 	return (0);
 }

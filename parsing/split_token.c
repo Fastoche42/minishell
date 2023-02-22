@@ -59,6 +59,8 @@ char	**split_token(char const *s)
 	size_t	i_word;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	tab = ft_calloc((count_w(s, ' ') + 1), sizeof(char *));
 	if (!tab)
 		return (NULL);
