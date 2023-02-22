@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 				break ;
 			}
 			if (!parsing(shell))
-				//print_cmdlist(shell->cmdlist);
+				print_cmdlist(shell->cmdlist);
 				//temporaire test parsing only
 				if (!init_process(shell))
 					g_exit_code = pipex(shell);
