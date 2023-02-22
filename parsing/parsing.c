@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/21 19:45:51 by event            ###   ########.fr       */
+/*   Updated: 2023/02/22 12:02:40 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,17 +132,10 @@ static int parse_one_cmd(t_cmdlist *ptr, t_env *env)
 		}
 		end++;
 	}
-<<<<<<< HEAD
-	
-	return (0);
-}
-*/
-=======
 	return (0);
 }
 	*/
 
->>>>>>> c1b63838c724f868be61be53274ba3e8d748c1be
 static int parse_pipes(t_var *shell)
 {
 	int in_single_quotes;
