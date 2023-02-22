@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 				//temporaire test parsing only
 				//if (!init_process(shell))
 					//g_exit_code = pipex(shell);
-			//free_cmdlist(&(shell->cmdlist));
+			free_cmdlist(&(shell->cmdlist));
 			reinit_struct(shell);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/22 12:02:40 by event            ###   ########.fr       */
+/*   Updated: 2023/02/22 16:52:43 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int find_redir(t_cmdlist *ptr)
 	}
 	return (0);
 }
+*/
 
 static int expand_dollar(t_cmdlist *ptr, t_env *env)
 {
@@ -57,7 +58,12 @@ static int expand_dollar(t_cmdlist *ptr, t_env *env)
 	while (*end)
 	{
 		if (*end == '\'')
-			skip_car(&end, '\'');
+		{
+			while (end[1] != '\'')
+				end++;
+			end++;
+		}
+//		skip_car(&end, '\'');
 		else if (*end == '$')
 		{
 			if (*(end+1) == '?' || ft_isalpha(*(end+1)) || *(end+1) == '_')
@@ -201,15 +207,14 @@ static int parse_pipes(t_var *shell)
 int	parsing(t_var *shell)
 {
 	t_cmdlist	*ptr; //pointeur de parcours
-/*
 	if (parse_pipes(shell))
 		return (1);
 
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
-		if (expand_dollar(ptr, shell->env))
-			return (1);
+		//if (expand_dollar(ptr, shell->env))
+	//		return (1);
 		//if (find_redir(ptr))
 		//	return (1);
 		ptr->cmd_arg = (split_token(ptr->brut));
@@ -221,7 +226,7 @@ int	parsing(t_var *shell)
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
- */
+ /*
 	shell->cmdlist = new_cmdnode();
 	if (!shell->cmdlist)
 		return (0);
@@ -239,6 +244,7 @@ int	parsing(t_var *shell)
 	ptr = ptr->next;
 	//ptr->cmd_path = "/usr/bin/head";
 	ptr->cmd_arg = ft_split("wc -l", ' ');
+*/
 
 	return (0);
 }

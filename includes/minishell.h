@@ -95,9 +95,9 @@ t_cmdlist	*new_cmdnode(void);
 int			free_cmdlist(t_cmdlist **head);
 char		*replace_by_var(char **pos, t_env *env);
 void		ft_concat(char **str, char *str2);
-void		skip_car(const char **pos, char c);
+void		skip_car(char **pos, char c);
 
-char		**split_token(char const *s);
+char		**split_token(char *s);
 
 //----------------exec----------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023

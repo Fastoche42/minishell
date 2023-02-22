@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:32:51 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/17 11:32:51 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/22 18:58:52 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ void*	ft_realloc(void* ptr, size_t size)
 		if (new_ptr == NULL)
 			return NULL;
 		ft_memcpy(new_ptr, ptr, size);
-		free(ptr);
+		if (ptr)
+			free(ptr);
+		ptr = NULL;
 		return new_ptr;
 	}
 }

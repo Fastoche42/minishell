@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	skip_car(const char **pos, char c)
+void	skip_car(char **pos, char c)
 {
 	if (**pos != c)
 		return ;
@@ -23,7 +23,9 @@ void	skip_car(const char **pos, char c)
 	}
 	else // quotes
 	{
-		while ((*(*pos)+1) != c)
+		printf("%c %c ", (*pos[0]), (*pos[1]));
+
+		//while (*pos[1] != c)
 			(*pos)++;
 	}
 }
@@ -36,11 +38,7 @@ int	free_cmdlist(t_cmdlist **head)
 	{
 		ptr = *head;
 		*head = (*head)->next;
-<<<<<<< HEAD
-		free(ptr->brut);
-=======
 		free_strs(ptr->brut, NULL);
->>>>>>> c1b63838c724f868be61be53274ba3e8d748c1be
 		free_strs(ptr->cmd_path, ptr->cmd_arg);
 		free_strs(ptr->redir_input, NULL);
 		free_strs(ptr->redir_output, NULL);
@@ -102,7 +100,9 @@ void    ft_concat(char **str, char *str2)
 	{
 		*str = ft_realloc(*str, strlen(*str) + strlen(str2) + 1);
 		ft_strcat(*str, str2);
-		free (str2);
+		if (str2)
+			free (str2);
+		str2 = NULL;
 	}
 	else
 		*str = str2;

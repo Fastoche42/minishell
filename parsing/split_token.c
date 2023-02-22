@@ -6,30 +6,36 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/21 18:27:03 by event            ###   ########.fr       */
+/*   Updated: 2023/02/22 16:48:14 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	count_w(const char *str, const char c)
+static int	count_w(char *str, const char c)
 {
 	int	i;
 	int	is_word;
 
 	i = 0;
 	is_word = 0;
-	while (*str)
+	while (str && *str)
 	{
 		if (*str == '\'')
 		{
 			is_word = 1;
-			skip_car (&str, '\'');
+			//skip_car (&str, '\'');
+			while (str[1] != '\'')
+				str++;
+			str++;
 		}
 		else if (*str == '"')
 		{
 			is_word = 1;
-			skip_car (&str, '"');
+			//skip_car (&str, '"');
+			while (str[1] != '"')
+				str++;
+			str++;
 		}
 		else if ((*str == c) == is_word)
 		{
@@ -53,12 +59,14 @@ static char	**free_on_error(char **tab, unsigned int i)
 // voir pour utiliser free_strs(NULL, char **)
 */
 
-char	**split_token(char const *s)
+char	**split_token(char *s)
 {
 	char	**tab;
 	size_t	i_word;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	tab = ft_calloc((count_w(s, ' ') + 1), sizeof(char *));
 	if (!tab)
 		return (NULL);
