@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/24 03:18:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/24 18:43:36 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ static int	count_w(char *str, const char c)
 	return (i);
 }
 
-static size_t	jump_to_blank(char *s)
+size_t	jump_to_blank(char *s)
 {
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] && (s[i] != ' '))
 	{
 		if (s[i] == '\'')

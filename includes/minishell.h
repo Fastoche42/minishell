@@ -107,6 +107,7 @@ int			set_redirs(t_cmdlist *ptr);
 
 //-------------split token----------------//
 char		**split_token(char *s);
+size_t		jump_to_blank(char *s);
 
 //------------------exec------------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023

@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/24 16:18:59 by event            ###   ########.fr       */
+/*   Updated: 2023/02/24 18:43:36 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int expand_dollar(t_cmdlist *ptr, t_env *env)
 	return (0);
 }
 
-static char	*create_token(t_var *shell, char *start, char *end, int last)
+static char	*create_token(t_var *shell, char *start, char *end)
 {
 	int length;
 	char *token;
@@ -94,14 +94,14 @@ static int	parse_pipes(t_var *sh)
 			in_quotes = 2 - in_quotes;
 		else if (sh->end[0] == '|' && !in_quotes)
 		{
-			sh->current->brut = create_token(sh, sh->start, sh->end, 0);
+			sh->current->brut = create_token(sh, sh->start, sh->end);
 			sh->start = sh->end + 1;
 		}
 		sh->end++;
 	}
 	if (in_quotes)
 		return (error_manager(20));
-	sh->current->brut = create_token(sh, sh->start, sh->end, 0);
+	sh->current->brut = create_token(sh, sh->start, sh->end);
 	sh->current = NULL; // init protect
 	return (0);
 }
@@ -115,8 +115,8 @@ int	parsing(t_var *shell)
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
-		//if (set_redirs(ptr))
-		//	return (1);
+		if (set_redirs(ptr))
+			return (1);
 		ptr->cmd_arg = (split_token(ptr->brut));
 		if (!(ptr->cmd_arg))
 			return (1);

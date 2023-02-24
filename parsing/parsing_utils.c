@@ -79,7 +79,6 @@ char	*replace_by_var(char **pos, t_env *env)
 		i++;
 	var = ft_strndup(*pos, i);
 	*pos += (i - 1);
-	//printf("<%c> ", **pos);
 	while (env)
 	{
 		if (!ft_strcmp(var, env->name))
