@@ -16,15 +16,13 @@ LIBFT = Libft/libft.a
 
 HOST := $(shell hostname)
 ifeq ($(HOST), LAPTOP-M60DL66F)
-#	CPPFLAGS = -I/mnt/d/msys64/mingw64/include/readline
 	CPPFLAGS =
-#	LDFLAGS = -L/mnt/d/msys64/mingw64/lib
 	LDFLAGS = -lreadline
 	CFLAG = -Wall -Wextra -lreadline
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
-	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = -Wall -Wextra
+	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -g -lreadline
+	CFLAG = -Wall -Wextra -g
 endif
 
 SRCS =	srcs/main.c\
@@ -74,12 +72,12 @@ alln : all
 		norminette
 
 .c.o:
-	cc -g -o $@ -c $< $(CPPFLAGS) $(CFLAG)
+	cc -g -o $@ -c $< $(CPPFLAGS) $(CFLAG) 
 
 $(NAME) : $(OBJS)
 		$(RE_LIBFT)
 		@echo $(HOST)
-		cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
+		cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS) -fsanitize=address
 		@echo "$(GREEN)$(BOLD)Minishell Executable Created"
 clean :
 		@rm -rf $(OBJS)

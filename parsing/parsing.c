@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/24 14:57:21 by event            ###   ########.fr       */
+/*   Updated: 2023/02/24 16:18:59 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,10 @@ static int	parse_pipes(t_var *sh)
 		}
 		sh->end++;
 	}
-	sh->current->brut = create_token(sh, sh->start, sh->end, 0);
 	if (in_quotes)
 		return (error_manager(20));
+	sh->current->brut = create_token(sh, sh->start, sh->end, 0);
+	sh->current = NULL; // init protect
 	return (0);
 }
 
