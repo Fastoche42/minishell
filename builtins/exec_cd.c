@@ -46,9 +46,27 @@ static int	update_pwd(t_cmdlist *cmd, t_env *env)
 
 int	exec_cd(t_cmdlist *cmd, t_env *env)
 {
-	
-	if (chdir(cmd->cmd_arg[1]) != 0)
-		return (1);
+	t_env *ptr;
+
+	ptr = env;
+	if (*cmd->cmd_arg[1] == '-')
+	{
+		while (ptr)
+		{
+			if (!ft_strcmp("OLDPWD", ptr->name))
+				cmd->cmd_arg[1] = ft_strdup(ptr->value);
+			ptr = ptr->next;
+		}
+		if (!cmd->cmd_arg[1])
+			return (1);
+		if (chdir(cmd->cmd_arg[1]) != 0)
+			return (1);
+	}
+	else
+	{
+		if (chdir(cmd->cmd_arg[1]) != 0)
+			return (1);
+	}
 	if (update_pwd(cmd, env))
 		return (1);
 	return (0);

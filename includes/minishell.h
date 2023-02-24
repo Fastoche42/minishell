@@ -118,6 +118,7 @@ int		exec_echo(t_cmdlist *cmd); // mise à jour 05/01/2023
 int		exec_exit(t_cmdlist *cmd);
 int		exec_cd(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_export(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
+t_env	*find_export(char **tmp, t_env *env);
 int		exec_unset(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
 int		one_cmd(t_var *shell);

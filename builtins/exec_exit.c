@@ -70,7 +70,7 @@ int	exec_exit(t_cmdlist *cmd)
 	}
 	else
 	{
-		write(1, "exit\n", 5);
+		write(2, "exit\n", 5);
 		exit (ft_atoi(cmd->cmd_arg[1]));
 	}
 	return (0); // à vérifier

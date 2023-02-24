@@ -52,11 +52,11 @@ int	main(int argc, char **argv, char **envp)
 		if (shell->input && *shell->input != 0)
 		{
 			add_history(shell->input);					// y compris que des spaces
-			if (!ft_strcmp(shell->input, "exit"))		//Temporaire, ou pas....
+			/*if (!ft_strcmp(shell->input, "exit"))		//Temporaire, ou pas....
 			{
 				ft_putendl_fd("exit", 1, 0);
 				break ;
-			}
+			}*/
 			if (!parsing(shell))
 			{
 				if (*argv[1] == '1') //
