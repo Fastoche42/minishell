@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:36:49 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/07 16:02:40 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/24 16:12:31 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ void	free_strs(char *str, char **strs)
 	{
 		i = 0;
 		while (strs[i])
-		{
-			free(strs[i]);
-			i++;
-		}
+			free(strs[i++]);
 		free(strs);
 		strs = NULL;
 	}

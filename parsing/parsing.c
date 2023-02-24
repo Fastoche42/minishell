@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/24 02:02:14 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/24 16:18:59 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static char	*create_token(t_var *shell, char *start, char *end, int last)
 		return (NULL);
 	ft_memcpy(token, start, length);
 	token[length] = '\0';
-	if (last)
-		return (token);
 	if (!shell->cmdlist)
 	{
 		shell->cmdlist = new_cmdnode();
@@ -84,29 +82,27 @@ static char	*create_token(t_var *shell, char *start, char *end, int last)
 static int	parse_pipes(t_var *sh)
 {
 	int	in_quotes; // 0, 1 pour ', 2 pour "
-	t_cmdlist	*current;
 
-	sh->cmdlist = new_cmdnode();
-	sh->current = sh->cmdlist;
 	in_quotes = 0;
 	sh->start = sh->input;
 	sh->end = sh->start;
 	while (*sh->end)
 	{
-		if (*sh->end == '\'' && in_quotes != 2)
+		if (sh->end[0] == '\'' && in_quotes != 2)
 			in_quotes = 1 - in_quotes;
-		else if (*sh->end == '"' && in_quotes != 1)
+		else if (sh->end[0] == '"' && in_quotes != 1)
 			in_quotes = 2 - in_quotes;
-		else if (*sh->end == '|' && !in_quotes)
+		else if (sh->end[0] == '|' && !in_quotes)
 		{
 			sh->current->brut = create_token(sh, sh->start, sh->end, 0);
 			sh->start = sh->end + 1;
 		}
 		sh->end++;
 	}
-	sh->current->brut = create_token(sh, sh->start, sh->end, 1);
 	if (in_quotes)
 		return (error_manager(20));
+	sh->current->brut = create_token(sh, sh->start, sh->end, 0);
+	sh->current = NULL; // init protect
 	return (0);
 }
 

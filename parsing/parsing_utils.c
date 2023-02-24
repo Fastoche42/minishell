@@ -57,6 +57,7 @@ t_cmdlist	*new_cmdnode(void)
 	if (!node)
 		return (NULL);
 	node->brut = NULL;
+	node->cmd_arg = NULL;
 	node->cmd_path = NULL;
 	node->cmd_arg = NULL;
 	node->redir_input = NULL;
