@@ -28,7 +28,7 @@ static int	check_export(char **tmp, t_env *env)
 	return (1);
 }
 
-static t_env	*find_export(char **tmp, t_env *env)
+t_env	*find_export(char **tmp, t_env *env)
 {
 	t_env 	*ptr;
 

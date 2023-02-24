@@ -23,7 +23,7 @@ void	close_pipe_fds(t_var *shell)
 		i++;
 	}
 }
-
+/*
 void	close_fds(t_var *shell)
 {
 	if (shell->cmdlist)
@@ -44,7 +44,7 @@ void	close_fds(t_var *shell)
 	}
 	//close_pipe_fds(shell);
 }
-
+*/
 void	free_strs(char *str, char **strs)
 {
 	int	i;

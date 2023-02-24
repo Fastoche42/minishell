@@ -39,8 +39,10 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 	{
 		redir_other(shell, cmd);
 	}
-	close_pipe_fds(shell); // à verifier
-	if (cmd->cmd_arg == NULL || (!is_builtin(cmd->cmd_arg[0]) && cmd->cmd_path == NULL))
+	close_pipe_fds(shell);
+	if (cmd->cmd_arg == NULL
+		|| (!is_builtin(cmd->cmd_arg[0])
+		&& cmd->cmd_path == NULL))
 		return (error_manager(10));
 	if (which_command(shell, cmd) != 0)
 		return (error_manager(10));
@@ -55,7 +57,7 @@ static int	parent(t_var *shell)
 	int		status;
 	int		exit_code;
 
-	close_pipe_fds(shell); // à vérifier
+	close_pipe_fds(shell);
 	shell->child--;
 	exit_code = 1;
 	while (shell->child >= 0)
@@ -68,8 +70,6 @@ static int	parent(t_var *shell)
 		}
 		shell->child--;
 	}
-	//free(shell->pipe); // a enlever une fois que la fonction pour reinit est faite
-	//free(shell->pids); // a enlever une fois que la fonction pour reinit est faite
 	return (exit_code);
 }
 
@@ -86,7 +86,7 @@ int	pipex(t_var *shell)
 			if (!shell->cmdlist->cmd_path)
 				return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror */
 		}
-		if (file_handler(shell->cmdlist)) // gestion des redirections (part 1)
+		if (file_handler(shell->cmdlist))
 			return (error_manager(12));
 		shell->pids[shell->child] = fork();
 		if (shell->pids[shell->child] == -1)
@@ -96,11 +96,26 @@ int	pipex(t_var *shell)
 				return (errno);
 		shell->child++;
 		shell->cmdlist = shell->cmdlist->next;
-		usleep(100000); // à enlever à la fin
 	}
 	exit_code = parent(shell);
-	if (shell->heredoc > 0)
-		if (ft_unlink_heredocs(shell) > 0)
-			return (error_manager(10));
+	if (shell->heredoc > 0 && ft_unlink_heredocs(shell) > 0)
+		return (error_manager(10));
+	return (exit_code);
+}
+
+int	one_cmd(t_var *shell)
+{
+	int	exit_code;
+
+	close_pipe_fds(shell);
+	if (file_handler(shell->cmdlist))
+		return (error_manager(12));
+	if (shell->cmdlist->cmd_arg == NULL
+		|| (!is_builtin(shell->cmdlist->cmd_arg[0])
+		&& shell->cmdlist->cmd_path == NULL))
+		return (error_manager(10));
+	exit_code = which_command(shell, shell->cmdlist);
+	if (exit_code != 0)
+		exit_code = error_manager(10);
 	return (exit_code);
 }

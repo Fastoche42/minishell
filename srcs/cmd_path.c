@@ -19,7 +19,7 @@ static char	*test_path(char *cmd, char **paths)
 
 	cmd_path = NULL;
 	i = 0;
-	while (paths[i])
+	while (paths[i] != NULL)
 	{
 		cmd_path = ft_strjoin(paths[i], cmd);
 		if (!cmd_path)
@@ -32,7 +32,7 @@ static char	*test_path(char *cmd, char **paths)
 		free_strs(cmd_path, NULL);
 		i++;
 	}
-	free_strs(cmd_path, NULL);
+	//free_strs(cmd_path, NULL);
 	return (NULL);
 }
 
@@ -98,8 +98,8 @@ char	*get_cmd(char *cmd, t_var *shell)
 	if (!env_paths)
 		return (NULL);
 	cmd_path = test_path(cmd, env_paths);
+	free_strs(NULL, env_paths);
 	if (!cmd_path)
 		return (NULL);
-	free_strs(NULL, env_paths);
 	return (cmd_path);
 }

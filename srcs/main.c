@@ -49,22 +49,22 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell->input = readline("minishell> ");
-		if (shell->input && (shell->input != 0))
+		if (shell->input && *shell->input != 0)
 		{
-			add_history(shell->input);					// y compris que des spaces
-			if (!ft_strcmp(shell->input, "exit"))		//Temporaire, ou pas....
-			{
-				ft_putendl_fd("exit", 1, 0);
-				break ;
-			}
+			add_history(shell->input);
 			if (!parsing(shell))
 			{
 				if (*argv[1] == '1') //
-				print_cmdlist(shell->cmdlist); //
+					print_cmdlist(shell->cmdlist); //
 				else //
 				{ //
-				if (!init_process(shell))
-					g_exit_code = pipex(shell);
+					if (!init_process(shell))
+					{
+						if (shell->cmd_nbr > 1 || (shell->cmd_nbr == 1 && !is_builtin(shell->cmdlist->cmd_arg[0])))
+							g_exit_code = pipex(shell);
+						else
+							g_exit_code = one_cmd(shell);
+					}
 				} //
 			}
 			free_cmdlist(&(shell->cmdlist));
