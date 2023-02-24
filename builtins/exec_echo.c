@@ -6,7 +6,7 @@
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:08:34 by fl-hote            #+#    #+#             */
-/*   Updated: 2022/12/07 08:03:59 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:24 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec_echo(t_cmdlist *cmd)
 		ft_putstr_fd(cmd->cmd_arg[i], 1, 0);
 		i++;
 		if (cmd->cmd_arg[i] != NULL)
-			ft_putchar_fd('\n', 1);
+			ft_putchar_fd(' ', 1);
 	}
 	if (flag == 0)
 		ft_putchar_fd('\n', 1);
