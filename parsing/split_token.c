@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/22 16:48:14 by event            ###   ########.fr       */
+/*   Updated: 2023/02/23 16:21:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ static int	count_w(char *str, const char c)
 	}
 	return (i);
 }
-
-/* On alloc error, free current and prec lines, then free tab
-static char	**free_on_error(char **tab, unsigned int i)
-{
-	while (--i)
-		free(tab[i]);
-	free(tab);
-	return (NULL);
-}
-// voir pour utiliser free_strs(NULL, char **)
-*/
 
 char	**split_token(char *s)
 {

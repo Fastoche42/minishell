@@ -72,7 +72,11 @@ typedef struct s_env {
 typedef struct s_var {
 	char		*input;
 
-	t_cmdlist	*cmdlist; // liste chainée de commandes
+	t_cmdlist	*cmdlist;
+	t_cmdlist	*current;
+	char		*start;
+	char		*end;
+
 
 	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
@@ -83,23 +87,28 @@ typedef struct s_var {
 }	t_var;
 
 //----------------minishell----------------//
-t_var	*init_struct(char **envp);
-t_env	*init_env(char **envp);
-int		init_process(t_var *shell);
-void	free_mem(t_var *shell);
+t_var		*init_struct(char **envp);
+t_env		*init_env(char **envp);
+int			init_process(t_var *shell);
+void		free_mem(t_var *shell);
 
 //---------------parsing------------------//
 int			parsing(t_var *shell);
 
+//---------------parsing utils------------//
 t_cmdlist	*new_cmdnode(void);
 int			free_cmdlist(t_cmdlist **head);
 char		*replace_by_var(char **pos, t_env *env);
 void		ft_concat(char **str, char *str2);
 void		skip_car(char **pos, char c);
 
+//------------- set redir ----------------//
+int			set_redirs(t_cmdlist *ptr);
+
+//-------------split token----------------//
 char		**split_token(char *s);
 
-//----------------exec----------------//
+//------------------exec------------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023
 void	handler_sig(int signum);
 int		ms_execute(t_var *shell);
@@ -124,10 +133,6 @@ int		ft_unlink_heredocs(t_var *shell);
 int		error_manager(int error);
 
 //----------------utils----------------//
-//int		count_args(t_var *shell);
-//void	find_cmd(t_var *shell, char **var);
-//int		nb_var_in_env(char **env);
-//char	*modif_input(char *input);
 void	close_fds(t_var *shell);
 void	close_pipe_fds(t_var *shell);
 void	free_strs(char *str, char **strs);

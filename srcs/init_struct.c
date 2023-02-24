@@ -61,6 +61,7 @@ t_var	*init_struct(char **envp)
 	}
 	shell->input = NULL;
 	shell->cmdlist = NULL;
+	shell->current = NULL;
 	shell->heredoc = 0;
 	shell->child = 0;
 	shell->cmd_nbr = -1;
@@ -72,13 +73,16 @@ void	reinit_struct(t_var *shell)
 	free(shell->input);
 	shell->input = NULL;
 	shell->cmdlist = NULL;
+	shell->current = NULL;
 	shell->heredoc = 0;
 	shell->child = 0;
 	shell->cmd_nbr = -1;
+	/*
 	if (shell->pids)
 		free(shell->pids);
 	if (shell->pipe)
 		free(shell->pipe);
+	*/
 }
 
 static int	generate_pipes(t_var *shell)

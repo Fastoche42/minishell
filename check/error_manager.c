@@ -12,6 +12,17 @@
 
 #include "../includes/minishell.h"
 
+static int	error_manager2(int error)
+{
+	if (error == 13)
+		return (perror("Malloc error"), (int)errno);
+	else if (error == 20)
+		return (ft_putendl_fd("Quotes not properly closed. Abort", 2, 1));
+	else if (error == 21)
+		return (ft_putendl_fd("Multi redirection not allowed. Abort", 2, 1));
+	return (ft_putendl_fd("Undefined error", 2, 1));
+}
+
 int	error_manager(int error)
 {
 	if (error == 1)
@@ -38,9 +49,6 @@ int	error_manager(int error)
 		return (perror("Redirection error"), (int)errno);
 	else if (error == 12)
 		return (perror("File handler error"), (int)errno);
-	else if (error == 20)
-		return (perror("Quotes not properly closed. Abort"), (int)errno);
-	else if (error == 21)
-		return (perror("Multi redirection not allowed. Abort"), (int)errno);
-	return (0);
+	return (error_manager2(error));
+	// limite des 25 lignes de la fonction
 }
