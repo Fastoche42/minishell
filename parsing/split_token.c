@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/23 16:21:18 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/24 03:18:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,28 @@ static int	count_w(char *str, const char c)
 	return (i);
 }
 
+static size_t	jump_to_blank(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] && (s[i] != ' '))
+	{
+		if (s[i] == '\'')
+		{
+			while (s[i + 1] && s[i + 1] != '\'')
+				i++;
+		}
+		else if (s[i] == '"')
+		{
+			while (s[i + 1] && s[i + 1] != '"')
+				i++;
+		}
+		i++;
+	}
+	return (i);
+}
+
 char	**split_token(char *s)
 {
 	char	**tab;
@@ -66,21 +88,7 @@ char	**split_token(char *s)
 			s++;
 		else
 		{
-			i = 0;
-			while (s[i] && (s[i] != ' '))
-			{
-				if (s[i] == '\'')
-				{
-					while (s[i + 1] && s[i + 1] != '\'')
-						i++;
-				}
-				else if (s[i] == '"')
-				{
-					while (s[i + 1] && s[i + 1] != '"')
-						i++;
-				}
-				i++;
-			}
+			i = jump_to_blank(s);
 			tab[i_word] = malloc(sizeof(char) * (i + 1));
 			if (!tab[i_word])
 			{
