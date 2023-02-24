@@ -38,7 +38,8 @@ int	main(int argc, char **argv, char **envp)
 
 	g_exit_code = 0;
 	(void)argv;
-	if (argc != 1)
+	//if (argc != 1)
+	if (argc != 2) // 1 pour affich liste only, 2 pour exec 
 		return (error_manager(1));
 	shell = init_struct(envp);
 	if (!shell)
@@ -58,10 +59,13 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (!parsing(shell))
 			{
-				print_cmdlist(shell->cmdlist);
-				//temporaire test parsing only
-				//if (!init_process(shell))
-				//	g_exit_code = pipex(shell);
+				if (*argv[1] == '1') //
+				print_cmdlist(shell->cmdlist); //
+				else //
+				{ //
+				if (!init_process(shell))
+					g_exit_code = pipex(shell);
+				} //
 			}
 			free_cmdlist(&(shell->cmdlist));
 			reinit_struct(shell);

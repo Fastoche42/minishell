@@ -22,18 +22,16 @@ int	exec_echo(t_cmdlist *cmd)
 	if (ft_strcmp(cmd->cmd_arg[i], "-n") == 0)
 	{
 		flag = 1;
-		i = i + 1;
-	}
-	fprintf(stderr, "flag = %d\n", flag);
-	fprintf(stderr, "i = %d\n", i);
-	while (cmd->cmd_arg[i] != NULL)
-	{
-		fprintf(stderr, "IM IN THE WHILE LOOP\n");
-		printf("%s", cmd->cmd_arg[2]);
-		printf(" ");
 		i++;
 	}
+	while (cmd->cmd_arg[i] != NULL)
+	{
+		ft_putstr_fd(cmd->cmd_arg[i], 1, 0);
+		i++;
+		if (cmd->cmd_arg[i] != NULL)
+			ft_putchar_fd('\n', 1);
+	}
 	if (flag == 0)
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
