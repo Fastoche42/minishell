@@ -96,7 +96,6 @@ int	pipex(t_var *shell)
 				return (errno);
 		shell->child++;
 		shell->cmdlist = shell->cmdlist->next;
-		usleep(100000); // à enlever à la fin
 	}
 	exit_code = parent(shell);
 	if (shell->heredoc > 0 && ft_unlink_heredocs(shell) > 0)
