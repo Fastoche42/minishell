@@ -88,6 +88,8 @@ int	pipex(t_var *shell)
 		}
 		if (file_handler(shell->cmdlist)) // gestion des redirections (part 1)
 			return (error_manager(12));
+		// redirection ici
+		// if statement pour forker ou pas
 		shell->pids[shell->child] = fork();
 		if (shell->pids[shell->child] == -1)
 			return (error_manager(7));
@@ -102,5 +104,20 @@ int	pipex(t_var *shell)
 	if (shell->heredoc > 0)
 		if (ft_unlink_heredocs(shell) > 0)
 			return (error_manager(10));
+	return (exit_code);
+}
+
+int	one_cmd(t_var *shell)
+{
+	int	exit_code;
+
+	close_pipe_fds(shell);
+	if (file_handler(shell->cmdlist)) // gestion des redirections (part 1)
+		return (error_manager(12));
+	if (shell->cmdlist->cmd_arg == NULL || (!is_builtin(shell->cmdlist->cmd_arg[0]) && shell->cmdlist->cmd_path == NULL))
+		return (error_manager(10));
+	exit_code = which_command(shell, shell->cmdlist);
+	if (exit_code != 0)
+		exit_code = error_manager(10);
 	return (exit_code);
 }

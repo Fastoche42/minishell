@@ -120,7 +120,7 @@ int		exec_cd(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_export(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 int		exec_unset(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
 void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
-
+int		one_cmd(t_var *shell);
 int  	pipex(t_var *shell);
 int		redirect_io(int input, int output);
 char 	*get_cmd(char *cmd, t_var *shell);

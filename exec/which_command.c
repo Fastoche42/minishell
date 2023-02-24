@@ -20,7 +20,7 @@ int	which_command(t_var *shell, t_cmdlist *cmd)
 		return(exec_env(shell->env));
 	else if (ft_strcmp (cmd->cmd_arg[0], "echo") == 0)
 		return(exec_echo(cmd));
-	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0) // à vérifier/modifier
+	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0)
 	{
 		if (cmd->cmd_arg[1] != NULL)
 			exit(ft_atoi(cmd->cmd_arg[1]));

@@ -26,7 +26,7 @@ static int	update_pwd(t_cmdlist *cmd, t_env *env)
 			{
 				tmp = ft_strdup(env->value);
 				free(env->value);
-				getcwd(env->value, 0); //à adapter pour le cas des chemins relatifs
+				env->value = getcwd(NULL, 0); //à adapter pour le cas des chemins relatifs
 				if (!tmp || !env->value)
 					return (1);
 			}
@@ -48,7 +48,7 @@ int	exec_cd(t_cmdlist *cmd, t_env *env)
 {
 	
 	if (chdir(cmd->cmd_arg[1]) != 0)
-		return (error_manager(9), ft_putendl_fd(strerror(errno), 2, 1));
+		return (1);
 	if (update_pwd(cmd, env))
 		return (1);
 	return (0);

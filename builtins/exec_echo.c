@@ -29,7 +29,7 @@ int	exec_echo(t_cmdlist *cmd)
 		ft_putstr_fd(cmd->cmd_arg[i], 1, 0);
 		i++;
 		if (cmd->cmd_arg[i] != NULL)
-			ft_putchar_fd('\n', 1);
+			ft_putchar_fd(' ', 1);
 	}
 	if (flag == 0)
 		ft_putchar_fd('\n', 1);

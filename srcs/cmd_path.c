@@ -19,7 +19,7 @@ static char	*test_path(char *cmd, char **paths)
 
 	cmd_path = NULL;
 	i = 0;
-	while (paths[i])
+	while (paths[i] != NULL && *paths[i] != 0)
 	{
 		cmd_path = ft_strjoin(paths[i], cmd);
 		if (!cmd_path)
@@ -32,7 +32,7 @@ static char	*test_path(char *cmd, char **paths)
 		free_strs(cmd_path, NULL);
 		i++;
 	}
-	free_strs(cmd_path, NULL);
+	//free_strs(cmd_path, NULL);
 	return (NULL);
 }
 
