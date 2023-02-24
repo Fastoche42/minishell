@@ -28,7 +28,7 @@ void	handler_sig(int signum)
 		rl_redisplay();
 		printf("  \b\b");
 		*/
-		printf("exit\n");
+		printf("\nexit\n");
 		exit(0);
 	}
 }

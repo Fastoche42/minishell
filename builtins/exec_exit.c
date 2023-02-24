@@ -52,26 +52,31 @@ int	exec_exit(t_cmdlist *cmd)
 	int	i;
 
 	i = -1;
-	while (cmd->cmd_arg[1][++i])
+	if (cmd->cmd_arg[1] != NULL)
 	{
-		if (!ft_isdigit(cmd->cmd_arg[1][i]))
+		while (cmd->cmd_arg[1][++i])
 		{
-			write(1, "exit\n", 5);
-			write(2, "minishell: exit: ", 17);
-			write(2, cmd->cmd_arg[1], ft_strlen(cmd->cmd_arg[1]));
-			write(2, ": numeric argument required", 29);
-			exit (255);
+			if (!ft_isdigit(cmd->cmd_arg[1][i]))
+			{
+				ft_putstr_fd("exit\n", 1, 0);
+				ft_putstr_fd("minishell: exit: ", 1, 0);
+				ft_putstr_fd(cmd->cmd_arg[1], 1, 0);
+				ft_putstr_fd(": numeric argument required\n", 1, 0);
+				exit (255);
+			}
+		}
+		if (cmd->cmd_arg[2])
+		{
+			ft_putstr_fd("exit\n", 1, 0);
+			ft_putstr_fd("minishell: exit: too many arguments\n", 1, 0);
+		}
+		else
+		{
+			ft_putstr_fd("exit\n", 1, 0);
+			exit (ft_atoi(cmd->cmd_arg[1]));
 		}
 	}
-	if (cmd->cmd_arg[2])
-	{
-		write(1, "exit\n", 5);
-		write(2, "minishell: exit: too many arguments\n", 36);
-	}
 	else
-	{
-		write(2, "exit\n", 5);
-		exit (ft_atoi(cmd->cmd_arg[1]));
-	}
+		exit (g_exit_code);
 	return (0); // à vérifier
 }

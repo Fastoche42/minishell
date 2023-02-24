@@ -22,10 +22,11 @@ int	which_command(t_var *shell, t_cmdlist *cmd)
 		return(exec_echo(cmd));
 	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0)
 	{
-		if (cmd->cmd_arg[1] != NULL)
+		exec_exit(cmd);
+		/*if (cmd->cmd_arg[1] != NULL)
 			exit(ft_atoi(cmd->cmd_arg[1]));
 		else
-			exit(0);
+			exit(0);*/
 	}
 	else if (ft_strcmp (cmd->cmd_arg[0], "export") == 0)
 		return(exec_export(cmd, shell->env));

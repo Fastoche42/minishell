@@ -12,13 +12,8 @@ int	free_all(t_var *shell) //esquisse de fonction pour free tout proprement (en 
 	{
 		env_tmp = env_ptr;
 		env_ptr = env_ptr->next;
-		free(env_tmp->name);
-		env_tmp->name = NULL;
-		if (env_tmp->value != NULL)
-		{
-			free(env_tmp->value);
-			env_tmp->value = NULL;
-		}
+		free_strs(env_tmp->name, NULL);
+		free_strs(env_tmp->value, NULL);
 		free(env_tmp);
 	}
 	shell->env = NULL;
@@ -27,31 +22,11 @@ int	free_all(t_var *shell) //esquisse de fonction pour free tout proprement (en 
 	{
 		cmd_tmp = cmd_ptr;
 		cmd_ptr = cmd_ptr->next;
-		if (cmd_tmp->cmd_path != NULL)
-		{
-			free(cmd_tmp->cmd_path);
-			cmd_tmp->cmd_path = NULL;
-		}
-		if (cmd_tmp->cmd_arg != NULL)
-		{
-			free(cmd_tmp->cmd_arg);
-			cmd_tmp->cmd_arg = NULL;
-		}
-		if (cmd_tmp->redir_input != NULL)
-		{
-			free(cmd_tmp->redir_input);
-			cmd_tmp->redir_input = NULL;
-		}
-		if (cmd_tmp->delim_hdoc != NULL)
-		{
-			free(cmd_tmp->delim_hdoc);
-			cmd_tmp->delim_hdoc = NULL;
-		}
-		if (cmd_tmp->redir_output != NULL)
-		{
-			free(cmd_tmp->redir_output);
-			cmd_tmp->redir_output = NULL;
-		}
+		free_strs(cmd_tmp->brut, NULL);
+		free_strs(cmd_tmp->cmd_path, cmd_tmp->cmd_arg);
+		free_strs(cmd_tmp->redir_input, NULL);
+		free_strs(cmd_tmp->redir_output, NULL);
+		free_strs(cmd_tmp->delim_hdoc, NULL);
 		free(cmd_tmp);
 	}
 	shell->cmdlist = NULL;
