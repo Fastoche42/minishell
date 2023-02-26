@@ -80,7 +80,7 @@ char	*replace_by_var(char **pos, t_env *env)
 		if (!ft_strcmp(var, env->name))
 		{
 			free (var);
-			return (env->value);
+			return (ft_strdup(env->value));
 		}
 		env = env->next;
 	}

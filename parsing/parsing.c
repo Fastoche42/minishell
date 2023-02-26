@@ -173,12 +173,6 @@ int	parsing(t_var *shell)
 			return (error_manager(99));
 		if (dequotes_cmd_arg(ptr, shell->env))
 			return (error_manager(21));
-		/*
-		if (quotes_and_var(&ptr->redir_input, shell->env)
-			|| quotes_and_var(&ptr->redir_output, shell->env)
-			|| quotes_and_var(&ptr->delim_hdoc, shell->env))
-			return (error_manager(21));
-		*/
 		ptr = ptr->next;
 	}
 	return (0);

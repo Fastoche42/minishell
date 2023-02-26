@@ -21,8 +21,8 @@ ifeq ($(HOST), LAPTOP-M60DL66F)
 	CFLAG = -Wall -Wextra -lreadline
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
-	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -g -lreadline
-	CFLAG = -Wall -Wextra -g
+	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
+	CFLAG = -Wall -Wextra -Werror
 endif
 
 SRCS =	srcs/main.c\
@@ -73,17 +73,17 @@ alln : all
 		norminette
 
 .c.o:
-	cc -g -o $@ -c $< $(CPPFLAGS) $(CFLAG) 
+	@cc -o $@ -c $< $(CPPFLAGS) $(CFLAG) 
 
 $(NAME) : $(OBJS)
 		$(RE_LIBFT)
 		@echo $(HOST)
-		cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
-		@echo "$(GREEN)$(BOLD)Minishell Executable Created"
+		@cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
+		@echo "$(GREEN)$(BOLD)Minishell Executable Created$(NORM)"
 clean :
 		@rm -rf $(OBJS)
 		@make clean -C Libft
-		@echo "$(GREEN)$(BOLD)Minishell objects removed"
+		@echo "$(GREEN)$(BOLD)Minishell objects removed$(NORM)"
 
 fclean : clean
 		@rm -rf $(NAME)

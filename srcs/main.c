@@ -25,20 +25,44 @@ static void	print_cmdlist(t_cmdlist *ptr)
 		i=-1;
 		while (ptr->cmd_arg[++i])
 		{
-			printf("[%s]  ", ptr->cmd_arg[i]);
+			printf("[%s]", ptr->cmd_arg[i]);
 		}
 		printf("\n");
 		ptr = ptr->next;
+	}
+}
+static void	main_loop(t_var *shell, char *prompt, int aff_or_exec)
+{
+	shell->input = readline(prompt);
+	if (shell->input && *shell->input != 0)
+	{
+		add_history(shell->input);
+		if (!parsing(shell))
+		{
+			if (aff_or_exec == '1') //
+				print_cmdlist(shell->cmdlist); //
+			else //
+			{ //
+				if (!init_process(shell))
+				{
+					if (shell->cmd_nbr > 1 || (shell->cmd_nbr == 1 && !is_builtin(shell->cmdlist->cmd_arg[0])))
+						g_exit_code = pipex(shell);
+					else
+						g_exit_code = one_cmd(shell);
+				}
+			} //
+		}
+		free_cmdlist(&(shell->cmdlist));
+		reinit_struct(shell);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*shell;
+	char	*prompt;
 
 	g_exit_code = 0;
-	(void)argv;
-	//if (argc != 1)
 	if (argc != 2) // 1 pour affich liste only, 2 pour exec 
 		return (error_manager(1));
 	shell = init_struct(envp);
@@ -46,30 +70,10 @@ int	main(int argc, char **argv, char **envp)
 		return (error_manager(13));
 	signal(SIGINT, handler_sig);
 	signal(SIGQUIT, handler_sig);
+	prompt = ft_strjoin((*argv+2), "> ");
 	while (1)
 	{
-		shell->input = readline("minishell> ");
-		if (shell->input && *shell->input != 0)
-		{
-			add_history(shell->input);
-			if (!parsing(shell))
-			{
-				if (*argv[1] == '1') //
-					print_cmdlist(shell->cmdlist); //
-				else //
-				{ //
-					if (!init_process(shell))
-					{
-						if (shell->cmd_nbr > 1 || (shell->cmd_nbr == 1 && !is_builtin(shell->cmdlist->cmd_arg[0])))
-							g_exit_code = pipex(shell);
-						else
-							g_exit_code = one_cmd(shell);
-					}
-				} //
-			}
-			free_cmdlist(&(shell->cmdlist));
-			reinit_struct(shell);
-		}
+		main_loop(shell, prompt, *argv[1]);
 	}
 	exit_minishell(shell, g_exit_code);
 	return (0);
