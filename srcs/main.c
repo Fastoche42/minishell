@@ -31,6 +31,7 @@ static void	print_cmdlist(t_cmdlist *ptr)
 		ptr = ptr->next;
 	}
 }
+
 static void	main_loop(t_var *shell, char *prompt, int aff_or_exec)
 {
 	shell->input = readline(prompt);
