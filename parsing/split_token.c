@@ -56,6 +56,7 @@ static size_t	jump_to_blank(char *s)
 			c = s[i];
 			while (s[i + 1] && s[i + 1] != c)
 				i++;
+			i++;
 		}
 		i++;
 	}
@@ -82,6 +83,7 @@ char	**split_token(char *s)
 		{
 			i = jump_to_blank(s);
 			tab[i_word] = malloc(sizeof(char) * (i + 1));
+			printf("malloc str dan tab lg:%d\n", i + 1);
 			if (!tab[i_word])
 				return (NULL);
 			ft_strlcpy(tab[i_word++], s, i + 1);

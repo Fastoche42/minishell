@@ -31,23 +31,11 @@
 // //----------------global variable----------------//
 extern int	g_exit_code;
 
-enum e_type { // utilité ?
-	NIL,
-	WORD,
-	SQ,
-	DQ,
-	TOKEN_CD,
-	TOKEN_PATH,
-	TOKEN_OPTION,
-	TOKEN_STRING
-};
-
 typedef struct s_cmdlist
 {
 	char				*brut;
 	char				*cmd_path;
 	char				**cmd_arg;
-	enum e_type			type;
 	char				*redir_input;	//filename or NULL
 	char				*delim_hdoc;	//exit word or NULL
 	char				*redir_output;	//filename or NULL

@@ -65,9 +65,10 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 	char	*tmp;
 
 	i = 0;
-	while (ptr->cmd_arg && ptr->cmd_arg[i])
+	while (ptr->cmd_arg[i])
 	{
 		tmp = ft_strdup(ptr->cmd_arg[i]);
+		printf("tmp\n");
 		if (quotes_and_var(&tmp, env))
 			return (1);
 		free (ptr->cmd_arg[i]);
@@ -168,17 +169,17 @@ int	parsing(t_var *shell)
 	while (ptr)
 	{
 		set_redirs(ptr, shell);
+		//printf("brut:[%s]\n", ptr->brut);
 		ptr->cmd_arg = (split_token(ptr->brut));
 		if (!(ptr->cmd_arg))
 			return (error_manager(99));
-		if (dequotes_cmd_arg(ptr, shell->env))
-			return (error_manager(21));
+		//if (dequotes_cmd_arg(ptr, shell->env))
+		//	return (error_manager(21));
 		ptr = ptr->next;
 	}
 	return (0);
 }
-	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
-	/*
+/*
 	shell->cmdlist = new_cmdnode();
 	if (!shell->cmdlist)
 		return (0);

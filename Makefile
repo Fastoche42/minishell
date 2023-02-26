@@ -22,7 +22,7 @@ ifeq ($(HOST), LAPTOP-M60DL66F)
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = -Wall -Wextra -Werror
+	CFLAG = -Wall -Wextra
 endif
 
 SRCS =	srcs/main.c\
@@ -77,7 +77,6 @@ alln : all
 
 $(NAME) : $(OBJS)
 		$(RE_LIBFT)
-		@echo $(HOST)
 		@cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
 		@echo "$(GREEN)$(BOLD)Minishell Executable Created$(NORM)"
 clean :

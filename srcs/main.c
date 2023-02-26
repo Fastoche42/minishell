@@ -25,7 +25,7 @@ static void	print_cmdlist(t_cmdlist *ptr)
 		i=-1;
 		while (ptr->cmd_arg[++i])
 		{
-			printf("[%s]", ptr->cmd_arg[i]);
+			printf("[%d|%s]", i, ptr->cmd_arg[i]);
 		}
 		printf("\n");
 		ptr = ptr->next;
@@ -70,10 +70,9 @@ int	main(int argc, char **argv, char **envp)
 		return (error_manager(13));
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
+	prompt = ft_strjoin(((*argv)+2), "> ");
 	while (1)
-	{
 		main_loop(shell, prompt, *argv[1]);
-	}
 	exit_minishell(shell, g_exit_code);
 	return (0);
 }

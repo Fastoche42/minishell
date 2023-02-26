@@ -71,7 +71,7 @@ static int	get_input_file(t_cmdlist *cmd, t_var *shell)
 	}
 	else if (cmd->redir_input)
 	{
-		cmd->fd_in = open(cmd->redir_input, O_RDONLY, 644);
+		cmd->fd_in = open(cmd->redir_input, O_RDONLY, 0644);
 		if (cmd->fd_in == -1)
 			return (1);
 	}
@@ -81,9 +81,9 @@ static int	get_input_file(t_cmdlist *cmd, t_var *shell)
 static int	get_output_file(t_cmdlist *cmd)
 {
 	if (cmd->flag_append)
-		cmd->fd_out = open(cmd->redir_output, O_WRONLY | O_CREAT | O_APPEND, 644);
+		cmd->fd_out = open(cmd->redir_output, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (cmd->redir_output)
-		cmd->fd_out = open(cmd->redir_output, O_WRONLY | O_CREAT | O_TRUNC, 644);
+		cmd->fd_out = open(cmd->redir_output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (cmd->fd_out == -1)
 		return (1);
 	return (0);
