@@ -45,7 +45,7 @@ void	close_fds(t_var *shell)
 	//close_pipe_fds(shell);
 }
 */
-void	free_strs(char *str, char **strs)
+int	free_strs(char *str, char **strs)
 {
 	int	i;
 
@@ -62,6 +62,7 @@ void	free_strs(char *str, char **strs)
 		free(strs);
 		strs = NULL;
 	}
+	return (1);
 }
 
 int	ft_unlink_heredocs(t_var *shell)

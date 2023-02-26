@@ -50,5 +50,4 @@ int	error_manager(int error)
 	else if (error == 12)
 		return (perror("File handler error"), (int)errno);
 	return (error_manager2(error));
-	// limite des 25 lignes de la fonction
 }

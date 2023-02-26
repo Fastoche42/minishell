@@ -6,32 +6,42 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/26 11:00: by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/26 11:00: by marvin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int quotes_and_var(char **str, t_env *env)
+static int	quotes_and_var(char **str, t_env *env)
 {
 	char	*start;
 	char	*end;
 	char	*str2;
+	int		in_dquotes;
 
 	start = *str;
 	end = start;
 	*str = NULL;
+	in_dquotes = 0;
 	while (*end)
 	{
-		if (*end == '\'')
+		if (*end == '\'' && !in_dquotes)
 		{
-			while (end[1] != '\'')
-				end++;
+			ft_concat(str, ft_strndup (start, (end - start)));
 			end++;
+			str2 = what_inside_sq(&end);
+			ft_concat(str, str2);
+			start = end + 1;
+		}
+		else if (*end == '"')
+		{
+			ft_concat(str, ft_strndup (start, (end - start)));
+			start = end + 1;
+			in_dquotes = 1 - in_dquotes;
 		}
 		else if (*end == '$')
 		{
-			if (*(end+1) == '?' || ft_isalpha(*(end+1)) || *(end+1) == '_')
+			if (ft_iscarvar(*(end + 1)))
 			{
 				ft_concat(str, ft_strndup (start, (end - start)));
 				end++;
@@ -51,7 +61,7 @@ static int quotes_and_var(char **str, t_env *env)
 
 static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 {
-    int		i;
+	int		i;
 	char	*tmp;
 
 	i = 0;
@@ -92,13 +102,12 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 		ptr->delim_hdoc = tmp;
 	}
 	return (0);
-
 }
 
 static char	*create_token(t_var *shell, char *start, char *end)
 {
-	int length;
-	char *token;
+	int		length;
+	char	*token;
 
 	length = end - start;
 	token = malloc(length + 1);
@@ -119,9 +128,10 @@ static char	*create_token(t_var *shell, char *start, char *end)
 	return (token);
 }
 
+/*		in_quotes; // 0, 1 pour ', 2 pour " .  */
 static int	parse_pipes(t_var *sh)
 {
-	int	in_quotes; // 0, 1 pour ', 2 pour "
+	int	in_quotes;
 
 	in_quotes = 0;
 	sh->start = sh->input;
@@ -144,7 +154,7 @@ static int	parse_pipes(t_var *sh)
 		return (error_manager(20));
 	sh->buf = create_token(sh, sh->start, sh->end);
 	sh->current->brut = sh->buf;
-	sh->current = NULL; // reinit to protect
+	sh->current = NULL;
 	return (0);
 }
 
@@ -163,7 +173,6 @@ int	parsing(t_var *shell)
 			return (error_manager(99));
 		if (dequotes_cmd_arg(ptr, shell->env))
 			return (error_manager(21));
-		printf("la?\n");
 		/*
 		if (quotes_and_var(&ptr->redir_input, shell->env)
 			|| quotes_and_var(&ptr->redir_output, shell->env)
@@ -172,7 +181,8 @@ int	parsing(t_var *shell)
 		*/
 		ptr = ptr->next;
 	}
-	printf("fin parsing\n");
+	return (0);
+}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
 	/*
 	shell->cmdlist = new_cmdnode();
@@ -198,5 +208,3 @@ int	parsing(t_var *shell)
 	//ptr->cmd_path = "/usr/bin/head";
 	ptr->cmd_arg = ft_split("wc", ' ');
 */
-	return (0);
-}

@@ -34,6 +34,7 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_isinfsup(int c);
 int		ft_isquote(int c);
+int		ft_iscarvar(int c);
 int		ft_strlen(const char *s);
 int		ft_strlen_tab(char **tab);
 int		ft_nb_lines_tab(char **tab);
@@ -79,11 +80,11 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strposchr(const char *s, int c);
-void*	ft_realloc(void* ptr, size_t size);
+void	*ft_realloc(void *ptr, size_t size);
 
 		// Get Next Line //
-int     ft_find_newline(const char *s);
-void    ft_safe_free(char **s, char **s1, char **s2);
-char    *get_next_line(int fd);
+int		ft_find_newline(const char *s);
+void	ft_safe_free(char **s, char **s1, char **s2);
+char	*get_next_line(int fd);
 
 #endif

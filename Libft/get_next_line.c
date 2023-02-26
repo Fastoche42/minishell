@@ -58,10 +58,10 @@ static char	*ft_after_newline(const char *tmp)
 		return (NULL);
 	j = 0;
 	while (tmp[i + j])
-		{
-			ret[j] = tmp[i + j];
-			j++;
-		}
+	{
+		ret[j] = tmp[i + j];
+		j++;
+	}
 	return (ret);
 }
 
@@ -70,8 +70,7 @@ static void	ft_read_line(int fd, char **keep, char **tmp)
 	char	*buffer;
 	int		ret;
 
-	//buffer = malloc(sizeof(buffer) * (BUFFER_SIZE + 1));
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)); // a valider
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return ;
 	ret = 1;
@@ -102,13 +101,13 @@ static char	*ft_parse_line(char **keep, char **tmp)
 	ft_safe_free(keep, 0, 0);
 	*keep = ft_after_newline(*tmp);
 	line = ft_before_newline(*tmp);
-	ft_safe_free(tmp, 0 , 0);
+	ft_safe_free(tmp, 0, 0);
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	static char *keep = NULL;
+	static char	*keep = NULL;
 	char		*tmp;
 	char		*next_line;
 

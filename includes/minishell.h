@@ -95,6 +95,7 @@ int			parsing(t_var *shell);
 //---------------parsing utils------------//
 int			free_cmdlist(t_cmdlist **head);
 t_cmdlist	*new_cmdnode(void);
+char		*what_inside_sq(char **pos);
 char		*replace_by_var(char **pos, t_env *env);
 void		ft_concat(char **str, char *str2);
 
@@ -132,7 +133,7 @@ int		error_manager(int error);
 //----------------utils----------------//
 void	close_fds(t_var *shell);
 void	close_pipe_fds(t_var *shell);
-void	free_strs(char *str, char **strs);
+int		free_strs(char *str, char **strs);
 char	**build_envp(t_env *env);
 int		number_of_cmd(t_var *shell);
 int		free_all(t_var *shell);
