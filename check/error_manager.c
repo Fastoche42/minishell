@@ -17,9 +17,9 @@ static int	error_manager2(int error)
 	if (error == 13)
 		return (perror("Malloc error"), (int)errno);
 	else if (error == 20)
-		return (ft_putendl_fd("Quotes not properly closed. Abort", 2, 1));
+		return (ft_putendl_fd("Quotes not properly closed", 2, 1));
 	else if (error == 21)
-		return (ft_putendl_fd("Multi redirection not allowed. Abort", 2, 1));
+		return (ft_putendl_fd("Error in redirection file or delimitor", 2, 1));
 	return (ft_putendl_fd("Undefined error", 2, 1));
 }
 

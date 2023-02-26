@@ -12,24 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void	skip_car(char **pos, char c)
-{
-	if (**pos != c)
-		return ;
-	if (c == ' ')
-	{
-		while (**pos == ' ')
-			(*pos)++;
-	}
-	else // quotes
-	{
-		printf("%c %c ", (*pos[0]), (*pos[1]));
-
-		//while (*pos[1] != c)
-			(*pos)++;
-	}
-}
-
 int	free_cmdlist(t_cmdlist **head)
 {
 	t_cmdlist	*ptr;

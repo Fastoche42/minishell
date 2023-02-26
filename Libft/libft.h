@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:39:51 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/21 11:46:34 by event            ###   ########.fr       */
+/*   Updated: 2023/02/25 21:48:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_isinfsup(int c);
+int		ft_isquote(int c);
 int		ft_strlen(const char *s);
 int		ft_strlen_tab(char **tab);
 int		ft_nb_lines_tab(char **tab);

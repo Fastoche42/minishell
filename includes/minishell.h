@@ -48,8 +48,6 @@ typedef struct s_cmdlist
 	char				*cmd_path;
 	char				**cmd_arg;
 	enum e_type			type;
-	char				*start;
-	char				*end;
 	char				*redir_input;	//filename or NULL
 	char				*delim_hdoc;	//exit word or NULL
 	char				*redir_output;	//filename or NULL
@@ -57,7 +55,7 @@ typedef struct s_cmdlist
 	int					fd_in; // initialiser à 0
 	int					fd_out; // initialiser à 1
 	struct s_cmdlist	*next;
-}					t_cmdlist;
+}	t_cmdlist;
 
 //----------------struct----------------//
 typedef struct s_env {
@@ -71,12 +69,11 @@ typedef struct s_env {
 
 typedef struct s_var {
 	char		*input;
-
 	t_cmdlist	*cmdlist;
 	t_cmdlist	*current;
 	char		*start;
 	char		*end;
-
+	char		*buf;
 
 	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
@@ -96,18 +93,16 @@ void		free_mem(t_var *shell);
 int			parsing(t_var *shell);
 
 //---------------parsing utils------------//
-t_cmdlist	*new_cmdnode(void);
 int			free_cmdlist(t_cmdlist **head);
+t_cmdlist	*new_cmdnode(void);
 char		*replace_by_var(char **pos, t_env *env);
 void		ft_concat(char **str, char *str2);
-void		skip_car(char **pos, char c);
 
 //------------- set redir ----------------//
-int			set_redirs(t_cmdlist *ptr);
+void		set_redirs(t_cmdlist *ptr, t_var *shell);
 
 //-------------split token----------------//
 char		**split_token(char *s);
-size_t		jump_to_blank(char *s);
 
 //------------------exec------------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023

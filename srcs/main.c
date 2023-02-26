@@ -51,6 +51,11 @@ int	main(int argc, char **argv, char **envp)
 		shell->input = readline("minishell> ");
 		if (shell->input && *shell->input != 0)
 		{
+			if (!ft_strcmp(shell->input, "exit"))		//Temporaire, ou pas....
+			{
+				ft_putendl_fd("exit", 1, 0);
+				break ;
+			}
 			add_history(shell->input);
 			if (!parsing(shell))
 			{

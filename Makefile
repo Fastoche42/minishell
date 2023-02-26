@@ -77,7 +77,7 @@ alln : all
 $(NAME) : $(OBJS)
 		$(RE_LIBFT)
 		@echo $(HOST)
-		cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS) -fsanitize=address
+		cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
 		@echo "$(GREEN)$(BOLD)Minishell Executable Created"
 clean :
 		@rm -rf $(OBJS)

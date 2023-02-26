@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/24 18:43:36 by event            ###   ########.fr       */
+/*   Updated: 2023/02/25 22:57:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,19 @@
 
 static int	count_w(char *str, const char c)
 {
-	int	i;
-	int	is_word;
+	int		i;
+	int		is_word;
+	char	car;
 
 	i = 0;
 	is_word = 0;
 	while (str && *str)
 	{
-		if (*str == '\'')
+		if (ft_isquote(*str))
 		{
 			is_word = 1;
-			//skip_car (&str, '\'');
-			while (str[1] != '\'')
-				str++;
-			str++;
-		}
-		else if (*str == '"')
-		{
-			is_word = 1;
-			//skip_car (&str, '"');
-			while (str[1] != '"')
+			car = *str;
+			while (str[1] != car)
 				str++;
 			str++;
 		}
@@ -48,23 +41,20 @@ static int	count_w(char *str, const char c)
 	return (i);
 }
 
-size_t	jump_to_blank(char *s)
+static size_t	jump_to_blank(char *s)
 {
 	size_t	i;
+	char	c;
 
 	i = 0;
 	if (!s)
 		return (0);
 	while (s[i] && (s[i] != ' '))
 	{
-		if (s[i] == '\'')
+		if (ft_isquote(s[i]))
 		{
-			while (s[i + 1] && s[i + 1] != '\'')
-				i++;
-		}
-		else if (s[i] == '"')
-		{
-			while (s[i + 1] && s[i + 1] != '"')
+			c = s[i];
+			while (s[i + 1] && s[i + 1] != c)
 				i++;
 		}
 		i++;
@@ -93,10 +83,7 @@ char	**split_token(char *s)
 			i = jump_to_blank(s);
 			tab[i_word] = malloc(sizeof(char) * (i + 1));
 			if (!tab[i_word])
-			{
-				free_strs(NULL, tab);
 				return (NULL);
-			}
 			ft_strlcpy(tab[i_word++], s, i + 1);
 			s += i;
 		}

@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/24 18:43:36 by event            ###   ########.fr       */
+/*   Updated: 2023/02/26 03:33:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int expand_dollar(t_cmdlist *ptr, t_env *env)
+static int quotes_and_var(char **str, t_env *env)
 {
 	char	*start;
 	char	*end;
-	char	*str;
 	char	*str2;
 
-	start = ptr->brut;
+	start = *str;
 	end = start;
-	str = NULL;
+	*str = NULL;
 	while (*end)
 	{
 		if (*end == '\'')
@@ -30,28 +29,23 @@ static int expand_dollar(t_cmdlist *ptr, t_env *env)
 				end++;
 			end++;
 		}
-//		skip_car(&end, '\'');
 		else if (*end == '$')
 		{
 			if (*(end+1) == '?' || ft_isalpha(*(end+1)) || *(end+1) == '_')
 			{
-				if (end > start)
-					ft_concat(&str, ft_strndup (start, (end - start)));
+				ft_concat(str, ft_strndup (start, (end - start)));
 				end++;
 				if (*end == '?')
 					str2 = ft_itoa(g_exit_code);
 				else
 					str2 = replace_by_var(&end, env);
-				ft_concat(&str, str2);
+				ft_concat(str, str2);
 				start = end + 1;
 			}
 		}
 		end++;
 	}
-	if (end > start)
-		ft_concat(&str, ft_strndup (start, (end - start)));
-	free (ptr->brut);
-	ptr->brut = str;
+	ft_concat(str, ft_strndup (start, (end - start)));
 	return (0);
 }
 
@@ -94,36 +88,39 @@ static int	parse_pipes(t_var *sh)
 			in_quotes = 2 - in_quotes;
 		else if (sh->end[0] == '|' && !in_quotes)
 		{
-			sh->current->brut = create_token(sh, sh->start, sh->end);
+			sh->buf = create_token(sh, sh->start, sh->end);
+			sh->current->brut = sh->buf;
 			sh->start = sh->end + 1;
 		}
 		sh->end++;
 	}
 	if (in_quotes)
 		return (error_manager(20));
-	sh->current->brut = create_token(sh, sh->start, sh->end);
-	sh->current = NULL; // init protect
+	sh->buf = create_token(sh, sh->start, sh->end);
+	sh->current->brut = sh->buf;
+	sh->current = NULL; // reinit to protect
 	return (0);
 }
 
 int	parsing(t_var *shell)
 {
-	t_cmdlist	*ptr; //pointeur de parcours
+	t_cmdlist	*ptr;
 
 	if (parse_pipes(shell))
 		return (1);
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
-		if (set_redirs(ptr))
-			return (1);
-		ptr->cmd_arg = (split_token(ptr->brut));
+		set_redirs(ptr, shell);
+		ptr->cmd_arg = (split_token(ptr->brut)) ;
 		if (!(ptr->cmd_arg))
-			return (1);
-		//if (expand_dollar(ptr, shell->env))
-		//	return (1);
-		//if (parse_one_cmd(ptr, shell->env))
-		//	return (1);
+			return (error_manager(99));
+		/*
+		if (quotes_and_var(&ptr->redir_input, shell->env)
+			|| quotes_and_var(&ptr->redir_output, shell->env)
+			|| quotes_and_var(&ptr->delim_hdoc, shell->env))
+			return (error_manager(21));
+		*/
 		ptr = ptr->next;
 	}
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...

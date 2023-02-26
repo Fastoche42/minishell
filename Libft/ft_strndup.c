@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 20:44:09 by event             #+#    #+#             */
-/*   Updated: 2023/02/21 11:56:53 by event            ###   ########.fr       */
+/*   Updated: 2023/02/25 21:33:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strndup(const char *src, size_t n)
 	size_t	len;
 	char	*dest;
 
+	if (!n)
+		return (NULL);
 	len = ft_strlen(src);
 	if (n < len)
 		len = n;
