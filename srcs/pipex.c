@@ -75,9 +75,11 @@ static int	parent(t_var *shell)
 
 int	pipex(t_var *shell)
 {
-	int		exit_code;
+	int			exit_code;
+	t_cmdlist	*tmp;
 
 	shell->child = 0;
+	tmp = shell->cmdlist;
 	while ((shell->child < shell->cmd_nbr) && shell->cmdlist)
 	{
 		if (!is_builtin(shell->cmdlist->cmd_arg[0]))
@@ -98,7 +100,7 @@ int	pipex(t_var *shell)
 		shell->cmdlist = shell->cmdlist->next;
 	}
 	exit_code = parent(shell);
-	if (shell->heredoc > 0 && ft_unlink_heredocs(shell) > 0)
+	if (shell->heredoc > 0 && ft_unlink_heredocs(shell, tmp) > 0)
 		return (error_manager(10));
 	return (exit_code);
 }
@@ -107,6 +109,7 @@ int	one_cmd(t_var *shell)
 {
 	int	exit_code;
 
+	close_fds(shell);
 	close_pipe_fds(shell);
 	if (file_handler(shell->cmdlist, shell))
 		return (error_manager(12));

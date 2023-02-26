@@ -14,14 +14,14 @@
 
 int	redir_first_last(t_var *shell, t_cmdlist *cmd)
 {
-	if (shell->child == 0 && shell->cmd_nbr > 1)
+	if (shell->child == 0)
 	{
-		if (cmd->redir_output != NULL)
+		if (cmd->redir_output != NULL || shell->cmd_nbr == 1)
 		{
 			if (redirect_io(cmd->fd_in, cmd->fd_out))
 				return (error_manager(11));
 		}
-		else
+		else if (shell->cmd_nbr > 1)
 		{	
 			if (redirect_io(cmd->fd_in, shell->pipe[1]))
 				return (error_manager(11));

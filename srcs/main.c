@@ -44,8 +44,8 @@ int	main(int argc, char **argv, char **envp)
 	shell = init_struct(envp);
 	if (!shell)
 		return (error_manager(13));
-	signal(SIGINT, handler_sig);
-	signal(SIGQUIT, handler_sig);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	while (1)
 	{
 		shell->input = readline("minishell> ");
