@@ -88,6 +88,7 @@ void	set_redirs(t_cmdlist *ptr, t_var *sh)
 	char	*str;
 	char	c;
 
+	//printf("redir ici?\n");
 	sh->start = ptr->brut;
 	sh->end = sh->start;
 	str = NULL;

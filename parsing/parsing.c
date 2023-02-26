@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/26 03:33:56 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/26 11:00: by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,52 @@ static int quotes_and_var(char **str, t_env *env)
 	}
 	ft_concat(str, ft_strndup (start, (end - start)));
 	return (0);
+}
+
+static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
+{
+    int		i;
+	char	*tmp;
+
+	i = 0;
+	while (ptr->cmd_arg && ptr->cmd_arg[i])
+	{
+		tmp = ft_strdup(ptr->cmd_arg[i]);
+		if (quotes_and_var(&tmp, env))
+			return (1);
+		free (ptr->cmd_arg[i]);
+		ptr->cmd_arg[i] = tmp;
+		i++;
+	}
+	if (ptr->redir_input)
+	{
+		tmp = ft_strdup(ptr->redir_input);
+		quotes_and_var(&tmp, env);
+		if (!tmp)
+			return (1);
+		free (ptr->redir_input);
+		ptr->redir_input = tmp;
+	}
+	if (ptr->redir_output)
+	{
+		tmp = ft_strdup(ptr->redir_output);
+		quotes_and_var(&tmp, env);
+		if (!tmp)
+			return (1);
+		free (ptr->redir_output);
+		ptr->redir_output = tmp;
+	}
+	if (ptr->delim_hdoc)
+	{
+		tmp = ft_strdup(ptr->delim_hdoc);
+		quotes_and_var(&tmp, env);
+		if (!tmp)
+			return (1);
+		free (ptr->delim_hdoc);
+		ptr->delim_hdoc = tmp;
+	}
+	return (0);
+
 }
 
 static char	*create_token(t_var *shell, char *start, char *end)
@@ -112,9 +158,12 @@ int	parsing(t_var *shell)
 	while (ptr)
 	{
 		set_redirs(ptr, shell);
-		ptr->cmd_arg = (split_token(ptr->brut)) ;
+		ptr->cmd_arg = (split_token(ptr->brut));
 		if (!(ptr->cmd_arg))
 			return (error_manager(99));
+		if (dequotes_cmd_arg(ptr, shell->env))
+			return (error_manager(21));
+		printf("la?\n");
 		/*
 		if (quotes_and_var(&ptr->redir_input, shell->env)
 			|| quotes_and_var(&ptr->redir_output, shell->env)
@@ -123,6 +172,7 @@ int	parsing(t_var *shell)
 		*/
 		ptr = ptr->next;
 	}
+	printf("fin parsing\n");
 	// temporaire commamde line : (ls -a | wc -l) ; (exit) ; ...
 	/*
 	shell->cmdlist = new_cmdnode();

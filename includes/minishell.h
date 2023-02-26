@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 16:07:03 by fl-hote            #+#    #+#             */
-/*   Updated: 2022/12/11 18:24:42 by fl-hote          ###   ########.fr       */
+/*   Created: 2022/10/28 16:07:03 by fl-hote           #+#    #+#             */
+/*   Updated: 2023/02/26 10:54:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 // //----------------global variable----------------//
 extern int	g_exit_code;
 
-enum e_type {
+enum e_type { // utilité ?
 	NIL,
 	WORD,
 	SQ,
