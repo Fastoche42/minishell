@@ -31,6 +31,7 @@ static void	print_cmdlist(t_cmdlist *ptr)
 		ptr = ptr->next;
 	}
 }
+
 static void	main_loop(t_var *shell, char *prompt, int aff_or_exec)
 {
 	shell->input = readline(prompt);
@@ -70,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 		return (error_manager(13));
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
+	prompt = ft_strjoin(*(argv)+2, "> ");
 	while (1)
 	{
 		main_loop(shell, prompt, *argv[1]);
