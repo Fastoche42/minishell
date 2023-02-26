@@ -38,6 +38,7 @@ void	close_fds(t_var *shell)
 		ptr = ptr->next;
 	}
 }
+
 int	free_strs(char *str, char **strs)
 {
 	int	i;
