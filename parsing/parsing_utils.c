@@ -12,6 +12,7 @@
 
 #include "../includes/minishell.h"
 
+/* head = NULL; // utile ?? */
 int	free_cmdlist(t_cmdlist **head)
 {
 	t_cmdlist	*ptr;
@@ -27,7 +28,6 @@ int	free_cmdlist(t_cmdlist **head)
 		free_strs(ptr->delim_hdoc, NULL);
 		free(ptr);
 	}
-	// head = NULL; // utile ??
 	return (0);
 }
 
@@ -52,12 +52,25 @@ t_cmdlist	*new_cmdnode(void)
 	return (node);
 }
 
+char	*what_inside_sq(char **pos)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	while ((*pos)[i] != '\'')
+		i++;
+	str = ft_strndup(*pos, i);
+	*pos += i;
+	return (str);
+}
+
 char	*replace_by_var(char **pos, t_env *env)
 {
 	char	*var;
 	int		i;
 
-	i = 1; //le 1e car est deja testé
+	i = 1;
 	while ((*pos)[i] == '_' || ft_isalnum((*pos)[i]))
 		i++;
 	var = ft_strndup(*pos, i);
@@ -75,11 +88,11 @@ char	*replace_by_var(char **pos, t_env *env)
 	return (NULL);
 }
 
-void    ft_concat(char **str, char *str2)
+void	ft_concat(char **str, char *str2)
 {
-	if(!str2)
+	if (!str2)
 		return ;
-	if(*str)
+	if (*str)
 	{
 		*str = ft_realloc(*str, strlen(*str) + strlen(str2) + 1);
 		ft_strcat(*str, str2);

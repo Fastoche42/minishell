@@ -1,4 +1,9 @@
 #
+homebrew
+
+.heredoc*
+
+#
 .vscode
 minishell
 *.txt
