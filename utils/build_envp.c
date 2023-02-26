@@ -68,7 +68,7 @@ char	**build_envp(t_env *env)
 	envp = malloc(sizeof(char *) * (env_lstlen(env) + 1));
 	while (env)
 	{
-		if (env->exists && env->exported)
+		if (env->exists == 1 && env->exported == 1)
 		{
 			envp[i] = env_strjoin(env->name, env->value);
 			if (!envp[i])

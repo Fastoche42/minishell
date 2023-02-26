@@ -1,10 +1,10 @@
 #include "../includes/minishell.h"
 
-static int	check_var(char **tmp, t_env *env)
+static int	check_var(char **tmp, t_var *shell)
 {
 	t_env 	*ptr;
 
-	ptr = env;
+	ptr = shell->env;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->name, tmp[0]))
@@ -16,11 +16,11 @@ static int	check_var(char **tmp, t_env *env)
 	return (1);
 }
 
-static t_env	*find_var(char **tmp, t_env *env)
+static t_env	*find_var(char **tmp, t_var *shell)
 {
 	t_env 	*ptr;
 
-	ptr = env;
+	ptr = shell->env;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->name, tmp[0]))
@@ -32,7 +32,7 @@ static t_env	*find_var(char **tmp, t_env *env)
 	return (NULL);
 }
 
-static int	new_var(char **tmp, t_env *env)
+static int	new_var(char **tmp, t_var *shell)
 {
 	t_env	*new;
 
@@ -51,19 +51,20 @@ static int	new_var(char **tmp, t_env *env)
 	}
 	new->exists = 1;
 	new->exported = 0;
-	new->next = env;
-	env = new;
+	new->next = shell->env;
+	shell->env = new;
 	return (0);
 }
 
-static int	change_var(char **tmp, t_env *env)
+static int	change_var(char **tmp, t_var *shell)
 {
 	t_env	*new;
 
-	new = find_var(tmp, env);
+	new = find_var(tmp, shell);
 	if (!new)
 		return (1);
-	free (new->value);
+	if (new->value)
+		free (new->value);
 	new->value = ft_strdup(tmp[1]);
 	if (!new->value)
 	{
@@ -74,28 +75,28 @@ static int	change_var(char **tmp, t_env *env)
 	return (0);
 }
 
-int	var_handler(t_cmdlist *cmd, t_env *env)
+int	var_handler(t_cmdlist *cmd, t_var *shell)
 {
 	char	**tmp;
 	int		i;
 
-	i = 1;
+	i = 0;
 	while (cmd->cmd_arg[i])
 	{
 		if (ft_strchr(cmd->cmd_arg[i], '=') != NULL) // double check
 		{
-			tmp = ft_split(cmd->cmd_arg[i], '='); // vérifier ft_split
+			tmp = ft_split(cmd->cmd_arg[i], '=');
 			if (!tmp)
 				return (1);
-			if (!check_export(tmp, env))
+			if (!check_var(tmp, shell))
 			{
-				if (change_export(tmp, env))
+				if (change_var(tmp, shell))
 				{
 					free (tmp);
 					return (1);
 				}
 			}
-			else if (new_export(tmp, env))
+			else if (new_var(tmp, shell))
 			{
 				free (tmp);
 				return (1);

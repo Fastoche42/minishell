@@ -12,12 +12,25 @@
 
 #include "../includes/minishell.h"
 
-static int	get_heredoc(t_cmdlist *cmd)
+static int	heredoc_file_generator(t_cmdlist *cmd, t_var *shell)
+{
+	if (cmd->redir_input)
+		free(cmd->redir_input);
+	cmd->redir_input = ft_strjoin(".heredoc.tmp", ft_itoa(shell->heredoc));
+	if (!cmd->redir_input)
+		return (error_manager(11));
+	shell->heredoc++;
+	return (0);
+}
+
+static int	get_heredoc(t_cmdlist *cmd, t_var *shell)
 {
 	int		tmp_fd;
 	int		stdin_fd;
 	char	*line;
 
+	if (heredoc_file_generator(cmd, shell))
+		return (1);
 	tmp_fd = open(cmd->redir_input, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	stdin_fd = dup(STDIN_FILENO);
 	if (tmp_fd == -1)
@@ -30,7 +43,7 @@ static int	get_heredoc(t_cmdlist *cmd)
 		if (line == NULL) // à tester
 			break ;
 		if (ft_strlen(cmd->delim_hdoc) + 1 == ft_strlen(line)
-				&& !ft_strncmp(line, cmd->delim_hdoc, ft_strlen(cmd->delim_hdoc + 1)))
+			&& !ft_strncmp(line, cmd->delim_hdoc, ft_strlen(cmd->delim_hdoc + 1)))
 			close(stdin_fd);
 		else
 			ft_putstr_fd(line, tmp_fd, 0);
@@ -40,11 +53,11 @@ static int	get_heredoc(t_cmdlist *cmd)
 	return (0);
 }
 
-static int	get_input_file(t_cmdlist *cmd)
+static int	get_input_file(t_cmdlist *cmd, t_var *shell)
 {
 	if (cmd->delim_hdoc)
 	{
-		if (get_heredoc(cmd))
+		if (get_heredoc(cmd, shell))
 			return (1);
 		cmd->fd_in = open(cmd->redir_input, O_RDONLY);
 		if (cmd->fd_in == -1)
@@ -70,9 +83,9 @@ static int	get_output_file(t_cmdlist *cmd)
 	return (0);
 }
 
-int	file_handler(t_cmdlist *cmd)
+int	file_handler(t_cmdlist *cmd, t_var *shell)
 {
-	if (get_input_file(cmd) || get_output_file(cmd))
+	if (get_input_file(cmd, shell) || get_output_file(cmd))
 		return (1);
 	return (0);
 }

@@ -55,7 +55,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
-char	*ft_strdup(const char *s1);
+char	*ft_strdup(const char *src);
 char	*ft_strndup(const char *src, size_t n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -81,9 +81,13 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strposchr(const char *s, int c);
 void*	ft_realloc(void* ptr, size_t size);
 
+
 		// Get Next Line //
 int     ft_find_newline(const char *s);
 void    ft_safe_free(char **s, char **s1, char **s2);
 char    *get_next_line(int fd);
+char	*ft_strdup2(const char *s1);
+char	*ft_strjoins(const char *s1, const char *s2);
+void	*ft_calloc2(size_t nmemb, size_t size);
 
 #endif

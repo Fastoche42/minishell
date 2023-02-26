@@ -45,7 +45,8 @@ BUILTINS =	builtins/exec_cd.c\
 UTILS =	utils/close_fds.c\
 		utils/exit.c\
 		utils/build_envp.c\
-		utils/is_builtin.c
+		utils/is_builtin.c\
+		utils/var_handler.c
 
 PARSING =	parsing/parsing.c\
 			parsing/split_token.c\

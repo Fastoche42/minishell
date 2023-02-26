@@ -12,13 +12,11 @@
 
 #include "../includes/minishell.h"
 
-static int	update_pwd(t_cmdlist *cmd, t_env *env)
+static int	update_pwd(t_env *env)
 {
-	//int		i;
 	t_env	*ptr;
 	char 	*tmp;
 
-	//i = 0;
 	ptr = env;
 	while (env)
 	{
@@ -26,7 +24,7 @@ static int	update_pwd(t_cmdlist *cmd, t_env *env)
 			{
 				tmp = ft_strdup(env->value);
 				free(env->value);
-				env->value = getcwd(NULL, 0); //à adapter pour le cas des chemins relatifs
+				env->value = getcwd(NULL, 0);
 				if (!tmp || !env->value)
 					return (1);
 			}
@@ -62,12 +60,9 @@ int	exec_cd(t_cmdlist *cmd, t_env *env)
 		if (chdir(cmd->cmd_arg[1]) != 0)
 			return (1);
 	}
-	else
-	{
-		if (chdir(cmd->cmd_arg[1]) != 0)
-			return (1);
-	}
-	if (update_pwd(cmd, env))
+	else if (chdir(cmd->cmd_arg[1]) != 0)
+		return (1);
+	if (update_pwd(env))
 		return (1);
 	return (0);
 }
