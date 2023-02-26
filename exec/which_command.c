@@ -21,20 +21,17 @@ int	which_command(t_var *shell, t_cmdlist *cmd)
 	else if (ft_strcmp (cmd->cmd_arg[0], "echo") == 0)
 		return(exec_echo(cmd));
 	else if (ft_strcmp (cmd->cmd_arg[0], "exit") == 0)
-	{
-		exec_exit(cmd);
-		/*if (cmd->cmd_arg[1] != NULL)
-			exit(ft_atoi(cmd->cmd_arg[1]));
-		else
-			exit(0);*/
-	}
+		exec_exit(cmd, shell);
 	else if (ft_strcmp (cmd->cmd_arg[0], "export") == 0)
-		return(exec_export(cmd, shell->env));
+		return(exec_export(cmd, shell));
 	else if (ft_strcmp (cmd->cmd_arg[0], "unset") == 0)
-		return(exec_unset(cmd, shell->env));
+		return(exec_unset(cmd, shell));
 	else if (ft_strcmp (cmd->cmd_arg[0], "cd") == 0)
 		return(exec_cd(cmd, shell->env));
+	else if (ft_strchr(cmd->cmd_arg[0], '='))
+		return(var_handler(cmd, shell));
 	else
 		return(execve(cmd->cmd_path, cmd->cmd_arg, build_envp(shell->env)));
+	return (0);
 }
             

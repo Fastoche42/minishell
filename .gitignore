@@ -1,6 +1,8 @@
 #
 homebrew
 
+.heredoc*
+
 #
 .vscode
 minishell

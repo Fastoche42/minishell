@@ -23,26 +23,20 @@ void	close_pipe_fds(t_var *shell)
 		i++;
 	}
 }
-/*
+
 void	close_fds(t_var *shell)
 {
-	if (shell->cmdlist)
+	t_cmdlist *ptr;
+
+	ptr = shell->cmdlist;
+	while (ptr)
 	{
-		if (shell->cmdlist->fd_in > 2)
-			close(shell->cmdlist->fd_in);
-		if (shell->cmdlist->fd_out > 2)
-			close(shell->cmdlist->fd_out);
+		if (ptr->redir_input != NULL)
+			close(ptr->fd_in);
+		if (ptr->redir_output != NULL)
+			close(ptr->fd_out);
+		ptr = ptr->next;
 	}
-	if (shell->child == 0)
-		close(shell->pipe[1]);
-	else if (shell->child == shell->cmd_nbr - 1)
-		close(shell->pipe[2 * shell->child - 2]);
-	else
-	{
-		close(shell->pipe[shell->child * 2 - 2]);
-		close(shell->pipe[shell->child * 2 + 1]);
-	}
-	//close_pipe_fds(shell);
 }
 */
 int	free_strs(char *str, char **strs)
@@ -68,13 +62,16 @@ int	free_strs(char *str, char **strs)
 int	ft_unlink_heredocs(t_var *shell)
 {
 	int	i;
+	t_cmdlist	*ptr;
 
 	i = 0;
+	ptr = shell->cmdlist;
 	while (i < shell->cmd_nbr)
 	{
-		if (shell->cmdlist[i].delim_hdoc != NULL)
-			if (unlink(shell->cmdlist[i].redir_input) == -1)
+		if (ptr->delim_hdoc != NULL)
+			if (unlink(ptr->redir_input) == -1)
 				return (errno);
+		ptr = ptr->next;
 		i++;
 	}
 	return (0);

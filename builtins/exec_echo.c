@@ -19,7 +19,7 @@ int	exec_echo(t_cmdlist *cmd)
 
 	i = 1;
 	flag = 0;
-	if (ft_strcmp(cmd->cmd_arg[i], "-n") == 0)
+	if (cmd->cmd_arg[i] && ft_strcmp(cmd->cmd_arg[i], "-n") == 0)
 	{
 		flag = 1;
 		i++;

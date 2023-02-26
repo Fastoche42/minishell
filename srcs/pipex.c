@@ -39,6 +39,7 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 	{
 		redir_other(shell, cmd);
 	}
+	close_fds(shell);
 	close_pipe_fds(shell);
 	if (cmd->cmd_arg == NULL
 		|| (!is_builtin(cmd->cmd_arg[0])
@@ -46,8 +47,6 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 		return (error_manager(10));
 	if (which_command(shell, cmd) != 0)
 		return (error_manager(10));
-	close(0);
-	close(1);
 	exit (0);
 }
 
@@ -57,6 +56,7 @@ static int	parent(t_var *shell)
 	int		status;
 	int		exit_code;
 
+	close_fds(shell);
 	close_pipe_fds(shell);
 	shell->child--;
 	exit_code = 1;
@@ -86,7 +86,7 @@ int	pipex(t_var *shell)
 			if (!shell->cmdlist->cmd_path)
 				return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror */
 		}
-		if (file_handler(shell->cmdlist))
+		if (file_handler(shell->cmdlist, shell))
 			return (error_manager(12));
 		shell->pids[shell->child] = fork();
 		if (shell->pids[shell->child] == -1)
@@ -108,7 +108,7 @@ int	one_cmd(t_var *shell)
 	int	exit_code;
 
 	close_pipe_fds(shell);
-	if (file_handler(shell->cmdlist))
+	if (file_handler(shell->cmdlist, shell))
 		return (error_manager(12));
 	if (shell->cmdlist->cmd_arg == NULL
 		|| (!is_builtin(shell->cmdlist->cmd_arg[0])

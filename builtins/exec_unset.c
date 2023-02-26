@@ -12,28 +12,28 @@
 
 #include "../includes/minishell.h"
 
-static int	check_unset(char *tmp, t_env *env)
+static int	check_unset(char *tmp, t_var *shell)
 {
 	t_env	*ptr;
 
-	ptr = env;
+	ptr = shell->env;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->name, tmp))
+		if (!ft_strcmp(ptr->name, tmp))
 			return (1);
 		ptr = ptr->next;
 	}
 	return (0);
 }
 
-static int	change_unset(char *tmp, t_env *env)
+static int	change_unset(char *tmp, t_var *shell)
 {
 	t_env	*ptr;
 
-	ptr = env;
+	ptr = shell->env;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->name, tmp))
+		if (!ft_strcmp(ptr->name, tmp))
 		{
 			ptr->exists = 0;
 			return (0);
@@ -43,7 +43,7 @@ static int	change_unset(char *tmp, t_env *env)
 	return (1);
 }
 
-int    exec_unset(t_cmdlist *cmd, t_env *env)
+int    exec_unset(t_cmdlist *cmd, t_var *shell)
 {
     int		i;
 	char	*tmp;
@@ -54,8 +54,8 @@ int    exec_unset(t_cmdlist *cmd, t_env *env)
 		tmp = ft_strdup(cmd->cmd_arg[i]);
 		if (!tmp)
 			return (1);
-		if (check_unset(tmp, env))
-			if (change_unset(tmp, env))
+		if (check_unset(tmp, shell))
+			if (change_unset(tmp, shell))
 				return (1);
 		free (tmp);
 		i++;

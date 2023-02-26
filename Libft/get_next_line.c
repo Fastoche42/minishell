@@ -22,7 +22,7 @@ static char	*ft_before_newline(const char *tmp)
 		i++;
 	if (tmp[i] != '\0' && tmp[i] == '\n')
 		i++;
-	ret = ft_calloc(i + 1, sizeof(ret));
+	ret = ft_calloc2(i + 1, sizeof(ret));
 	if (!ret)
 		return (NULL);
 	i = 0;
@@ -53,7 +53,7 @@ static char	*ft_after_newline(const char *tmp)
 		i++;
 	if (tmp[i] != '\0' && tmp[i] == '\n')
 		i++;
-	ret = ft_calloc((j - i) + 1, sizeof(ret));
+	ret = ft_calloc2((j - i) + 1, sizeof(ret));
 	if (!ret)
 		return (NULL);
 	j = 0;
@@ -83,9 +83,9 @@ static void	ft_read_line(int fd, char **keep, char **tmp)
 			return ;
 		}
 		buffer[ret] = '\0';
-		*tmp = ft_strdup(*keep);
+		*tmp = ft_strdup2(*keep);
 		ft_safe_free(keep, 0, 0);
-		*keep = ft_strjoin(*tmp, buffer);
+		*keep = ft_strjoins(*tmp, buffer);
 		ft_safe_free(tmp, 0, 0);
 		if (ft_find_newline(*keep))
 			break ;
@@ -97,7 +97,7 @@ static char	*ft_parse_line(char **keep, char **tmp)
 {
 	char	*line;
 
-	*tmp = ft_strdup(*keep);
+	*tmp = ft_strdup2(*keep);
 	ft_safe_free(keep, 0, 0);
 	*keep = ft_after_newline(*tmp);
 	line = ft_before_newline(*tmp);

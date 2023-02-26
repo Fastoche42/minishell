@@ -11,43 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-/*
-int	exit_number_of_args(t_var *shell)
-{
-	char	**tab;
-	int		i;
-	int		args;
 
-	i = 1;
-	args = 0;
-	tab = ft_split(shell->input, ' ');
-	while (tab[i])
-	{
-		args++;
-		i++;
-	}
-	return (args);
-}
-
-int	exec_exit(t_var *shell)
-{
-	int	args;
-	int	exit_status;
-
-	args = exit_number_of_args(shell);
-	exit_status = 0;
-	if (args > 0)
-		return (write (1, "too many arguments\n", 19));
-	else
-	{
-		write(1, "exit\n", 1);
-		exit(exit_status);
-		return (0);
-	}
-}
-*/
-
-int	exec_exit(t_cmdlist *cmd)
+int	exec_exit(t_cmdlist *cmd, t_var *shell)
 {
 	int	i;
 
@@ -62,7 +27,7 @@ int	exec_exit(t_cmdlist *cmd)
 				ft_putstr_fd("minishell: exit: ", 1, 0);
 				ft_putstr_fd(cmd->cmd_arg[1], 1, 0);
 				ft_putstr_fd(": numeric argument required\n", 1, 0);
-				exit (255);
+				exit_minishell(shell, 255);
 			}
 		}
 		if (cmd->cmd_arg[2])
@@ -73,10 +38,10 @@ int	exec_exit(t_cmdlist *cmd)
 		else
 		{
 			ft_putstr_fd("exit\n", 1, 0);
-			exit (ft_atoi(cmd->cmd_arg[1]));
+			exit_minishell(shell, ft_atoi(cmd->cmd_arg[1]));
 		}
 	}
 	else
-		exit (g_exit_code);
+		exit_minishell(shell, g_exit_code);
 	return (0); // à vérifier
 }
