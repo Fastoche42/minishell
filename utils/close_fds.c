@@ -58,13 +58,13 @@ int	free_strs(char *str, char **strs)
 	return (1);
 }
 
-int	ft_unlink_heredocs(t_var *shell)
+int	ft_unlink_heredocs(t_var *shell, t_cmdlist *cmd)
 {
 	int	i;
 	t_cmdlist	*ptr;
 
 	i = 0;
-	ptr = shell->cmdlist;
+	ptr = cmd;
 	while (i < shell->cmd_nbr)
 	{
 		if (ptr->delim_hdoc != NULL)

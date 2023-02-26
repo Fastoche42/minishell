@@ -113,7 +113,7 @@ int		var_handler(t_cmdlist *cmd, t_var *shell);
 
 //------------------exec------------------//
 int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023
-void	handler_sig(int signum);
+void	sig_handler(int signum);
 int		ms_execute(t_var *shell);
 int		exec_pwd(t_env *env); // mise à jour 05/01/2023
 int		exec_env(t_env *env); // mise à jour 10/01/2023
@@ -130,7 +130,7 @@ char 	*get_cmd(char *cmd, t_var *shell);
 int		file_handler(t_cmdlist *cmd, t_var *shell);
 int		redir_first_last(t_var *shell, t_cmdlist *cmd);
 int		redir_other(t_var *shell, t_cmdlist *cmd);
-int		ft_unlink_heredocs(t_var *shell);
+int		ft_unlink_heredocs(t_var *shell, t_cmdlist *cmd);
 
 //----------------check----------------//
 int		error_manager(int error);

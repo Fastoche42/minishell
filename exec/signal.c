@@ -12,22 +12,17 @@
 
 #include "../includes/minishell.h"
 
-void	handler_sig(int signum)
+void	sig_handler(int signum)
 {
-	if (signum == SIGINT) //ctrl c
+	if (signum == SIGINT)
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (signum == SIGQUIT) //ctrl d (?)(ctrl D devrait juste exit, non ?)
+	else if (signum == SIGQUIT)
 	{
-		/*
-		rl_on_new_line();
-		rl_redisplay();
-		printf("  \b\b");
-		*/
 		printf("\nexit\n");
 		exit(0);
 	}

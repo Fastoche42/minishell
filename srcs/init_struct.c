@@ -77,12 +77,10 @@ void	reinit_struct(t_var *shell)
 	shell->heredoc = 0;
 	shell->child = 0;
 	shell->cmd_nbr = -1;
-	/*
 	if (shell->pids)
 		free(shell->pids);
 	if (shell->pipe)
 		free(shell->pipe);
-	*/
 }
 
 static int	generate_pipes(t_var *shell)

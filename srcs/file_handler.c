@@ -14,9 +14,15 @@
 
 static int	heredoc_file_generator(t_cmdlist *cmd, t_var *shell)
 {
+	char *tmp;
+
+	tmp = ft_itoa(shell->heredoc);
+	if (!tmp)
+		return (error_manager(11));
 	if (cmd->redir_input)
 		free(cmd->redir_input);
-	cmd->redir_input = ft_strjoin(".heredoc.tmp", ft_itoa(shell->heredoc));
+	cmd->redir_input = ft_strjoin(".heredoc.tmp", tmp);
+	free (tmp);
 	if (!cmd->redir_input)
 		return (error_manager(11));
 	shell->heredoc++;

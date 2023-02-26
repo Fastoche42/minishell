@@ -30,6 +30,11 @@ int	free_all(t_var *shell) //esquisse de fonction pour free tout proprement (en 
 		free(cmd_tmp);
 	}
 	shell->cmdlist = NULL;
+	free_strs(shell->input, NULL);
+	free(shell->pipe);
+	shell->pipe = NULL;
+	free(shell->pids);
+	shell->pids = NULL;
 	shell = NULL;
 	return (0);
 }
