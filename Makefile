@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #\
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/28 16:07:42 by fl-hote            #+#    #+#              #
-#    Updated: 2022/12/15 12:59:46 by fl-hote          ###   ########.fr        #
+#    Updated: 2023/02/27 20:57:14 by event            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ ifeq ($(HOST), LAPTOP-M60DL66F)
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = -Wall -Wextra -Werror
+	CFLAG = -Wall -Wextra -Werror -g
 endif
 
 SRCS =	srcs/main.c\

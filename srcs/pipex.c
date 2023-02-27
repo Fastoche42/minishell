@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:34 by jlorber           #+#    #+#             */
-/*   Updated: 2023/02/05 00:35:52 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/27 21:48:07 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,20 @@ int	pipex(t_var *shell)
 
 	shell->child = 0;
 	tmp = shell->cmdlist;
-	while ((shell->child < shell->cmd_nbr) && shell->cmdlist)
+	while ((shell->child < shell->cmd_nbr) && tmp)
 	{
 		if (path_finder(shell))
 			return (127);
-		if (file_handler(shell->cmdlist, shell))
+		if (file_handler(tmp, shell))
 			return (error_manager(12));
 		shell->pids[shell->child] = fork();
 		if (shell->pids[shell->child] == -1)
 			return (error_manager(7));
 		else if (shell->pids[shell->child] == 0)
-			if (child(shell, shell->cmdlist) > 0)
+			if (child(shell, tmp) > 0)
 				return (errno);
 		shell->child++;
-		shell->cmdlist = shell->cmdlist->next;
+		tmp = tmp->next;
 	}
 	exit_code = parent(shell);
 	if (shell->heredoc > 0 && ft_unlink_heredocs(shell, tmp) > 0)

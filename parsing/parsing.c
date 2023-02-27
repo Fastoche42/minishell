@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 19:00:34 by event            ###   ########.fr       */
+/*   Updated: 2023/02/27 21:33:38 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ static char	*create_token(t_var *shell, char *start, char *end)
 	{
 		shell->current->next = new_cmdnode();
 		shell->current = shell->current->next;
+	}
+	if (shell->buf)
+	{
+		free(shell->buf);
+		shell->buf = 0;
 	}
 	return (token);
 }
