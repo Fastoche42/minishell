@@ -35,6 +35,6 @@ int	exec_exit(t_cmdlist *cmd, t_var *shell)
 			exit_minishell(shell, ft_atoi(cmd->cmd_arg[1]));
 	}
 	else
-		exit_minishell(shell, g_exit_code);
+		exit_minishell(shell, g_data.exit_code);
 	return (0);
 }

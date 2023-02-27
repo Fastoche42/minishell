@@ -52,7 +52,6 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 
 static int	parent(t_var *shell)
 {
-	pid_t	wpid;
 	int		status;
 	int		exit_code;
 
@@ -62,8 +61,8 @@ static int	parent(t_var *shell)
 	exit_code = 1;
 	while (shell->child >= 0)
 	{
-		wpid = waitpid(shell->pids[shell->child], &status, 0);
-		if (wpid == shell->pids[shell->cmd_nbr - 1])
+		g_data.pid = waitpid(shell->pids[shell->child], &status, 0);
+		if (g_data.pid == shell->pids[shell->cmd_nbr - 1])
 		{
 			if ((shell->child == (shell->cmd_nbr - 1)) && WIFEXITED(status))
 				exit_code = WEXITSTATUS(status);

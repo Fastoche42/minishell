@@ -28,13 +28,18 @@
 # define MAX_LEN 4096
 
 // //----------------global variable----------------//
-extern int	g_exit_code;
+extern struct s_data	g_data;
+struct s_data
+{
+	int		exit_code;
+	int		pid;
+};
 
 typedef struct s_cmdlist
 {
 	char				*brut;
 	char				*cmd_path;
-	char				**cmd_arg;
+	char				**cmd_arg; 	
 	char				*redir_input;
 	char				*delim_hdoc;
 	char				*redir_output;
@@ -103,7 +108,7 @@ int			var_handler(t_cmdlist *cmd, t_var *shell);
 int			var_handler2(char **tmp, t_var *shell);
 
 //------------------built-in------------------//
-int			exec_pwd(t_env *env);
+int			exec_pwd(t_env *env, t_cmdlist *cmd);
 int			exec_env(t_env *env);
 int			exec_echo(t_cmdlist *cmd);
 int			exec_exit(t_cmdlist *cmd, t_var *shell);

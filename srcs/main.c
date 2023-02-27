@@ -12,11 +12,15 @@
 
 #include "../includes/minishell.h"
 
-int	g_exit_code;
+struct s_data	g_data;
 
 static int	main_loop(t_var *shell, char *prompt)
 {
 	shell->input = readline(prompt);
+	if (!shell->input)
+	{
+		return (1);
+	}
 	if (shell->input && *shell->input != 0)
 	{
 		add_history(shell->input);
@@ -28,9 +32,9 @@ static int	main_loop(t_var *shell, char *prompt)
 			{
 				if (shell->cmd_nbr > 1 || (shell->cmd_nbr == 1
 						&& !is_builtin(shell->cmdlist->cmd_arg[0])))
-					g_exit_code = pipex(shell);
+					g_data.exit_code = pipex(shell);
 				else
-					g_exit_code = one_cmd(shell);
+					g_data.exit_code = one_cmd(shell);
 			}
 		}
 		free_cmdlist(&(shell->cmdlist));
@@ -43,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_var	*shell;
 
-	g_exit_code = 0;
+	g_data.exit_code = 0;
 	if (argc != 1)
 		return (error_manager(1));
 	shell = init_struct(envp);
@@ -57,6 +61,6 @@ int	main(int argc, char **argv, char **envp)
 		if (main_loop(shell, shell->prompt))
 			break ;
 	}
-	exit_minishell(shell, g_exit_code);
+	exit_minishell(shell, g_data.exit_code);
 	return (0);
 }

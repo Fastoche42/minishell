@@ -42,7 +42,7 @@ int	quotes_and_var(char **str, t_env *env, int in_dq)
             ft_concat(str, ft_strndup (start, (end - start)));
             end++;
             if (*end == '?')
-                str2 = ft_itoa(g_exit_code);
+                str2 = ft_itoa(g_data.exit_code);
             else
                 str2 = replace_by_var(&end, env);
             ft_concat(str, str2);

@@ -15,7 +15,7 @@
 int	which_command(t_var *shell, t_cmdlist *cmd)
 {
 	if (ft_strcmp (cmd->cmd_arg[0], "pwd") == 0)
-		return (exec_pwd(shell->env));
+		return (exec_pwd(shell->env, cmd));
 	else if (ft_strcmp (cmd->cmd_arg[0], "env") == 0)
 		return (exec_env(shell->env));
 	else if (ft_strcmp (cmd->cmd_arg[0], "echo") == 0)
