@@ -19,6 +19,7 @@ int	free_cmdlist(t_cmdlist **head)
 	while (*head)
 	{
 		ptr = *head;
+		*head = (*head)->next;
 		free_strs(ptr->brut, NULL);
 		free_strs(ptr->cmd_path, ptr->cmd_arg);
 		free_strs(ptr->redir_input, NULL);
@@ -26,7 +27,7 @@ int	free_cmdlist(t_cmdlist **head)
 		free_strs(ptr->delim_hdoc, NULL);
 		if (ptr)
 			free(ptr);
-		*head = (*head)->next;
+		ptr = NULL;
 	}
 	return (0);
 }
