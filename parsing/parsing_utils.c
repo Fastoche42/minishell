@@ -27,6 +27,7 @@ int	free_cmdlist(t_cmdlist **head)
 		free_strs(ptr->delim_hdoc, NULL);
 		if (ptr)
 			free(ptr);
+		ptr = NULL;
 	}
 	return (0);
 }

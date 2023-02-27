@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 16:42:23 by event            ###   ########.fr       */
+/*   Updated: 2023/02/27 19:00:34 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	parsing(t_var *shell)
 	empty = ft_strtrim(shell->input, " ");
 	if (!empty || !*empty)
 		return (1);
+	free_strs(empty, NULL);
 	if (parse_pipes(shell))
 		return (1);
 	ptr = shell->cmdlist;
