@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlorber <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:33:30 by jlorber           #+#    #+#             */
-/*   Updated: 2023/02/27 14:33:32 by jlorber          ###   ########.fr       */
+/*   Updated: 2023/02/27 17:50:24 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,15 @@ int	var_handler2(char **tmp, t_var *shell)
 	{
 		if (change_var(tmp, shell))
 		{
-			free (tmp);
+			free_strs(NULL, tmp);
 			return (1);
 		}
 	}
 	else if (new_var(tmp, shell))
 	{
-		free (tmp);
+		free_strs(NULL, tmp);
 		return (1);
 	}
-	free (tmp);
+	free_strs(NULL, tmp);
 	return (0);
 }

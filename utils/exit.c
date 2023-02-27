@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlorber <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:32:15 by jlorber           #+#    #+#             */
-/*   Updated: 2023/02/27 14:32:22 by jlorber          ###   ########.fr       */
+/*   Updated: 2023/02/27 17:50:25 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	free_all(t_var *shell)
 	shell->pipe = 0;
 	free(shell->pids);
 	shell->pids = 0;
-	free(shell);
-	shell = NULL;
+	if (shell)
+	{
+		free(shell);
+		shell = NULL;
+	}
 	return (0);
 }
 

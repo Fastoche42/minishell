@@ -22,7 +22,7 @@ ifeq ($(HOST), LAPTOP-M60DL66F)
 else
 	CPPFLAGS = -I/Users/$(USER)/.brew/opt/readline/include 
 	LDFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	CFLAG = -Wall -Wextra
+	CFLAG = -Wall -Wextra -Werror -g
 endif
 
 SRCS =	srcs/main.c\

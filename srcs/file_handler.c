@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:56 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/01/19 16:56:10 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/27 17:50:27 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	get_heredoc(t_cmdlist *cmd, t_var *shell)
 			break ;
 		else
 			ft_putstr_fd(line, tmp_fd, 0);
-		free(line);
+		free_strs(line, NULL);
 	}
 	close(stdin_fd);
 	close(tmp_fd);

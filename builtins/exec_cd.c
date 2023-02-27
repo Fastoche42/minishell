@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:47:59 by fl-hote           #+#    #+#             */
-/*   Updated: 2022/12/07 08:03:59 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/27 17:50:31 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	update_pwd(t_env *env)
 		}
 		ptr = ptr->next;
 	}
-	free(tmp);
+	free_strs(tmp, NULL);
 	return (0);
 }
 

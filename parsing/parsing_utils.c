@@ -25,7 +25,8 @@ int	free_cmdlist(t_cmdlist **head)
 		free_strs(ptr->redir_input, NULL);
 		free_strs(ptr->redir_output, NULL);
 		free_strs(ptr->delim_hdoc, NULL);
-		free(ptr);
+		if (ptr)
+			free(ptr);
 	}
 	return (0);
 }
@@ -78,12 +79,12 @@ char	*replace_by_var(char **pos, t_env *env)
 	{
 		if (env->exists && !ft_strcmp(var, env->name))
 		{
-			free (var);
+			free_strs(var, NULL);
 			return (ft_strdup(env->value));
 		}
 		env = env->next;
 	}
-	free (var);
+	free_strs(var, NULL);
 	return (NULL);
 }
 

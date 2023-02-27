@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:45:59 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/01 17:33:05 by fl-hote          ###   ########.fr       */
+/*   Updated: 2023/02/27 17:50:31 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	exec_unset(t_cmdlist *cmd, t_var *shell)
 		if (check_unset(tmp, shell))
 			if (change_unset(tmp, shell))
 				return (1);
-		free (tmp);
+		free_strs(tmp, NULL);
 		i++;
 	}
 	return (0);

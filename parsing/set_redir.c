@@ -108,6 +108,6 @@ void	set_redirs(t_cmdlist *ptr, t_var *sh)
 		(sh->end)++;
 	}
 	ft_concat(&str, ft_strndup (sh->start, (sh->end - sh->start)));
-	free (ptr->brut);
+	free_strs(ptr->brut, NULL);
 	ptr->brut = str;
 }

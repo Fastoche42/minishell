@@ -20,7 +20,8 @@ void	*ft_realloc(void *ptr, size_t size)
 		return (malloc(size));
 	else if (size == 0)
 	{
-		free(ptr);
+		if (ptr)
+			free(ptr);
 		return (NULL);
 	}
 	else
