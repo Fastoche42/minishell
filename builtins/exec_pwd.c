@@ -12,13 +12,15 @@
 
 #include "../includes/minishell.h"
 
-int	exec_pwd(t_env *env)
+int	exec_pwd(t_env *env, t_cmdlist *cmd)
 {
 	while (env)
 	{
+		if (cmd->cmd_arg[1])
+			return (ft_putstr_fd("pwd: too many arguments\n", 2, 0));
 		if (!ft_strcmp(env->name, "PWD"))
 		{
-			ft_putstr_fd(env->value, 1 , 0);
+			ft_putstr_fd(env->value, 1, 0);
 			ft_putchar_fd('\n', 1);
 			return (0);
 		}

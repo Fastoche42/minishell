@@ -14,7 +14,7 @@
 
 int	check_export(char **tmp, t_var *shell)
 {
-	t_env 	*ptr;
+	t_env	*ptr;
 
 	ptr = shell->env;
 	while (ptr)
@@ -30,7 +30,7 @@ int	check_export(char **tmp, t_var *shell)
 
 t_env	*find_export(char **tmp, t_var *shell)
 {
-	t_env 	*ptr;
+	t_env	*ptr;
 
 	ptr = shell->env;
 	while (ptr)
@@ -60,8 +60,8 @@ int	new_export(char **tmp, t_var *shell)
 	}
 	if (tmp[1])
 		new->value = ft_strdup(tmp[1]);
-	else 
-		new->value = ft_strdup(" "); //
+	else
+		new->value = ft_strdup(" ");
 	if (!new->name || !new->value)
 	{
 		free (new);
@@ -103,7 +103,7 @@ int	exec_export(t_cmdlist *cmd, t_var *shell)
 	i = 1;
 	while (cmd->cmd_arg[i])
 	{
-		if (ft_strchr(cmd->cmd_arg[i], '=') != NULL) // double check
+		if (ft_strchr(cmd->cmd_arg[i], '=') != NULL)
 		{
 			tmp = ft_split(cmd->cmd_arg[i], '=');
 			if (!tmp)

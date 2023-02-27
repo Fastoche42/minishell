@@ -23,7 +23,17 @@ void	sig_handler(int signum)
 	}
 	else if (signum == SIGQUIT)
 	{
-		printf("\nexit\n");
-		exit(0);
+		if (g_data.pid != 0)
+		{
+			kill(g_data.pid, SIGQUIT);
+			rl_replace_line("", 0);
+			printf("\n");
+			rl_redisplay();
+		}
+		else
+		{
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 	}
 }

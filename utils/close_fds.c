@@ -26,7 +26,7 @@ void	close_pipe_fds(t_var *shell)
 
 void	close_fds(t_var *shell)
 {
-	t_cmdlist *ptr;
+	t_cmdlist	*ptr;
 
 	ptr = shell->cmdlist;
 	while (ptr)
@@ -61,7 +61,7 @@ int	free_strs(char *str, char **strs)
 
 int	ft_unlink_heredocs(t_var *shell, t_cmdlist *cmd)
 {
-	int	i;
+	int			i;
 	t_cmdlist	*ptr;
 
 	i = 0;

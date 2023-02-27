@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:04:58 by event             #+#    #+#             */
-/*   Updated: 2023/02/27 15:02:29 by event            ###   ########.fr       */
+/*   Updated: 2023/02/27 17:38:55 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	dollar_found(char **str, char **end, char **start, t_env *env)
 	ft_concat(str, ft_strndup (*start, (*end - *start)));
 	(*end)++;
 	if (**end == '?')
-		str2 = ft_itoa(g_exit_code);
+		str2 = ft_itoa(g_data.exit_code);
 	else
 		str2 = replace_by_var(end, env);
 	ft_concat(str, str2);

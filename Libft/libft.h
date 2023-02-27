@@ -82,11 +82,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strposchr(const char *s, int c);
 void	*ft_realloc(void *ptr, size_t size);
 
-
 		// Get Next Line //
-int     ft_find_newline(const char *s);
-void    ft_safe_free(char **s, char **s1, char **s2);
-char    *get_next_line(int fd);
+int		ft_find_newline(const char *s);
+void	ft_safe_free(char **s, char **s1, char **s2);
+char	*get_next_line(int fd);
 char	*ft_strdup2(const char *s1);
 char	*ft_strjoins(const char *s1, const char *s2);
 void	*ft_calloc2(size_t nmemb, size_t size);

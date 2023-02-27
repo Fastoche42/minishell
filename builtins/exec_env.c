@@ -15,7 +15,7 @@
 int	exec_env(t_env *env)
 {
 	char	**envp;
-	int 	i;
+	int		i;
 
 	envp = build_envp(env);
 	if (!envp)

@@ -42,9 +42,9 @@ static int	env_lstlen(t_env *env)
 
 static char	*env_strjoin(char *name, char *value)
 {
-	char *ret;
-	int	i;
-	int	j;
+	char	*ret;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;

@@ -59,7 +59,8 @@ int	redir_other(t_var *shell, t_cmdlist *cmd)
 	}
 	else
 	{
-		if (redirect_io(shell->pipe[2 * shell->child - 2], shell->pipe[2 * shell->child + 1]))
+		if (redirect_io(shell->pipe[2 * shell->child - 2],
+				shell->pipe[2 * shell->child + 1]))
 			return (error_manager(11));
 	}
 	return (0);

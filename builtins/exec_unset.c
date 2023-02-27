@@ -43,9 +43,9 @@ static int	change_unset(char *tmp, t_var *shell)
 	return (1);
 }
 
-int    exec_unset(t_cmdlist *cmd, t_var *shell)
+int	exec_unset(t_cmdlist *cmd, t_var *shell)
 {
-    int		i;
+	int		i;
 	char	*tmp;
 
 	i = 1;

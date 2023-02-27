@@ -15,36 +15,35 @@
 static int	update_pwd(t_env *env)
 {
 	t_env	*ptr;
-	char 	*tmp;
+	char	*tmp;
 
 	ptr = env;
-	while (env)
+	while (ptr)
 	{
-		if (ft_strcmp(env->name, "PWD") == 0)
-			{
-				tmp = ft_strdup(env->value);
-				free(env->value);
-				env->value = getcwd(NULL, 0);
-				if (!tmp || !env->value)
-					return (1);
-			}
-		if (ft_strcmp(env->name, "OLDPWD") == 0)
+		if (ft_strcmp(ptr->name, "PWD") == 0)
 		{
-			free(env->value);
-			env->value = ft_strdup(tmp);
-			if (!env->value)
+			tmp = ft_strdup(ptr->value);
+			free_strs(ptr->value, NULL);
+			ptr->value = getcwd(NULL, 0);
+			if (!tmp || !ptr->value)
 				return (1);
 		}
-		env = env->next;
+		if (ft_strcmp(ptr->name, "OLDPWD") == 0)
+		{
+			free_strs(ptr->value, NULL);
+			ptr->value = ft_strdup(tmp);
+			if (!ptr->value)
+				return (1);
+		}
+		ptr = ptr->next;
 	}
-	env = ptr;
 	free(tmp);
 	return (0);
 }
 
 int	exec_cd(t_cmdlist *cmd, t_env *env)
 {
-	t_env *ptr;
+	t_env	*ptr;
 
 	ptr = env;
 	if (*cmd->cmd_arg[1] == '-')

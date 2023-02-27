@@ -43,7 +43,7 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 	close_pipe_fds(shell);
 	if (cmd->cmd_arg == NULL
 		|| (!is_builtin(cmd->cmd_arg[0])
-		&& cmd->cmd_path == NULL))
+			&& cmd->cmd_path == NULL))
 		return (error_manager(10));
 	if (which_command(shell, cmd) != 0)
 		return (error_manager(10));
@@ -52,7 +52,6 @@ static int	child(t_var *shell, t_cmdlist *cmd)
 
 static int	parent(t_var *shell)
 {
-	pid_t	wpid;
 	int		status;
 	int		exit_code;
 
@@ -62,8 +61,8 @@ static int	parent(t_var *shell)
 	exit_code = 1;
 	while (shell->child >= 0)
 	{
-		wpid = waitpid(shell->pids[shell->child], &status, 0);
-		if (wpid == shell->pids[shell->cmd_nbr - 1])
+		g_data.pid = waitpid(shell->pids[shell->child], &status, 0);
+		if (g_data.pid == shell->pids[shell->cmd_nbr - 1])
 		{
 			if ((shell->child == (shell->cmd_nbr - 1)) && WIFEXITED(status))
 				exit_code = WEXITSTATUS(status);
@@ -111,7 +110,7 @@ int	one_cmd(t_var *shell)
 		return (error_manager(12));
 	if (shell->cmdlist->cmd_arg == NULL
 		|| (!is_builtin(shell->cmdlist->cmd_arg[0])
-		&& shell->cmdlist->cmd_path == NULL))
+			&& shell->cmdlist->cmd_path == NULL))
 		return (error_manager(10));
 	exit_code = which_command(shell, shell->cmdlist);
 	if (exit_code != 0)
