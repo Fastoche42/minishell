@@ -60,6 +60,8 @@ t_var	*init_struct(char **envp)
 	shell->heredoc = 0;
 	shell->child = 0;
 	shell->cmd_nbr = -1;
+	shell->pids = NULL;
+	shell->pipe = NULL;
 	g_data.pid = 0;
 	g_data.exit_code = 0;
 	return (shell);
@@ -75,9 +77,15 @@ void	reinit_struct(t_var *shell)
 	shell->child = 0;
 	shell->cmd_nbr = -1;
 	if (shell->pids)
+	{
 		free(shell->pids);
+		shell->pids = NULL;
+	}
 	if (shell->pipe)
+	{
 		free(shell->pipe);
+		shell->pipe = NULL;
+	}
 	g_data.pid = 0;
 }
 

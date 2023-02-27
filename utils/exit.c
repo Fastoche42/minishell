@@ -40,7 +40,10 @@ void	final_free_env(t_var *shell)
 		free_strs(env_ptr->name, NULL);
 		free_strs(env_ptr->value, NULL);
 		free(env_ptr);
-		shell->env = shell->env->next;
+		if (shell->env->next)
+			shell->env = shell->env->next;
+		else
+			break ;
 	}
 	shell->env = NULL;
 }
@@ -58,7 +61,10 @@ void	final_free_cmd(t_var *shell)
 		free_strs(cmd_ptr->redir_output, NULL);
 		free_strs(cmd_ptr->delim_hdoc, NULL);
 		free(cmd_ptr);
-		shell->cmdlist = shell->cmdlist->next;
+		if (shell->cmdlist->next)
+			shell->cmdlist = shell->cmdlist->next;
+		else
+			break ;
 	}
 	shell->cmdlist = NULL;
 }
