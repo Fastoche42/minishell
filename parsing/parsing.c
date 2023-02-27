@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/26 11:00: by marvin             ###   ########.fr       */
+/*   Updated: 2023/02/27 11:10:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 	while (ptr->cmd_arg[i])
 	{
 		tmp = ft_strdup(ptr->cmd_arg[i]);
-		printf("tmp\n");
 		if (quotes_and_var(&tmp, env))
 			return (1);
 		free (ptr->cmd_arg[i]);
@@ -173,33 +172,9 @@ int	parsing(t_var *shell)
 		ptr->cmd_arg = (split_token(ptr->brut));
 		if (!(ptr->cmd_arg))
 			return (error_manager(99));
-		//if (dequotes_cmd_arg(ptr, shell->env))
-		//	return (error_manager(21));
+		if (dequotes_cmd_arg(ptr, shell->env))
+			return (error_manager(21));
 		ptr = ptr->next;
 	}
 	return (0);
 }
-/*
-	shell->cmdlist = new_cmdnode();
-	if (!shell->cmdlist)
-		return (0);
-
-	ptr = shell->cmdlist;
-	//ptr->cmd_path = "/bin/ls";
-	ptr->cmd_arg = ft_split("env", ' ');
-
-	ptr->next = new_cmdnode();
-	ptr = ptr->next;
-	//ptr->cmd_path = "/usr/bin/head";
-	ptr->cmd_arg = ft_split("grep PATH", ' ');
-
-	ptr->next = new_cmdnode();
-	ptr = ptr->next;
-	//ptr->cmd_path = "/usr/bin/head";
-	ptr->cmd_arg = ft_split("grep bin", ' ');
-
-	ptr->next = new_cmdnode();
-	ptr = ptr->next;
-	//ptr->cmd_path = "/usr/bin/head";
-	ptr->cmd_arg = ft_split("wc", ' ');
-*/
