@@ -32,30 +32,29 @@ static void	print_cmdlist(t_cmdlist *ptr)
 	}
 }
 
-static void	main_loop(t_var *shell, char *prompt, int aff_or_exec)
+static int	main_loop(t_var *shell, char *prompt)
 {
 	shell->input = readline(prompt);
 	if (shell->input && *shell->input != 0)
 	{
 		add_history(shell->input);
+		if (!ft_strcmp(shell->input, "exit_pc"))
+			return (1);
 		if (!parsing(shell))
 		{
-			if (aff_or_exec == '1') //
-				print_cmdlist(shell->cmdlist); //
-			else //
-			{ //
-				if (!init_process(shell))
-				{
-					if (shell->cmd_nbr > 1 || (shell->cmd_nbr == 1 && !is_builtin(shell->cmdlist->cmd_arg[0])))
-						g_exit_code = pipex(shell);
-					else
-						g_exit_code = one_cmd(shell);
-				}
-			} //
+			//print_cmdlist(shell->cmdlist); //
+			if (!init_process(shell))
+			{
+				if (shell->cmd_nbr > 1 || (shell->cmd_nbr == 1 && !is_builtin(shell->cmdlist->cmd_arg[0])))
+					g_exit_code = pipex(shell);
+				else
+					g_exit_code = one_cmd(shell);
+			}
 		}
 		free_cmdlist(&(shell->cmdlist));
 		reinit_struct(shell);
 	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -64,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*prompt;
 
 	g_exit_code = 0;
-	if (argc != 2) // 1 pour affich liste only, 2 pour exec 
+	if (argc != 1)
 		return (error_manager(1));
 	shell = init_struct(envp);
 	if (!shell)
@@ -73,7 +72,10 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, sig_handler);
 	prompt = ft_strjoin(((*argv)+2), "> ");
 	while (1)
-		main_loop(shell, prompt, *argv[1]);
+	{
+		if (main_loop(shell, prompt))
+			break;
+	}
 	exit_minishell(shell, g_exit_code);
 	return (0);
 }
