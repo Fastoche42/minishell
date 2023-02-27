@@ -100,6 +100,7 @@ int	parsing(t_var *shell)
 	empty = ft_strtrim(shell->input, " ");
 	if (!empty || !*empty)
 		return (1);
+	free_strs(empty, NULL);
 	if (parse_pipes(shell))
 		return (1);
 	ptr = shell->cmdlist;
