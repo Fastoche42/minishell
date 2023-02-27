@@ -34,11 +34,8 @@ int	redir_first_last(t_var *shell, t_cmdlist *cmd)
 			if (redirect_io(cmd->fd_in, cmd->fd_out))
 				return (error_manager(11));
 		}
-		else
-		{
-			if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out))
-				return (error_manager(11));
-		}
+		else if (redirect_io(shell->pipe[2 * shell->child - 2], cmd->fd_out))
+			return (error_manager(11));
 	}
 	return (0);
 }

@@ -31,9 +31,9 @@ void	close_fds(t_var *shell)
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
-		if (ptr->redir_input != NULL)
+		if (ptr->fd_in != STDIN_FILENO)
 			close(ptr->fd_in);
-		if (ptr->redir_output != NULL)
+		if (ptr->fd_out != STDOUT_FILENO)
 			close(ptr->fd_out);
 		ptr = ptr->next;
 	}

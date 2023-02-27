@@ -20,27 +20,23 @@ t_env	*init_env(char **envp)
 	int		c;
 
 	i = 0;
+	list = malloc (sizeof(t_env));
+	ptr = list;
 	while (envp[i])
 	{
-		if (i == 0)
-		{
-			list = malloc (sizeof(t_env));
-			ptr = list;
-		}
-		else
+		if (i > 0)
 		{
 			ptr->next = malloc (sizeof(t_env));
 			ptr = ptr->next;
 		}
 		if (!ptr)
 			return (NULL);
-		c = ft_strposchr(envp[i], '='); // 1e '=' en partant de la gauche
+		c = ft_strposchr(envp[i], '=');
 		ptr->name = ft_substr(envp[i], 0, c);
 		ptr->value = ft_substr(envp[i], c + 1, strlen(envp[i]) - c);
 		ptr->exists = 1;
 		ptr->exported = 1;
 		ptr->next = NULL;
-		//printf("%d: '%s'  '%s'\n", i, ptr->name, ptr->value);
 		i++;
 	}
 	return (list);

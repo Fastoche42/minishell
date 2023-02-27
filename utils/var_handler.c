@@ -100,7 +100,7 @@ int	var_handler(t_cmdlist *cmd, t_var *shell)
 			{
 				free (tmp);
 				return (1);
-			}	
+			}
 			free (tmp);
 		}
 		i++;

@@ -130,6 +130,8 @@ int		free_strs(char *str, char **strs);
 char	**build_envp(t_env *env);
 int		number_of_cmd(t_var *shell);
 int		free_all(t_var *shell);
+void	final_free_cmd(t_var *shell);
+void	final_free_env(t_var *shell);
 int		exit_minishell(t_var *shell, int exit_code);
 int		is_builtin(char *cmd);
 void	reinit_struct(t_var *shell);

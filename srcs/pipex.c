@@ -82,12 +82,8 @@ int	pipex(t_var *shell)
 	tmp = shell->cmdlist;
 	while ((shell->child < shell->cmd_nbr) && shell->cmdlist)
 	{
-		if (!is_builtin(shell->cmdlist->cmd_arg[0]))
-		{
-			shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
-			if (!shell->cmdlist->cmd_path)
-				return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror */
-		}
+		if (path_finder(shell))
+			return (127);
 		if (file_handler(shell->cmdlist, shell))
 			return (error_manager(12));
 		shell->pids[shell->child] = fork();
