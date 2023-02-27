@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:07:03 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 13:22:22 by event            ###   ########.fr       */
+/*   Updated: 2023/02/27 14:44:16 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		set_redirs(t_cmdlist *ptr, t_var *shell);
 char		**split_token(char *s);
 
 //-------------pars quotes----------------//
-int			quotes_and_var(char **str, t_env *env, int in_dq);
+void		quotes_and_var(char **str, t_env *env, int in_dq);
 
 //------------------envir------------------//
 t_env		*find_export(char **tmp, t_var *shell);

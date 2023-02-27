@@ -66,7 +66,7 @@ t_var	*init_struct(char **envp)
 
 void	reinit_struct(t_var *shell)
 {
-	free(shell->input);
+	free_strs(shell->input, NULL);
 	shell->input = NULL;
 	shell->cmdlist = NULL;
 	shell->current = NULL;

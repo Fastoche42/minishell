@@ -51,16 +51,16 @@ t_cmdlist	*new_cmdnode(void)
 	return (node);
 }
 
-char	*what_inside_sq(char **pos)
+char	*what_inside_sq(char **end)
 {
 	char	*str;
 	int		i;
 
 	i = 0;
-	while ((*pos)[i] != '\'')
+	while ((*end)[i] != '\'')
 		i++;
-	str = ft_strndup(*pos, i);
-	*pos += i;
+	str = ft_strndup(*end, i);
+	*end += i;
 	return (str);
 }
 

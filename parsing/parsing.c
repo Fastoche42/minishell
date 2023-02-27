@@ -6,54 +6,35 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 13:22:22 by event            ###   ########.fr       */
+/*   Updated: 2023/02/27 16:42:23 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static void	dequotes_on_redir(char **file, t_env *env)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(*file);
+	quotes_and_var(&tmp, env, 0);
+	free_strs (*file, NULL);
+	*file = tmp;
+}
+
 static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	while (ptr->cmd_arg[i])
-	{
-		tmp = ft_strdup(ptr->cmd_arg[i]);
-		if (quotes_and_var(&tmp, env, 0))
-			return (1);
-		free (ptr->cmd_arg[i]);
-		ptr->cmd_arg[i] = tmp;
-		i++;
-	}
+		dequotes_on_redir(&(ptr->cmd_arg[i++]), env);
 	if (ptr->redir_input)
-	{
-		tmp = ft_strdup(ptr->redir_input);
-		quotes_and_var(&tmp, env, 0);
-		if (!tmp)
-			return (1);
-		free (ptr->redir_input);
-		ptr->redir_input = tmp;
-	}
+		dequotes_on_redir(&(ptr->redir_input), env);
 	if (ptr->redir_output)
-	{
-		tmp = ft_strdup(ptr->redir_output);
-		quotes_and_var(&tmp, env,0);
-		if (!tmp)
-			return (1);
-		free (ptr->redir_output);
-		ptr->redir_output = tmp;
-	}
+		dequotes_on_redir(&(ptr->redir_output), env);
 	if (ptr->delim_hdoc)
-	{
-		tmp = ft_strdup(ptr->delim_hdoc);
-		quotes_and_var(&tmp, env, 0);
-		if (!tmp)
-			return (1);
-		free (ptr->delim_hdoc);
-		ptr->delim_hdoc = tmp;
-	}
+		dequotes_on_redir(&(ptr->delim_hdoc), env);
 	return (0);
 }
 
@@ -114,14 +95,17 @@ static int	parse_pipes(t_var *sh)
 int	parsing(t_var *shell)
 {
 	t_cmdlist	*ptr;
+	char		*empty;
 
+	empty = ft_strtrim(shell->input, " ");
+	if (!empty || !*empty)
+		return (1);
 	if (parse_pipes(shell))
 		return (1);
 	ptr = shell->cmdlist;
 	while (ptr)
 	{
 		set_redirs(ptr, shell);
-		//printf("brut:[%s]\n", ptr->brut);
 		ptr->cmd_arg = (split_token(ptr->brut));
 		if (!(ptr->cmd_arg))
 			return (error_manager(99));
