@@ -64,8 +64,7 @@ void	final_free_cmd(t_var *shell)
 		free_strs(cmd_ptr->redir_input, NULL);
 		free_strs(cmd_ptr->redir_output, NULL);
 		free_strs(cmd_ptr->delim_hdoc, NULL);
-		if (cmd_ptr)
-			free(cmd_ptr);
+		free(cmd_ptr);
 	}
 	shell->cmdlist = NULL;
 }

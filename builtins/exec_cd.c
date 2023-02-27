@@ -41,26 +41,58 @@ static int	update_pwd(t_env *env)
 	return (0);
 }
 
-int	exec_cd(t_cmdlist *cmd, t_env *env)
+static char *cd_find_home(t_env *env)
 {
 	t_env	*ptr;
 
 	ptr = env;
+	while (ptr)
+	{
+		if (!ft_strcmp("HOME", ptr->name))
+			return(ft_strdup(ptr->value));
+		ptr = ptr->next;
+	}
+	return (NULL);
+}
+
+static char *cd_find_oldpwd(t_env *env)
+{
+	t_env	*ptr;
+
+	ptr = env;
+	while (ptr)
+	{
+		if (!ft_strcmp("OLDPWD", ptr->name))
+			return(ft_strdup(ptr->value));
+		ptr = ptr->next;
+	}
+	return (NULL);
+}
+
+int	exec_cd(t_cmdlist *cmd, t_env *env)
+{
+	t_env	*ptr;
+	char	*tmp;
+
+	ptr = env;
+	tmp = NULL;
 	if (cmd->cmd_arg[1] && *cmd->cmd_arg[1] == '-')
 	{
-		while (ptr)
-		{
-			if (!ft_strcmp("OLDPWD", ptr->name))
-				cmd->cmd_arg[1] = ft_strdup(ptr->value);
-			ptr = ptr->next;
-		}
-		if (!cmd->cmd_arg[1])
+		tmp = cd_find_oldpwd(env);
+		if (!tmp)
 			return (1);
-		if (chdir(cmd->cmd_arg[1]) != 0)
+	}
+	else if (!cmd->cmd_arg[1])
+	{
+		tmp = cd_find_home(env);
+		if (!tmp)
 			return (1);
 	}
 	else if (chdir(cmd->cmd_arg[1]) != 0)
 		return (1);
+	if (tmp && (chdir(tmp) != 0))
+		return (1);
+	free_strs(tmp, NULL);
 	if (update_pwd(env))
 		return (1);
 	return (0);

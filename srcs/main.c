@@ -16,6 +16,9 @@ struct s_data	g_data;
 
 static int	main_loop(t_var *shell, char *prompt)
 {
+	t_cmdlist *ptr;
+
+	ptr = shell->cmdlist;
 	shell->input = readline(prompt);
 	if (!shell->input)
 		return (1);
@@ -33,7 +36,7 @@ static int	main_loop(t_var *shell, char *prompt)
 					g_data.exit_code = one_cmd(shell);
 			}
 		}
-		free_cmdlist(&(shell->cmdlist));
+		free_cmdlist(&ptr);
 		reinit_struct(shell);
 	}
 	return (0);
