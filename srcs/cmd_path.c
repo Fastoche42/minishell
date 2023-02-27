@@ -109,7 +109,11 @@ int	path_finder(t_var *shell)
 	{
 		shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
 		if (!shell->cmdlist->cmd_path)
-			return (ft_putendl_fd(ft_strjoin("Command not found: ", shell->cmdlist->cmd_arg[0]), 2 , 1)); // à modifier avec perror */
+		{
+			ft_putstr_fd("Command not found: ", 2, 1);
+			ft_putendl_fd(shell->cmdlist->cmd_arg[0], 2, 1);
+			return (1);
+		}
 	}
-	return(0);
+	return (0);
 }

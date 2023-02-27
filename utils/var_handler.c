@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var_handler.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlorber <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/27 14:33:30 by jlorber           #+#    #+#             */
+/*   Updated: 2023/02/27 14:33:32 by jlorber          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static int	check_var(char **tmp, t_var *shell)
 {
-	t_env 	*ptr;
+	t_env	*ptr;
 
 	ptr = shell->env;
 	while (ptr)
@@ -18,7 +30,7 @@ static int	check_var(char **tmp, t_var *shell)
 
 static t_env	*find_var(char **tmp, t_var *shell)
 {
-	t_env 	*ptr;
+	t_env	*ptr;
 
 	ptr = shell->env;
 	while (ptr)
@@ -42,7 +54,7 @@ static int	new_var(char **tmp, t_var *shell)
 	new->name = ft_strdup(tmp[0]);
 	if (tmp[1])
 		new->value = ft_strdup(tmp[1]);
-	else 
+	else
 		new->value = ft_strdup(" ");
 	if (!new->name || !new->value)
 	{
@@ -75,7 +87,7 @@ static int	change_var(char **tmp, t_var *shell)
 	return (0);
 }
 
-int var_handler2(char **tmp, t_var *shell)
+int	var_handler2(char **tmp, t_var *shell)
 {
 	if (!check_var(tmp, shell))
 	{

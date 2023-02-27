@@ -18,7 +18,7 @@ int	exec_pwd(t_env *env)
 	{
 		if (!ft_strcmp(env->name, "PWD"))
 		{
-			ft_putstr_fd(env->value, 1 , 0);
+			ft_putstr_fd(env->value, 1, 0);
 			ft_putchar_fd('\n', 1);
 			return (0);
 		}

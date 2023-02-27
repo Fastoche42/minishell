@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fl-hote <fl-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 13:00:34 by fl-hote            #+#    #+#             */
+/*   Created: 2022/11/01 13:00:34 by fl-hote            #+#    #+#            */
 /*   Updated: 2022/12/11 12:33:47 by fl-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -19,10 +19,10 @@ t_env	*init_env(char **envp)
 	int		i;
 	int		c;
 
-	i = 0;
+	i = -1;
 	list = malloc (sizeof(t_env));
 	ptr = list;
-	while (envp[i])
+	while (envp[++i])
 	{
 		if (i > 0)
 		{
@@ -37,7 +37,6 @@ t_env	*init_env(char **envp)
 		ptr->exists = 1;
 		ptr->exported = 1;
 		ptr->next = NULL;
-		i++;
 	}
 	return (list);
 }
