@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static int	check_export(char **tmp, t_var *shell)
+int	check_export(char **tmp, t_var *shell)
 {
 	t_env 	*ptr;
 
@@ -44,7 +44,7 @@ t_env	*find_export(char **tmp, t_var *shell)
 	return (NULL);
 }
 
-static int	new_export(char **tmp, t_var *shell)
+int	new_export(char **tmp, t_var *shell)
 {
 	t_env	*new;
 
@@ -72,7 +72,7 @@ static int	new_export(char **tmp, t_var *shell)
 	return (0);
 }
 
-static int	change_export(char **tmp, t_var *shell)
+int	change_export(char **tmp, t_var *shell)
 {
 	t_env	*new;
 
@@ -108,20 +108,8 @@ int	exec_export(t_cmdlist *cmd, t_var *shell)
 			tmp = ft_split(cmd->cmd_arg[i], '=');
 			if (!tmp)
 				return (1);
-			if (!check_export(tmp, shell))
-			{
-				if (change_export(tmp, shell))
-				{
-					free_strs(NULL, tmp);
-					return (1);
-				}
-			}
-			else if (new_export(tmp, shell))
-			{
-				free_strs(NULL, tmp);
+			if (exec_export2(tmp, shell))
 				return (1);
-			}
-			free_strs(NULL, tmp);
 		}
 		else if (!check_export(&cmd->cmd_arg[i], shell))
 		{

@@ -39,6 +39,7 @@ BUILTINS =	builtins/exec_cd.c\
 			builtins/exec_env.c\
 			builtins/exec_exit.c\
 			builtins/exec_export.c\
+			builtins/exec_export2.c\
 			builtins/exec_pwd.c\
 			builtins/exec_unset.c
 	  

@@ -98,22 +98,28 @@ t_env	*find_export(char **tmp, t_var *shell);
 char	**build_envp(t_env *env);
 int		var_handler(t_cmdlist *cmd, t_var *shell);
 
+//------------------built-in------------------//
+int		exec_pwd(t_env *env);
+int		exec_env(t_env *env);
+int		exec_echo(t_cmdlist *cmd);
+int		exec_exit(t_cmdlist *cmd, t_var *shell);
+int		exec_cd(t_cmdlist *cmd, t_env *env);
+int		exec_export(t_cmdlist *cmd, t_var *shell);
+int		exec_export2(char **tmp, t_var *shell);
+int		check_export(char **tmp, t_var *shell);
+int		new_export(char **tmp, t_var *shell);
+int		change_export(char **tmp, t_var *shell);
+int		exec_unset(t_cmdlist *cmd, t_var *shell);
 
 //------------------exec------------------//
-int		which_command(t_var *shell, t_cmdlist *cmd); // mise à jour 10/01/2023
+int		which_command(t_var *shell, t_cmdlist *cmd);
 void	sig_handler(int signum);
 int		ms_execute(t_var *shell);
-int		exec_pwd(t_env *env); // mise à jour 05/01/2023
-int		exec_env(t_env *env); // mise à jour 10/01/2023
-int		exec_echo(t_cmdlist *cmd); // mise à jour 05/01/2023
-int		exec_exit(t_cmdlist *cmd, t_var *shell);
-int		exec_cd(t_cmdlist *cmd, t_env *env); // mise à jour 10/01/2023
-int		exec_export(t_cmdlist *cmd, t_var *shell); // mise à jour 10/01/2023
-int		exec_unset(t_cmdlist *cmd, t_var *shell); // mise à jour 10/01/2023
-void	redirection(t_var *shell, t_cmdlist *ptr); // toujours nécessaire ?
+void	redirection(t_var *shell, t_cmdlist *ptr);
 int		one_cmd(t_var *shell);
 int  	pipex(t_var *shell);
 int		redirect_io(int input, int output);
+int		path_finder(t_var *shell);
 char 	*get_cmd(char *cmd, t_var *shell);
 int		file_handler(t_cmdlist *cmd, t_var *shell);
 int		redir_first_last(t_var *shell, t_cmdlist *cmd);
