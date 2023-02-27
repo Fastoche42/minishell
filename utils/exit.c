@@ -5,6 +5,7 @@ int	free_all(t_var *shell)
 	final_free_env(shell);
 	final_free_cmd(shell);
 	free_strs(shell->input, NULL);
+	free_strs(shell->prompt, NULL);
 	free(shell->pipe);
 	shell->pipe = 0;
 	free(shell->pids);

@@ -75,35 +75,21 @@ static int	change_var(char **tmp, t_var *shell)
 	return (0);
 }
 
-int	var_handler(t_cmdlist *cmd, t_var *shell)
+int var_handler2(char **tmp, t_var *shell)
 {
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	while (cmd->cmd_arg[i])
+	if (!check_var(tmp, shell))
 	{
-		if (ft_strchr(cmd->cmd_arg[i], '=') != NULL) // double check
+		if (change_var(tmp, shell))
 		{
-			tmp = ft_split(cmd->cmd_arg[i], '=');
-			if (!tmp)
-				return (1);
-			if (!check_var(tmp, shell))
-			{
-				if (change_var(tmp, shell))
-				{
-					free (tmp);
-					return (1);
-				}
-			}
-			else if (new_var(tmp, shell))
-			{
-				free (tmp);
-				return (1);
-			}
 			free (tmp);
+			return (1);
 		}
-		i++;
 	}
+	else if (new_var(tmp, shell))
+	{
+		free (tmp);
+		return (1);
+	}
+	free (tmp);
 	return (0);
 }

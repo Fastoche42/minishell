@@ -26,7 +26,7 @@ static int	error_manager2(int error)
 int	error_manager(int error)
 {
 	if (error == 1)
-		return (perror("Invalid number of arguments"), (int)errno);
+		return (ft_putendl_fd("Invalid number of arguments", 2, 1));
 	else if (error == 2)
 		return (perror("Invalid command"), (int)errno);
 	else if (error == 3)

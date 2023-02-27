@@ -38,7 +38,7 @@ static int	main_loop(t_var *shell, char *prompt)
 	if (shell->input && *shell->input != 0)
 	{
 		add_history(shell->input);
-		if (!ft_strcmp(shell->input, "exit_pc"))
+		if (!ft_strcmp(shell->input, "exit_pc")) // ?
 			return (1);
 		if (!parsing(shell))
 		{
@@ -60,7 +60,6 @@ static int	main_loop(t_var *shell, char *prompt)
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*shell;
-	char	*prompt;
 
 	g_exit_code = 0;
 	if (argc != 1)
@@ -70,10 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		return (error_manager(13));
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-	prompt = ft_strjoin(((*argv)+2), "> ");
+	shell->prompt = ft_strjoin(((*argv)+2), "> ");
 	while (1)
 	{
-		if (main_loop(shell, prompt))
+		if (main_loop(shell, shell->prompt))
 			break;
 	}
 	exit_minishell(shell, g_exit_code);

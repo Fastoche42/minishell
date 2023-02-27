@@ -62,6 +62,7 @@ typedef struct s_var {
 	char		*start;
 	char		*end;
 	char		*buf;
+	char		*prompt;
 
 	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
 	int			child; // index
@@ -97,6 +98,7 @@ char		**split_token(char *s);
 t_env	*find_export(char **tmp, t_var *shell);
 char	**build_envp(t_env *env);
 int		var_handler(t_cmdlist *cmd, t_var *shell);
+int 	var_handler2(char **tmp, t_var *shell);
 
 //------------------built-in------------------//
 int		exec_pwd(t_env *env);
