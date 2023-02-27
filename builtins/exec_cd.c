@@ -46,7 +46,7 @@ int	exec_cd(t_cmdlist *cmd, t_env *env)
 	t_env	*ptr;
 
 	ptr = env;
-	if (*cmd->cmd_arg[1] == '-')
+	if (cmd->cmd_arg[1] && *cmd->cmd_arg[1] == '-')
 	{
 		while (ptr)
 		{
