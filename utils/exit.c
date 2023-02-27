@@ -22,6 +22,7 @@ int	free_all(t_var *shell)
 	shell->pipe = 0;
 	free(shell->pids);
 	shell->pids = 0;
+	rl_clear_history();
 	if (shell)
 	{
 		free(shell);
@@ -33,17 +34,16 @@ int	free_all(t_var *shell)
 void	final_free_env(t_var *shell)
 {
 	t_env	*env_ptr;
+	t_env	*env_tmp;
 
-	while (shell->env)
+	env_tmp = shell->env;
+	while (env_tmp)
 	{
-		env_ptr = shell->env;
+		env_ptr = env_tmp;
+		env_tmp = env_tmp->next;
 		free_strs(env_ptr->name, NULL);
 		free_strs(env_ptr->value, NULL);
 		free(env_ptr);
-		if (shell->env->next)
-			shell->env = shell->env->next;
-		else
-			break ;
 	}
 	shell->env = NULL;
 }
