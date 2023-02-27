@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 21:33:38 by event            ###   ########.fr       */
+/*   Updated: 2023/02/27 22:59:38 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ static void	dequotes_on_redir(char **file, t_env *env)
 
 	tmp = ft_strdup(*file);
 	quotes_and_var(&tmp, env, 0);
-	free_strs (*file, NULL);
+	/* free_strs (*file, NULL);*/
+	if (*file)
+	{
+		free(*file);
+		*file = NULL;
+	}
 	*file = tmp;
 }
 
@@ -58,11 +63,6 @@ static char	*create_token(t_var *shell, char *start, char *end)
 	{
 		shell->current->next = new_cmdnode();
 		shell->current = shell->current->next;
-	}
-	if (shell->buf)
-	{
-		free(shell->buf);
-		shell->buf = 0;
 	}
 	return (token);
 }
