@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-/* head = NULL; // utile ?? */
 int	free_cmdlist(t_cmdlist **head)
 {
 	t_cmdlist	*ptr;
@@ -77,7 +76,7 @@ char	*replace_by_var(char **pos, t_env *env)
 	*pos += (i - 1);
 	while (env)
 	{
-		if (!ft_strcmp(var, env->name))
+		if (env->exists && !ft_strcmp(var, env->name))
 		{
 			free (var);
 			return (ft_strdup(env->value));

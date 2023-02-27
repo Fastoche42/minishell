@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:07:03 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/26 10:54:13 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:22:22 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@
 # include <readline/history.h>
 # include <errno.h>
 # include "../Libft/libft.h"
-//# include "parsing.h"
 
-#define MAX_LEN 4096
+# define MAX_LEN 4096
 
 // //----------------global variable----------------//
 extern int	g_exit_code;
@@ -36,23 +35,23 @@ typedef struct s_cmdlist
 	char				*brut;
 	char				*cmd_path;
 	char				**cmd_arg;
-	char				*redir_input;	//filename or NULL
-	char				*delim_hdoc;	//exit word or NULL
-	char				*redir_output;	//filename or NULL
-	int					flag_append;	//flag
-	int					fd_in; // initialiser à 0
-	int					fd_out; // initialiser à 1
+	char				*redir_input;
+	char				*delim_hdoc;
+	char				*redir_output;
+	int					flag_append;
+	int					fd_in;
+	int					fd_out;
 	struct s_cmdlist	*next;
 }	t_cmdlist;
 
 //----------------struct----------------//
 typedef struct s_env {
-	char			*name;		// gauche du =
-	char			*value;		// droite du =
-	int				exists;		// pas deleted
-	int				exported;	// exportee ou non
+	char			*name;
+	char			*value;
+	int				exists;
+	int				exported;
 	struct s_env	*next;
-	
+
 }	t_env;
 
 typedef struct s_var {
@@ -64,10 +63,10 @@ typedef struct s_var {
 	char		*buf;
 	char		*prompt;
 
-	int			heredoc; // heredoc flag, à incrémenter pour chaque heredoc
-	int			child; // index
+	int			heredoc;
+	int			child;
 	int			*pipe;
-	int			*pids; // process IDs (nécessaire au forking)
+	int			*pids;
 	int			cmd_nbr;
 	t_env		*env;
 }	t_var;
@@ -94,54 +93,57 @@ void		set_redirs(t_cmdlist *ptr, t_var *shell);
 //-------------split token----------------//
 char		**split_token(char *s);
 
+//-------------pars quotes----------------//
+int			quotes_and_var(char **str, t_env *env, int in_dq);
+
 //------------------envir------------------//
-t_env	*find_export(char **tmp, t_var *shell);
-char	**build_envp(t_env *env);
-int		var_handler(t_cmdlist *cmd, t_var *shell);
-int 	var_handler2(char **tmp, t_var *shell);
+t_env		*find_export(char **tmp, t_var *shell);
+char		**build_envp(t_env *env);
+int			var_handler(t_cmdlist *cmd, t_var *shell);
+int			var_handler2(char **tmp, t_var *shell);
 
 //------------------built-in------------------//
-int		exec_pwd(t_env *env);
-int		exec_env(t_env *env);
-int		exec_echo(t_cmdlist *cmd);
-int		exec_exit(t_cmdlist *cmd, t_var *shell);
-int		exec_cd(t_cmdlist *cmd, t_env *env);
-int		exec_export(t_cmdlist *cmd, t_var *shell);
-int		exec_export2(char **tmp, t_var *shell);
-int		check_export(char **tmp, t_var *shell);
-int		new_export(char **tmp, t_var *shell);
-int		change_export(char **tmp, t_var *shell);
-int		exec_unset(t_cmdlist *cmd, t_var *shell);
+int			exec_pwd(t_env *env);
+int			exec_env(t_env *env);
+int			exec_echo(t_cmdlist *cmd);
+int			exec_exit(t_cmdlist *cmd, t_var *shell);
+int			exec_cd(t_cmdlist *cmd, t_env *env);
+int			exec_export(t_cmdlist *cmd, t_var *shell);
+int			exec_export2(char **tmp, t_var *shell);
+int			check_export(char **tmp, t_var *shell);
+int			new_export(char **tmp, t_var *shell);
+int			change_export(char **tmp, t_var *shell);
+int			exec_unset(t_cmdlist *cmd, t_var *shell);
 
 //------------------exec------------------//
-int		which_command(t_var *shell, t_cmdlist *cmd);
-void	sig_handler(int signum);
-int		ms_execute(t_var *shell);
-void	redirection(t_var *shell, t_cmdlist *ptr);
-int		one_cmd(t_var *shell);
-int  	pipex(t_var *shell);
-int		redirect_io(int input, int output);
-int		path_finder(t_var *shell);
-char 	*get_cmd(char *cmd, t_var *shell);
-int		file_handler(t_cmdlist *cmd, t_var *shell);
-int		redir_first_last(t_var *shell, t_cmdlist *cmd);
-int		redir_other(t_var *shell, t_cmdlist *cmd);
-int		ft_unlink_heredocs(t_var *shell, t_cmdlist *cmd);
+int			which_command(t_var *shell, t_cmdlist *cmd);
+void		sig_handler(int signum);
+int			ms_execute(t_var *shell);
+void		redirection(t_var *shell, t_cmdlist *ptr);
+int			one_cmd(t_var *shell);
+int			pipex(t_var *shell);
+int			redirect_io(int input, int output);
+int			path_finder(t_var *shell);
+char		*get_cmd(char *cmd, t_var *shell);
+int			file_handler(t_cmdlist *cmd, t_var *shell);
+int			redir_first_last(t_var *shell, t_cmdlist *cmd);
+int			redir_other(t_var *shell, t_cmdlist *cmd);
+int			ft_unlink_heredocs(t_var *shell, t_cmdlist *cmd);
 
 //----------------check----------------//
-int		error_manager(int error);
+int			error_manager(int error);
 
 //----------------utils----------------//
-void	close_fds(t_var *shell);
-void	close_pipe_fds(t_var *shell);
-int		free_strs(char *str, char **strs);
-char	**build_envp(t_env *env);
-int		number_of_cmd(t_var *shell);
-int		free_all(t_var *shell);
-void	final_free_cmd(t_var *shell);
-void	final_free_env(t_var *shell);
-int		exit_minishell(t_var *shell, int exit_code);
-int		is_builtin(char *cmd);
-void	reinit_struct(t_var *shell);
+void		close_fds(t_var *shell);
+void		close_pipe_fds(t_var *shell);
+int			free_strs(char *str, char **strs);
+char		**build_envp(t_env *env);
+int			number_of_cmd(t_var *shell);
+int			free_all(t_var *shell);
+void		final_free_cmd(t_var *shell);
+void		final_free_env(t_var *shell);
+int			exit_minishell(t_var *shell, int exit_code);
+int			is_builtin(char *cmd);
+void		reinit_struct(t_var *shell);
 
 #endif

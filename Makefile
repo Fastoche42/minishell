@@ -53,6 +53,7 @@ UTILS =	utils/close_fds.c\
 PARSING =	parsing/parsing.c\
 			parsing/split_token.c\
 			parsing/set_redir.c\
+			parsing/pars_quotes.c\
 			parsing/parsing_utils.c
 
 EXEC =	exec/signal.c\

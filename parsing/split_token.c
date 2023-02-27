@@ -3,32 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/27 11:01:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:00:04 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	count_w(char *str)
+static int	count_w(char *str, int i)
 {
-	int		i;
 	int		is_word;
 	char	car;
 
-	i = 0;
 	is_word = 0;
 	while (str && *str)
 	{
 		if (ft_isquote(*str))
 		{
 			if (!is_word)
-			{
-				is_word = 1;
 				i++;
-			}
+			is_word = 1;
 			car = *str;
 			str++;
 			while (str[0] != car)
@@ -58,9 +54,7 @@ static size_t	jump_to_blank(char *s)
 			c = s[i];
 			i++;
 			while (s[i] && s[i] != c)
-		{
 				i++;
-		}
 		}
 		i++;
 	}
@@ -75,7 +69,7 @@ char	**split_token(char *s)
 
 	if (!s)
 		return (NULL);
-	tab = ft_calloc((count_w(s) + 1), sizeof(char *));
+	tab = ft_calloc((count_w(s, 0) + 1), sizeof(char *));
 	if (!tab)
 		return (NULL);
 	i_word = 0;

@@ -3,61 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 11:10:06 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:22:22 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static int	quotes_and_var(char **str, t_env *env)
-{
-	char	*start;
-	char	*end;
-	char	*str2;
-	int		in_dquotes;
-
-	start = *str;
-	end = start;
-	*str = NULL;
-	in_dquotes = 0;
-	while (*end)
-	{
-		if (*end == '\'' && !in_dquotes)
-		{
-			ft_concat(str, ft_strndup (start, (end - start)));
-			end++;
-			str2 = what_inside_sq(&end);
-			ft_concat(str, str2);
-			start = end + 1;
-		}
-		else if (*end == '"')
-		{
-			ft_concat(str, ft_strndup (start, (end - start)));
-			start = end + 1;
-			in_dquotes = 1 - in_dquotes;
-		}
-		else if (*end == '$')
-		{
-			if (ft_iscarvar(*(end + 1)))
-			{
-				ft_concat(str, ft_strndup (start, (end - start)));
-				end++;
-				if (*end == '?')
-					str2 = ft_itoa(g_exit_code);
-				else
-					str2 = replace_by_var(&end, env);
-				ft_concat(str, str2);
-				start = end + 1;
-			}
-		}
-		end++;
-	}
-	ft_concat(str, ft_strndup (start, (end - start)));
-	return (0);
-}
 
 static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 {
@@ -68,7 +21,7 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 	while (ptr->cmd_arg[i])
 	{
 		tmp = ft_strdup(ptr->cmd_arg[i]);
-		if (quotes_and_var(&tmp, env))
+		if (quotes_and_var(&tmp, env, 0))
 			return (1);
 		free (ptr->cmd_arg[i]);
 		ptr->cmd_arg[i] = tmp;
@@ -77,7 +30,7 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 	if (ptr->redir_input)
 	{
 		tmp = ft_strdup(ptr->redir_input);
-		quotes_and_var(&tmp, env);
+		quotes_and_var(&tmp, env, 0);
 		if (!tmp)
 			return (1);
 		free (ptr->redir_input);
@@ -86,7 +39,7 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 	if (ptr->redir_output)
 	{
 		tmp = ft_strdup(ptr->redir_output);
-		quotes_and_var(&tmp, env);
+		quotes_and_var(&tmp, env,0);
 		if (!tmp)
 			return (1);
 		free (ptr->redir_output);
@@ -95,7 +48,7 @@ static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 	if (ptr->delim_hdoc)
 	{
 		tmp = ft_strdup(ptr->delim_hdoc);
-		quotes_and_var(&tmp, env);
+		quotes_and_var(&tmp, env, 0);
 		if (!tmp)
 			return (1);
 		free (ptr->delim_hdoc);
