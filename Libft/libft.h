@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlorber <jlorber@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:39:51 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/25 21:48:51 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/28 17:04:44 by jlorber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		ft_isprint(int c);
 int		ft_isinfsup(int c);
 int		ft_isquote(int c);
 int		ft_iscarvar(int c);
+int		ft_onlyspace(char *str);
 int		ft_strlen(const char *s);
 int		ft_strlen_tab(char **tab);
 int		ft_nb_lines_tab(char **tab);

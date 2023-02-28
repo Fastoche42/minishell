@@ -2,6 +2,7 @@
 homebrew
 *.tmp
 .heredoc*
+.DS*
 
 #
 .vscode

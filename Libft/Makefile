@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: jlorber <jlorber@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 19:21:22 by fl-hote           #+#    #+#              #
-#    Updated: 2023/02/25 21:53:58 by marvin           ###   ########.fr        #
+#    Updated: 2023/02/28 17:05:25 by jlorber          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isinfsup.c ft_isquote.c  ft_iscarvar.c
 	  ft_lstclear_bonus.c ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstlast_bonus.c\
 	  ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c ft_strcmp.c ft_putstr.c\
 	  ft_nb_lines_tab.c ft_strlen_tab.c ft_strposchr.c ft_realloc.c\
-	  get_next_line.c get_next_line_utils.c
+	  get_next_line.c get_next_line_utils.c ft_onlyspace.c
 
 OBJS = $(SRC:.c=.o)
 

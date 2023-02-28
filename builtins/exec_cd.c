@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jlorber <jlorber@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:47:59 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 17:50:31 by event            ###   ########.fr       */
+/*   Updated: 2023/02/28 17:09:30 by jlorber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	update_pwd(t_env *env)
 	return (0);
 }
 
-static char *cd_find_home(t_env *env)
+static char	*cd_find_home(t_env *env)
 {
 	t_env	*ptr;
 
@@ -49,13 +49,13 @@ static char *cd_find_home(t_env *env)
 	while (ptr)
 	{
 		if (!ft_strcmp("HOME", ptr->name))
-			return(ft_strdup(ptr->value));
+			return (ft_strdup(ptr->value));
 		ptr = ptr->next;
 	}
 	return (NULL);
 }
 
-static char *cd_find_oldpwd(t_env *env)
+static char	*cd_find_oldpwd(t_env *env)
 {
 	t_env	*ptr;
 
@@ -63,7 +63,7 @@ static char *cd_find_oldpwd(t_env *env)
 	while (ptr)
 	{
 		if (!ft_strcmp("OLDPWD", ptr->name))
-			return(ft_strdup(ptr->value));
+			return (ft_strdup(ptr->value));
 		ptr = ptr->next;
 	}
 	return (NULL);

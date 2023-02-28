@@ -75,27 +75,26 @@ static int	parent(t_var *shell)
 int	pipex(t_var *shell)
 {
 	int			exit_code;
-	t_cmdlist	*tmp;
 
 	shell->child = 0;
-	tmp = shell->cmdlist;
-	while ((shell->child < shell->cmd_nbr) && shell->cmdlist)
+	shell->current = shell->cmdlist;
+	while ((shell->child < shell->cmd_nbr) && shell->current)
 	{
 		if (path_finder(shell))
 			return (127);
-		if (file_handler(shell->cmdlist, shell))
+		if (file_handler(shell->current, shell))
 			return (error_manager(12));
 		shell->pids[shell->child] = fork();
 		if (shell->pids[shell->child] == -1)
 			return (error_manager(7));
 		else if (shell->pids[shell->child] == 0)
-			if (child(shell, shell->cmdlist) > 0)
+			if (child(shell, shell->current) > 0)
 				return (errno);
 		shell->child++;
-		shell->cmdlist = shell->cmdlist->next;
+		shell->current = shell->current->next;
 	}
 	exit_code = parent(shell);
-	if (shell->heredoc > 0 && ft_unlink_heredocs(shell, tmp) > 0)
+	if (shell->heredoc > 0 && ft_unlink_heredocs(shell, shell->cmdlist) > 0)
 		return (error_manager(10));
 	return (exit_code);
 }
@@ -104,15 +103,16 @@ int	one_cmd(t_var *shell)
 {
 	int	exit_code;
 
+	shell->current = shell->cmdlist;
 	close_fds(shell);
 	close_pipe_fds(shell);
-	if (file_handler(shell->cmdlist, shell))
+	if (file_handler(shell->current, shell))
 		return (error_manager(12));
-	if (shell->cmdlist->cmd_arg == NULL
-		|| (!is_builtin(shell->cmdlist->cmd_arg[0])
-			&& shell->cmdlist->cmd_path == NULL))
+	if (shell->current->cmd_arg == NULL
+		|| (!is_builtin(shell->current->cmd_arg[0])
+			&& shell->current->cmd_path == NULL))
 		return (error_manager(10));
-	exit_code = which_command(shell, shell->cmdlist);
+	exit_code = which_command(shell, shell->current);
 	if (exit_code != 0)
 		exit_code = error_manager(10);
 	return (exit_code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jlorber <jlorber@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:07:56 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 17:36:35 by event            ###   ########.fr       */
+/*   Updated: 2023/02/28 17:08:20 by jlorber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ struct s_data	g_data;
 
 static int	main_loop(t_var *shell, char *prompt)
 {
-	t_cmdlist *ptr;
+	t_var	*ptr;
 
-	ptr = shell->cmdlist;
+	ptr = shell;
 	shell->input = readline(prompt);
 	if (!shell->input)
 		return (1);
@@ -36,9 +36,9 @@ static int	main_loop(t_var *shell, char *prompt)
 					g_data.exit_code = one_cmd(shell);
 			}
 		}
-		free_cmdlist(&ptr);
-		reinit_struct(shell);
+		final_free_cmd(shell);
 	}
+	reinit_struct(shell);
 	return (0);
 }
 

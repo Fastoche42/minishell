@@ -3,38 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jlorber <jlorber@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 19:00:34 by event            ###   ########.fr       */
+/*   Updated: 2023/02/28 17:07:11 by jlorber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	dequotes_on_redir(char **file, t_env *env)
+static int	dequotes_on_redir(t_cmdlist *ptr, t_env *env)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(*file);
-	quotes_and_var(&tmp, env, 0);
-	free_strs (*file, NULL);
-	*file = tmp;
+	if (ptr->redir_input)
+	{
+		tmp = ptr->redir_input;
+		quotes_and_var(&tmp, env, 0);
+		free_strs(ptr->redir_input, NULL);
+		ptr->redir_input = tmp;
+	}
+	if (ptr->redir_output)
+	{
+		tmp = ptr->redir_output;
+		quotes_and_var(&tmp, env, 0);
+		free_strs(ptr->redir_output, NULL);
+		ptr->redir_output = tmp;
+	}
+	if (ptr->delim_hdoc)
+	{
+		tmp = ptr->delim_hdoc;
+		quotes_and_var(&tmp, env, 0);
+		free_strs(ptr->delim_hdoc, NULL);
+		ptr->delim_hdoc = tmp;
+	}
+	return (0);
 }
 
 static int	dequotes_cmd_arg(t_cmdlist *ptr, t_env *env)
 {
 	int		i;
+	char	*tmp;
 
-	i = 0;
-	while (ptr->cmd_arg[i])
-		dequotes_on_redir(&(ptr->cmd_arg[i++]), env);
-	if (ptr->redir_input)
-		dequotes_on_redir(&(ptr->redir_input), env);
-	if (ptr->redir_output)
-		dequotes_on_redir(&(ptr->redir_output), env);
-	if (ptr->delim_hdoc)
-		dequotes_on_redir(&(ptr->delim_hdoc), env);
+	i = -1;
+	while (ptr->cmd_arg[++i])
+	{
+		tmp = ptr->cmd_arg[i];
+		quotes_and_var(&tmp, env, 0);
+		free_strs(ptr->cmd_arg[i], NULL);
+		ptr->cmd_arg[i] = tmp;
+	}
 	return (0);
 }
 
@@ -95,12 +113,9 @@ static int	parse_pipes(t_var *sh)
 int	parsing(t_var *shell)
 {
 	t_cmdlist	*ptr;
-	char		*empty;
 
-	empty = ft_strtrim(shell->input, " ");
-	if (!empty || !*empty)
+	if (ft_onlyspace(shell->input))
 		return (1);
-	free_strs(empty, NULL);
 	if (parse_pipes(shell))
 		return (1);
 	ptr = shell->cmdlist;
@@ -111,6 +126,8 @@ int	parsing(t_var *shell)
 		if (!(ptr->cmd_arg))
 			return (error_manager(99));
 		if (dequotes_cmd_arg(ptr, shell->env))
+			return (error_manager(21));
+		if (dequotes_on_redir(ptr, shell->env))
 			return (error_manager(21));
 		ptr = ptr->next;
 	}

@@ -105,13 +105,13 @@ char	*get_cmd(char *cmd, t_var *shell)
 
 int	path_finder(t_var *shell)
 {
-	if (!is_builtin(shell->cmdlist->cmd_arg[0]))
+	if (!is_builtin(shell->current->cmd_arg[0]))
 	{
-		shell->cmdlist->cmd_path = get_cmd(shell->cmdlist->cmd_arg[0], shell);
-		if (!shell->cmdlist->cmd_path)
+		shell->current->cmd_path = get_cmd(shell->current->cmd_arg[0], shell);
+		if (!shell->current->cmd_path)
 		{
 			ft_putstr_fd("Command not found: ", 2, 1);
-			ft_putendl_fd(shell->cmdlist->cmd_arg[0], 2, 1);
+			ft_putendl_fd(shell->current->cmd_arg[0], 2, 1);
 			return (1);
 		}
 	}

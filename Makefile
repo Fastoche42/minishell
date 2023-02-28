@@ -80,7 +80,7 @@ alln : all
 
 $(NAME) : $(OBJS)
 		$(RE_LIBFT)
-		@cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS) -g
+		@cc -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
 		@echo "$(GREEN)$(BOLD)Minishell Executable Created$(NORM)"
 clean :
 		@rm -rf $(OBJS)

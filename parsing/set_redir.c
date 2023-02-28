@@ -35,11 +35,9 @@ static size_t	jump_to_separ(char *s)
 
 static char	*find_redirfile(char **end)
 {
-	char	*start;
 	char	*str;
 	size_t	i;
 
-	start = *end;
 	str = NULL;
 	if (!*end)
 		return (NULL);

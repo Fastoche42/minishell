@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jlorber <jlorber@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:07:03 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 14:44:16 by event            ###   ########.fr       */
+/*   Updated: 2023/02/28 17:08:47 by jlorber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_cmdlist
 {
 	char				*brut;
 	char				*cmd_path;
-	char				**cmd_arg; 	
+	char				**cmd_arg;
 	char				*redir_input;
 	char				*delim_hdoc;
 	char				*redir_output;
