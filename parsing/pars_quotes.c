@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:04:58 by event             #+#    #+#             */
-/*   Updated: 2023/02/27 17:38:55 by event            ###   ########.fr       */
+/*   Updated: 2023/02/28 00:50:06 by rtazlaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,6 @@ void	quotes_and_var(char **str, t_env *env, int in_dq)
 		end++;
 	}
 	ft_concat(str, ft_strndup (start, (end - start)));
+	if (start)
+		free(start);
 }

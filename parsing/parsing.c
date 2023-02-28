@@ -6,7 +6,7 @@
 /*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:28:29 by fl-hote           #+#    #+#             */
-/*   Updated: 2023/02/27 22:59:38 by event            ###   ########.fr       */
+/*   Updated: 2023/02/28 00:18:13 by rtazlaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ static void	dequotes_on_redir(char **file, t_env *env)
 
 	tmp = ft_strdup(*file);
 	quotes_and_var(&tmp, env, 0);
-	/* free_strs (*file, NULL);*/
-	if (*file)
-	{
-		free(*file);
-		*file = NULL;
-	}
+	free_strs (*file, NULL);
 	*file = tmp;
 }
 

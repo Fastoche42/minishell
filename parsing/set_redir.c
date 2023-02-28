@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:22:18 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/23 16:22:18 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/28 00:55:05 by rtazlaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ static size_t	jump_to_separ(char *s)
 
 static char	*find_redirfile(char **end)
 {
-	char	*start;
 	char	*str;
 	size_t	i;
 
-	start = *end;
 	str = NULL;
 	if (!*end)
 		return (NULL);
